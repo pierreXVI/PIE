@@ -43,7 +43,7 @@ def rk_2(y0, t, f):
         y = np.zeros((n,))
     y[0] = y0
     for i in range(n - 1):
-        h = (t[i + 1] - t[i])
+        h = t[i + 1] - t[i]
         k1 = f(y[i], t[i])
         k2 = f(y[i] + h * k1 / 2, t[i] + h / 2)
         y[i + 1] = y[i] + h * k2
@@ -69,7 +69,7 @@ def rk_4(y0, t, f):
         y = np.zeros((n,))
     y[0] = y0
     for i in range(n - 1):
-        h = (t[i + 1] - t[i])
+        h = t[i + 1] - t[i]
         k1 = f(y[i], t[i])
         k2 = f(y[i] + h * k1 / 2, t[i] + h / 2)
         k3 = f(y[i] + h * k2 / 2, t[i] + h / 2)
