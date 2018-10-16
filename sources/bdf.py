@@ -31,6 +31,26 @@ def Gear_2(y0, t, f):
 
     return y
 
+import from rk import Euler_explicit
+
+def bdf_4(y0,t0,tf,n,f):
+
+	t=t0
+	y=y0
+	h=(tf-t0)/float(n)
+	Approx_solution=Euler_explicit(f,t0,t0+3*h,y0,3)
+	Temps=[t0]
+	for i in range(n):
+		 t+=h
+		 Temps.append(t)
+		 def F1(z):
+		  return z-(48./25)*Approx_solution[i+3]+(36./25)*Approx_solution[i+2]-(16./25)*Approx_solution[i+1]+(3./25)*Approx_solution[i]=(12./25)*h*f(z,Temps[i+3])
+		  Approx_solution[i+4]=scipy.optimize.newton(F1,Approx_solution[i+3])
+	plt.plot(Temps,Approx_solution,'b')
+	plt.xlabel("Temps")
+	plt.ylabel("y(t)")
+	plt.show()
+return Approx_solution, Temps 	
 
 def bdf_6(y0, t, f):
     """
