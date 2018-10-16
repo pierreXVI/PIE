@@ -38,7 +38,7 @@ def bdf_4(y0,t0,tf,n,f):
 	t=t0
 	y=y0
 	h=(tf-t0)/float(n)
-	Approx_solution=Euler_explicit(f,t0,t0+4*h,y0,4)
+	Approx_solution=Euler_explicit(f,t0,t0+3*h,y0,3)
 	Temps=[t0]
 	for i in range(n):
 		 t+=h
