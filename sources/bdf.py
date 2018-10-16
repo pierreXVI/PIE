@@ -88,7 +88,6 @@ def bdf_4(y0, t0, tf, n, f):
         Approx_solution.append(scipy.optimize.newton(F1, Approx_solution[i + 3]))
     return Approx_solution
 
-
 def bdf_6(y0, t, f):
     """
     Backward Differentiation Formula - 6 method
