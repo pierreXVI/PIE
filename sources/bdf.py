@@ -1,6 +1,7 @@
 import numpy as np
+import scipy as sc
 
-def rk_1(y0, t, f):
+def Gear_2(y0, t, f):
     """
     Gear method 2nd order
     y' = f(y, t)
@@ -21,7 +22,10 @@ def rk_1(y0, t, f):
     y[1] = y0+ (t[1]-t[1])*f(y0,t[0])
     
     for i in range(1,n - 1):
-        y[i + 1] = 4./3.*y[i]-1./3.*y[i-1] + 2./3.(t[i + 1] - t[i]) * f(y[i], t[i])
+        def g(y):
+            g(y) = y-4./3.*y[i]-1./3.*y[i-1] + 2./3.(t[i + 1] - t[i]) * f(y, t[i+1])
+        y[i + 1] = sc.optimize.newton(f,y[i]);
+        
 return y
 
 if __name__ == '__main__':
