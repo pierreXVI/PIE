@@ -72,9 +72,12 @@ def bdf_6(y0, t, f):
     y[:6] = rk_4(y0, t[:6], f)
     for i in range(n - 6):
         h = t[i + 1] - t[i]
-        l = lambda u: 147. * u - 360. * y[i + 5] + 450. * y[i + 4] - 400. * y[i + 3] + 225. * y[i + 2] - 72. * y[
-            i + 1] + 10. * y[i] - 60. * h * f(u, t[i + 1])
-        y[i + 6] = scipy.optimize.newton(l, y[i + 5])
+
+        def func_to_minimise(u):
+            return u - 360. * y[i + 5] / 147. + 450. * y[i + 4] / 147. - 400. * y[i + 3] / 147. + 225. * y[
+                i + 2] / 147. - 72. * y[i + 1] / 147. + 10. * y[i] / 147. - 60. * h * f(u, t[i + 6]) / 147.
+
+        y[i + 6] = scipy.optimize.newton(func_to_minimise, y[i + 5])
     return y
 
 
