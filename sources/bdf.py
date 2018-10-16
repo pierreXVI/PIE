@@ -1,9 +1,9 @@
 import numpy as np
 import scipy.optimize
-from rk import rk_4
+from rk import rk_4, Euler_explicit
 
 
-def Gear_2(y0, t, f):
+def bdf_2(y0, t, f):
     """
     Gear method 2nd order
     y' = f(y, t)
@@ -30,6 +30,63 @@ def Gear_2(y0, t, f):
         y[i + 1] = scipy.optimize.newton(g, y[i])
 
     return y
+
+
+import scipy as sc
+import math as m
+from scipy.optimize import newton
+
+
+def real(t):
+    return np.exp(t / 2 - np.sin(2 * t) / 4)
+
+
+def fGear(y, sol, tStep, t, function):
+    return (18. / 11.) * sol[-1] - (9. / 11.) * sol[-2] + (2. / 11.) * sol[-3] + (6. / 11.) * tStep * function(y, t) - y
+
+
+# Calcul des coefs pour RK
+def coefRK(ord, f, ti, yi):
+    if ord == 1:
+        k1 = f(ti, yi)
+        return k1
+
+
+def bdf_3(f, y0, t0, tEnd, tStep):
+    temps = [t0]
+    sol = [y0]
+    t = t0
+    yact = y0
+    for i in range(2):
+        # Premieres iterations calculees avec RK
+        yact = yact + coefRK(1, f, t, yact) * tStep
+        t += tStep
+        sol.append(yact)
+        temps.append(t)
+    while t < tEnd:
+        t += tStep
+        yact = newton(fGear, sol[-1], args=(sol, tStep, t, f))
+        sol.append(yact)
+        temps.append(t)
+    return sol
+
+
+def bdf_4(y0, t0, tf, n, f):
+    t = t0
+    y = y0
+    h = (tf - t0) / float(n)
+    Approx_solution = Euler_explicit(f, t0, t0 + 3 * h, y0, 3)[0]
+    Temps = [t0 + i*h for i in range(4)]
+    for i in range(n-4):
+        t += h
+        Temps.append(t)
+
+        def F1(z):
+            return z - (48. / 25) * Approx_solution[i + 3] + (36. / 25) * Approx_solution[i + 2] - (16. / 25) * \
+                   Approx_solution[i + 1] + (3. / 25) * Approx_solution[i] - (12. / 25) * h * f(z, Temps[i + 3])
+
+        Approx_solution.append(scipy.optimize.newton(F1, Approx_solution[i + 3]))
+    return Approx_solution
 
 
 def bdf_6(y0, t, f):
