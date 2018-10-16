@@ -65,19 +65,19 @@ def bdf_3(f, y0, t0, tEnd, tStep):
         temps.append(t)
     while t < tEnd:
         t += tStep
-        yact = newton(fGear, sol[-1], args=(sol, tStep, t, function))
+        yact = newton(fGear, sol[-1], args=(sol, tStep, t, f))
         sol.append(yact)
         temps.append(t)
-    return temps, sol
+    return sol
 
 
 def bdf_4(y0, t0, tf, n, f):
     t = t0
     y = y0
     h = (tf - t0) / float(n)
-    Approx_solution = Euler_explicit(f, t0, t0 + 3 * h, y0, 3)
-    Temps = [t0]
-    for i in range(n):
+    Approx_solution = Euler_explicit(f, t0, t0 + 3 * h, y0, 3)[0]
+    Temps = [t0 + i*h for i in range(4)]
+    for i in range(n-4):
         t += h
         Temps.append(t)
 
@@ -85,9 +85,8 @@ def bdf_4(y0, t0, tf, n, f):
             return z - (48. / 25) * Approx_solution[i + 3] + (36. / 25) * Approx_solution[i + 2] - (16. / 25) * \
                    Approx_solution[i + 1] + (3. / 25) * Approx_solution[i] - (12. / 25) * h * f(z, Temps[i + 3])
 
-        Approx_solution[i + 4] = scipy.optimize.newton(F1, Approx_solution[i + 3])
-    return Approx_solution, Temps
-
+        Approx_solution.append(scipy.optimize.newton(F1, Approx_solution[i + 3]))
+    return Approx_solution
 
 def bdf_6(y0, t, f):
     """

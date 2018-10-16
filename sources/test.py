@@ -96,12 +96,14 @@ def compare_methods_bdf():
     y4 = bdf.bdf_4(y0, x[0], x[-1], len(x), f)
     y6 = bdf.bdf_6(y0, x, f)
 
-    ax1.plot(x, y_2, '+', label='BDF2')
-    ax1.plot(x, y_4, '+', label='BDF4')
-    ax1.plot(x, y_6, '+', label='BDF6')
+    ax1.plot(x, y2, '+', label='BDF2')
+    ax1.plot(x, y3[:100], '+', label='BDF3')
+    ax1.plot(x, y4, '+', label='BDF4')
+    ax1.plot(x, y6, '+', label='BDF6')
     ax1.plot(x, y_exact, label='Exact')
 
     ax2.plot(x, abs(y2 - y_exact))
+    ax2.plot(x, abs(y3[:100] - y_exact))
     ax2.plot(x, abs(y4 - y_exact))
     ax2.plot(x, abs(y6 - y_exact))
 
