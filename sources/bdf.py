@@ -27,7 +27,7 @@ def Gear_2(y0, t, f):
         def g(y):
             return y - 4. / 3. * y[i] - 1. / 3. * y[i - 1] + 2. / 3. * (t[i + 1] - t[i]) * f(y, t[i + 1])
 
-        y[i + 1] = scipy.optimize.newton(f, y[i])
+        y[i + 1] = scipy.optimize.newton(g, y[i])
 
     return y
 
