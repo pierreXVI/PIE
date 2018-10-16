@@ -32,6 +32,45 @@ def bdf_2(y0, t, f):
     return y
 
 
+import scipy as sc
+import math as m
+from scipy.optimize import newton
+
+
+def real(t):
+    return np.exp(t / 2 - np.sin(2 * t) / 4)
+
+
+def fGear(y, sol, tStep, t, function):
+    return (18. / 11.) * sol[-1] - (9. / 11.) * sol[-2] + (2. / 11.) * sol[-3] + (6. / 11.) * tStep * function(y, t) - y
+
+
+# Calcul des coefs pour RK
+def coefRK(ord, f, ti, yi):
+    if ord == 1:
+        k1 = f(ti, yi)
+        return k1
+
+
+def bdf_3(f, y0, t0, tEnd, tStep):
+    temps = [t0]
+    sol = [y0]
+    t = t0
+    yact = y0
+    for i in range(2):
+        # Premieres iterations calculees avec RK
+        yact = yact + coefRK(1, f, t, yact) * tStep
+        t += tStep
+        sol.append(yact)
+        temps.append(t)
+    while t < tEnd:
+        t += tStep
+        yact = newton(fGear, sol[-1], args=(sol, tStep, t, function))
+        sol.append(yact)
+        temps.append(t)
+    return temps, sol
+
+
 def bdf_4(y0, t0, tf, n, f):
     t = t0
     y = y0

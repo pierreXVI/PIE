@@ -92,8 +92,9 @@ def compare_methods_bdf():
 
     y_exact = np.exp(x / 2 - np.sin(2 * x) / 4)
     y2 = bdf.bdf_2(y0, x, f)
-    y4 = bdf.bdf_6(y0, x[0], x[-1], len(x), f)
-    y_6 = bdf.bdf_6(y0, x, f)
+    y3 = bdf.bdf_3(f, y0, x[0], x[-1], (x[-1] - x[0])/len(x))
+    y4 = bdf.bdf_4(y0, x[0], x[-1], len(x), f)
+    y6 = bdf.bdf_6(y0, x, f)
 
     ax1.plot(x, y_2, '+', label='BDF2')
     ax1.plot(x, y_4, '+', label='BDF4')
