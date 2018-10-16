@@ -1,2 +1,5 @@
 README for the project
-To be completed ...
+
+Example for git commit
+
+TODO : complete the README.md
