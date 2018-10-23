@@ -136,7 +136,8 @@ def compare_methods_2d():
         ax2.semilogy(x, abs(y[:, 0] - y_exact), c=color)
         score[label] = np.sum(abs(y[:, 0] - y_exact))
 
-    print(sorted(score, key=score.__getitem__))
+    print('Scoring :')
+    print(*sorted(score, key=score.__getitem__), sep=' > ')
 
     ax1.legend()
     plt.show()
