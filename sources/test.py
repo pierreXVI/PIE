@@ -91,12 +91,17 @@ def compare_all_methods():
     y_exact = solution(x)
     ax1.plot(x, y_exact, c='k', label=r'$y_{exact}$')
 
+    score = dict()
     for method, label in zip(
             (rk.rk_1, rk.rk_2, rk.rk_4, bdf.bdf_1, bdf.bdf_2, bdf.bdf_3, bdf.bdf_4, bdf.bdf_5, bdf.bdf_6),
             ('RK1', 'RK2', 'RK4', 'BDF1', 'BDF2', 'BDF3', 'BDF4', 'BDF5', 'BDF6')):
         y = method(y0, x, f)
         color = ax1.plot(x, y, '+', label=label)[0].get_color()
         ax2.semilogy(x, abs(y - y_exact), c=color)
+        score[label] = np.sum(abs(y - y_exact))
+
+    print('Scoring :')
+    print(*sorted(score, key=score.__getitem__), sep=' > ')
 
     ax1.legend()
     plt.show()
@@ -145,6 +150,6 @@ def compare_methods_2d():
 
 if __name__ == '__main__':
     # compare_methods_rk()
-    # compare_methods_bdf()
-    # compare_all_methods()
+    compare_methods_bdf()
+    compare_all_methods()
     compare_methods_2d()
