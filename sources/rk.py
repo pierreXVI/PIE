@@ -76,3 +76,23 @@ def rk_4(y0, t, f):
         k4 = f(y[i] + h * k3, t[i] + h)
         y[i + 1] = y[i] + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6
     return y
+
+
+def rk_butcher(y0, t, f, a, b):
+    assert a.shape[0] == a.shape[1] == len(b)
+    q = a.shape[0]
+    c = np.array([np.sum(a[i, :i]) for i in range(q)])
+    try:
+        n, d = len(t), len(y0)
+        y = np.zeros((n, d))
+    except TypeError:
+        n = len(t)
+        y = np.zeros((n,))
+    y[0] = y0
+    for i in range(n - 1):
+        h = t[i + 1] - t[i]
+        p = np.zeros(q)
+        for j in range(q):
+            p[j] = f(y[i] + h * np.sum(a[j, :j] * p[:j]), t[i] + h * c[j])
+        y[i + 1] = y[i] + h * np.sum(b * p)
+    return y
