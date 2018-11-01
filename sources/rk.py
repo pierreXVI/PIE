@@ -79,7 +79,19 @@ def rk_4(y0, t, f):
 
 
 def rk_butcher(y0, t, f, a, b):
-    assert a.shape[0] == a.shape[1] == len(b)
+    """
+    Generic RK method, using a Butcher tableau (*a*, *b*, *c*)
+
+    The *c* array is deduced from the *a* and the *b* array so that the method is consistent:
+    :math:`c_{i}=\sum _{k=0}^{i-1}a_{ik}`
+
+    :param y0: initial value, may be multi-dimensional of size d
+    :param t: array of time steps, of size n
+    :param f: a function with well shaped input and output
+    :param a: the *a* array of the Butcher tableau
+    :param b: the *b* array of the Butcher tableau
+    :return: the solution, of shape (n, d)
+    """
     q = a.shape[0]
     c = np.array([np.sum(a[i, :i]) for i in range(q)])
     try:
@@ -96,3 +108,13 @@ def rk_butcher(y0, t, f, a, b):
             p[j] = f(y[i] + h * np.sum(a[j, :j] * p[:j]), t[i] + h * c[j])
         y[i + 1] = y[i] + h * np.sum(b * p)
     return y
+
+
+A_RK4 = np.array([[0., 0., 0, 0],
+                  [.5, 0., 0, 0],
+                  [.0, .5, 0, 0],
+                  [.0, 0., 1, 0]])
+"""The *a* array for the RK4 Butcher tableau"""
+
+B_RK4 = np.array([1 / 6, 1 / 3, 1 / 3, 1 / 6])
+"""The *b* array for the RK4 Butcher tableau"""
