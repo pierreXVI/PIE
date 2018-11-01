@@ -2,50 +2,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import rk
 import bdf
+import exp_rk
 
 
-def f(y, t):
-    return y * (np.sin(t) ** 2)
-
-
-def solution(t):
-    return np.exp(t / 2 - np.sin(2 * t) / 4)
-
-
-def compare_methods_rk():
+def compare_methods(pb, h=0.1, t_max=10):
     """
-    Compare RK1, RK2 and RK4 methods
-    """
-    fig = plt.figure()
-    ax1 = fig.add_subplot(211)
-    ax1.grid(True)
-    ax2 = fig.add_subplot(212, sharex=ax1)
-    ax2.grid(True)
+    Compare methods in METHODS
 
-    x = np.linspace(0, 10, 100)
-    y0 = 1
-
-    y_exact = solution(x)
-    y1 = rk.rk_1(y0, x, f)
-    y2 = rk.rk_2(y0, x, f)
-    y4 = rk.rk_4(y0, x, f)
-
-    ax1.plot(x, y1, '+', label='RK1')
-    ax1.plot(x, y2, '+', label='RK2')
-    ax1.plot(x, y4, '+', label='RK4')
-    ax1.plot(x, y_exact, label='Exact')
-
-    ax2.plot(x, abs(y1 - y_exact))
-    ax2.plot(x, abs(y2 - y_exact))
-    ax2.plot(x, abs(y4 - y_exact))
-
-    ax1.legend()
-    plt.show()
-
-
-def compare_methods_bdf():
-    """
-    Compare BDF1-6 methods
+    :param pb: The problem to solve : y' = pb[0](y, t) with pb[1] as solution
+    :param h: The time step
+    :param t_max: Solve on [0, t_max]
     """
     fig = plt.figure()
     ax1 = fig.add_subplot(211)
@@ -56,49 +22,17 @@ def compare_methods_bdf():
     ax2.set_xlabel(r'$x$')
     ax2.set_ylabel(r'$\left|y - y_{exact}\right|$')
 
-    x = np.linspace(0, 10, 100)
-    y0 = 1
+    x = np.linspace(0, t_max, int(t_max / h))
 
-    y_exact = solution(x)
-    ax1.plot(x, y_exact, c='k', label=r'$y_{exact}$')
-
-    for method, label in zip((bdf.bdf_1, bdf.bdf_2, bdf.bdf_3, bdf.bdf_4, bdf.bdf_5, bdf.bdf_6),
-                             ('BDF1', 'BDF2', 'BDF3', 'BDF4', 'BDF5', 'BDF6')):
-        y = method(y0, x, f)
-        color = ax1.plot(x, y, '+', label=label)[0].get_color()
-        ax2.semilogy(x, abs(y - y_exact), c=color)
-
-    ax1.legend()
-    plt.show()
-
-
-def compare_all_methods():
-    """
-    Compare all methods
-    """
-    fig = plt.figure()
-    ax1 = fig.add_subplot(211)
-    ax1.grid(True)
-    ax1.set_ylabel(r'$y$')
-    ax2 = fig.add_subplot(212, sharex=ax1)
-    ax2.grid(True)
-    ax2.set_xlabel(r'$x$')
-    ax2.set_ylabel(r'$\left|y - y_{exact}\right|$')
-
-    x = np.linspace(0, 10, 100)
-    y0 = 1
-
-    y_exact = solution(x)
+    y_exact = pb[1](x)
     ax1.plot(x, y_exact, c='k', label=r'$y_{exact}$')
 
     score = dict()
-    for method, label in zip(
-            (rk.rk_1, rk.rk_2, rk.rk_4, bdf.bdf_1, bdf.bdf_2, bdf.bdf_3, bdf.bdf_4, bdf.bdf_5, bdf.bdf_6),
-            ('RK1', 'RK2', 'RK4', 'BDF1', 'BDF2', 'BDF3', 'BDF4', 'BDF5', 'BDF6')):
-        y = method(y0, x, f)
-        color = ax1.plot(x, y, '+', label=label)[0].get_color()
+    for method in METHODS:
+        y = method(pb[1](0), x, pb[0])
+        color = ax1.plot(x, y, '+', label=method.__name__)[0].get_color()
         ax2.semilogy(x, abs(y - y_exact), c=color)
-        score[label] = np.sum(abs(y - y_exact))
+        score[method.__name__] = np.sum(abs(y - y_exact))
 
     print('Scoring :')
     print(*sorted(score, key=score.__getitem__), sep=' > ')
@@ -107,12 +41,13 @@ def compare_all_methods():
     plt.show()
 
 
-def compare_methods_2d():
+def compare_methods_2d(pb, h=0.1, t_max=10):
     """
-    Compare methods on a harmonic oscillator problem:
-    y'' + y = 0
-    y(0) = 1
-    y'(0) = 0
+    Compare methods in METHODS on a 2D problem
+
+    :param pb: The problem to solve : [y, y']' = pb[0]([y, y'], t) with y = pb[1] as solution and [y, y'](0) = pb[2]
+    :param h: The time step
+    :param t_max: Solve on [0, t_max]
     """
     fig = plt.figure()
     ax1 = fig.add_subplot(211)
@@ -123,23 +58,17 @@ def compare_methods_2d():
     ax2.set_xlabel(r'$x$')
     ax2.set_ylabel(r'$\left|y - y_{exact}\right|$')
 
-    x = np.linspace(0, 10 * np.pi, 1000)
-    y0 = np.array([1, 0])
+    x = np.linspace(0, t_max, int(t_max / h))
 
-    def f_harmonic(y, t):
-        return np.array([y[1], -y[0]])
-
-    y_exact = np.cos(x)
-    ax1.plot(x, y_exact, c='k', label=r'$y_{exact}$')
+    y_exact = pb[1](x)
+    ax1.plot(x, y_exact, '+-', c='k', label=r'$y_{exact}$')
 
     score = dict()
-    for method, label in zip(
-            (rk.rk_1, rk.rk_2, rk.rk_4, bdf.bdf_1, bdf.bdf_2, bdf.bdf_3, bdf.bdf_4, bdf.bdf_5, bdf.bdf_6),
-            ('RK1', 'RK2', 'RK4', 'BDF1', 'BDF2', 'BDF3', 'BDF4', 'BDF5', 'BDF6')):
-        y = method(y0, x, f_harmonic)
-        color = ax1.plot(x, y[:, 0], '+', label=label)[0].get_color()
+    for method in METHODS:
+        y = method(pb[2], x, pb[0])
+        color = ax1.plot(x, y[:, 0], '+', label=method.__name__)[0].get_color()
         ax2.semilogy(x, abs(y[:, 0] - y_exact), c=color)
-        score[label] = np.sum(abs(y[:, 0] - y_exact))
+        score[method.__name__] = np.sum(abs(y[:, 0] - y_exact))
 
     print('Scoring :')
     print(*sorted(score, key=score.__getitem__), sep=' > ')
@@ -147,9 +76,38 @@ def compare_methods_2d():
     ax1.legend()
     plt.show()
 
+
+METHODS = (
+    rk.rk_1,
+    rk.rk_2,
+    rk.rk_4,
+    bdf.bdf_1,
+    bdf.bdf_2,
+    bdf.bdf_3,
+    bdf.bdf_4,
+    bdf.bdf_5,
+    bdf.bdf_6,
+    # implex.euler_implex,
+    # implex.implex_2
+    # exp_rk.exp_rk_1
+)
+
+pb_1 = (lambda y, t: y * (np.sin(t) ** 2),
+        lambda t: np.exp(t / 2 - np.sin(2 * t) / 4))
+pb_2 = (lambda y, t: np.cos(t) * np.exp(np.cos(t)) - y * y * np.exp(-np.cos(t)),
+        lambda t: np.sin(t) * np.exp(np.cos(t)))
+
+pb2d_1 = (lambda y, t: np.array([y[1], -y[0]]),
+          lambda t: np.cos(t),
+          np.array([1, 0]))
+pb2d_2 = (lambda y, t: np.array([y[1], -(1 + 2 * np.cos(t)) * y[0] - np.sin(t) * y[1]]),
+          lambda t: np.sin(t) * np.exp(np.cos(t)),
+          np.array([0, np.e]))
 
 if __name__ == '__main__':
-    # compare_methods_rk()
-    compare_methods_bdf()
-    compare_all_methods()
-    compare_methods_2d()
+    # compare_methods(pb_1, t_max=10, h=0.1)
+    # compare_methods(pb_2, t_max=100, h=0.1)
+    # compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
+    compare_methods_2d(pb2d_2, t_max=200, h=0.05)
+
+    pass
