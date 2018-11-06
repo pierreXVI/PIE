@@ -20,6 +20,8 @@ The different methods are used to solve the ODE:
    
    rk.rst
    bdf.rst
+   stability.rst
+   test.rst
 
 
 

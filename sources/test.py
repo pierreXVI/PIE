@@ -6,12 +6,15 @@ import exp_rk
 
 
 def compare_methods(pb, h=0.1, t_max=10):
-    """
-    Compare methods in METHODS
+    r"""
+    Compare methods in ``METHODS``
 
-    :param pb: The problem to solve : y' = pb[0](y, t) with pb[1] as solution
-    :param h: The time step
-    :param t_max: Solve on [0, t_max]
+    :param pb: tuple
+        The problem to solve : y' = pb[0](y, t) with y = pb[1] as solution
+    :param h: float
+        The time step
+    :param t_max: float
+        Solve on [0, t_max]
     """
     fig = plt.figure()
     ax1 = fig.add_subplot(211)
@@ -42,12 +45,15 @@ def compare_methods(pb, h=0.1, t_max=10):
 
 
 def compare_methods_2d(pb, h=0.1, t_max=10):
-    """
-    Compare methods in METHODS on a 2D problem
+    r"""
+    Compare methods in ``METHODS`` on a 2D problem
 
-    :param pb: The problem to solve : [y, y']' = pb[0]([y, y'], t) with y = pb[1] as solution and [y, y'](0) = pb[2]
-    :param h: The time step
-    :param t_max: Solve on [0, t_max]
+    :param pb: tuple
+        The problem to solve : [y, y']' = pb[0]([y, y'], t) with y = pb[1] as solution and [y, y'](0) = pb[2]
+    :param h: float
+        The time step
+    :param t_max: float
+        Solve on [0, t_max]
     """
     fig = plt.figure()
     ax1 = fig.add_subplot(211)
@@ -89,25 +95,47 @@ METHODS = (
     bdf.bdf_6,
     # implex.euler_implex,
     # implex.implex_2
-    # exp_rk.exp_rk_1
+    # exp_rk.exp_euler,
+    # exp_rk.exp_rosen
 )
+"""The methods that are going to be tested"""
 
 pb_1 = (lambda y, t: y * (np.sin(t) ** 2),
         lambda t: np.exp(t / 2 - np.sin(2 * t) / 4))
+r"""
+From the `Wikipedia article <https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods>`_ on RK methods
+
+.. math::
+   \left\{\begin{aligned}
+    f\left(y, t\right) &= y\sin\left(t\right)^2 \\
+    y\left(t\right) &= \exp\left(\frac{t}{2} - \frac{\sin\left(2t\right)}{4}\right)
+   \end{aligned}\right.
+"""
+
 pb_2 = (lambda y, t: np.cos(t) * np.exp(np.cos(t)) - y * y * np.exp(-np.cos(t)),
         lambda t: np.sin(t) * np.exp(np.cos(t)))
+r"""
+.. math::
+   \left\{\begin{aligned}
+    f\left(y, t\right) &= \cos\left(t\right) e^{\cos\left(t\right)} - y^2e^{-\cos\left(t\right)} \\
+    y\left(t\right) &= \sin\left(t\right) e^{\cos\left(t\right)}
+   \end{aligned}\right.
+"""
 
 pb2d_1 = (lambda y, t: np.array([y[1], -y[0]]),
           lambda t: np.cos(t),
           np.array([1, 0]))
+"""Harmonic pb"""
+
 pb2d_2 = (lambda y, t: np.array([y[1], -(1 + 2 * np.cos(t)) * y[0] - np.sin(t) * y[1]]),
           lambda t: np.sin(t) * np.exp(np.cos(t)),
           np.array([0, np.e]))
+"""Same as pb_2 but in 2d"""
 
 if __name__ == '__main__':
     # compare_methods(pb_1, t_max=10, h=0.1)
-    # compare_methods(pb_2, t_max=100, h=0.1)
+    compare_methods(pb_2, t_max=300, h=0.1)
     # compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
-    compare_methods_2d(pb2d_2, t_max=200, h=0.05)
+    # compare_methods_2d(pb2d_2, t_max=100, h=0.1)
 
     pass
