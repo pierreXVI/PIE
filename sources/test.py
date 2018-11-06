@@ -5,15 +5,15 @@ import bdf
 import exp_rk
 
 
-def compare_methods(pb, h=0.1, t_max=10):
+def compare_methods(pb, h, t_max):
     r"""
     Compare methods in ``METHODS``
 
-    :param pb: tuple
+    :param pb: tuple -
         The problem to solve : y' = pb[0](y, t) with y = pb[1] as solution
-    :param h: float
+    :param h: float -
         The time step
-    :param t_max: float
+    :param t_max: float -
         Solve on [0, t_max]
     """
     fig = plt.figure()
@@ -44,15 +44,15 @@ def compare_methods(pb, h=0.1, t_max=10):
     plt.show()
 
 
-def compare_methods_2d(pb, h=0.1, t_max=10):
+def compare_methods_2d(pb, h, t_max):
     r"""
     Compare methods in ``METHODS`` on a 2D problem
 
-    :param pb: tuple
+    :param pb: tuple -
         The problem to solve : [y, y']' = pb[0]([y, y'], t) with y = pb[1] as solution and [y, y'](0) = pb[2]
-    :param h: float
+    :param h: float -
         The time step
-    :param t_max: float
+    :param t_max: float -
         Solve on [0, t_max]
     """
     fig = plt.figure()
@@ -125,12 +125,27 @@ r"""
 pb2d_1 = (lambda y, t: np.array([y[1], -y[0]]),
           lambda t: np.cos(t),
           np.array([1, 0]))
-"""Harmonic pb"""
+r"""
+Harmonic problem :
+:math:`\left\{\begin{aligned}\ddot{y} + y &= 0 \\\left(y, \dot{y}\right)_{t = 0} &= \left(1, 0\right)\end{aligned}\right.`
+with :math:`y = \cos\left(t\right)` as solution
+
+"""
 
 pb2d_2 = (lambda y, t: np.array([y[1], -(1 + 2 * np.cos(t)) * y[0] - np.sin(t) * y[1]]),
           lambda t: np.sin(t) * np.exp(np.cos(t)),
           np.array([0, np.e]))
-"""Same as pb_2 but in 2d"""
+r"""
+Same problem as ``pb_2`` written in 2D
+
+.. math::
+   \left\{\begin{aligned}
+    &\ddot{y} = -\left(1 + 2\cos\left(t\right)\right)y - \sin\left(t\right)\dot{y} \\
+    &\left(y, \dot{y}\right)_{t = 0} = \left(0, e\right)
+   \end{aligned}\right.
+
+with :math:`y = \cos\left(t\right)` as solution
+"""
 
 if __name__ == '__main__':
     # compare_methods(pb_1, t_max=10, h=0.1)

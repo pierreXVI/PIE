@@ -8,10 +8,14 @@ Runge Kutta methods
 .. py:function:: rk.rk_2(y0, t, f)
 .. py:function:: rk.rk_4(y0, t, f)
 
-    :param y0: initial value, may be multi-dimensional of size d
-    :param t: array of time steps, of size n
-    :param f: a function with well shaped input and output
-    :return: the solution, of shape (n, d)
+    :param y0: array_like -
+        Initial value, may be multi-dimensional of size d
+    :param t: 1D_array -
+        Array of time steps, of size n
+    :param f: func -
+        Function with well shaped input and output
+    :return: numpy.ndarray -
+        the solution, of shape (n, d)
 
 
 .. autofunction:: rk.rk_butcher
