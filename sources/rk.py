@@ -7,10 +7,14 @@ def rk_1(y0, t, f):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: initial value, may be multi-dimensional of size d
-    :param t: array of time steps, of size n
-    :param f: a function with well shaped input and output
-    :return: the solution, of shape (n, d)
+    :param y0: array_like -
+        Initial value, may be multi-dimensional of size d
+    :param t: 1D_array -
+        Array of time steps, of size n
+    :param f: func -
+        Function with well shaped input and output
+    :return: numpy.ndarray -
+        the solution, of shape (n, d)
     """
     try:
         n, d = len(t), len(y0)
@@ -30,10 +34,14 @@ def rk_2(y0, t, f):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: initial value, may be multi-dimensional of size d
-    :param t: array of time steps, of size n
-    :param f: a function with well shaped input and output
-    :return: the solution, of shape (n, d)
+    :param y0: array_like -
+        Initial value, may be multi-dimensional of size d
+    :param t: 1D_array -
+        Array of time steps, of size n
+    :param f: func -
+        Function with well shaped input and output
+    :return: numpy.ndarray -
+        the solution, of shape (n, d)
     """
     try:
         n, d = len(t), len(y0)
@@ -56,10 +64,14 @@ def rk_4(y0, t, f):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: initial value, may be multi-dimensional of size d
-    :param t: array of time steps, of size n
-    :param f: a function with well shaped input and output
-    :return: the solution, of shape (n, d)
+    :param y0: array_like -
+        Initial value, may be multi-dimensional of size d
+    :param t: 1D_array -
+        Array of time steps, of size n
+    :param f: func -
+        Function with well shaped input and output
+    :return: numpy.ndarray -
+        the solution, of shape (n, d)
     """
     try:
         n, d = len(t), len(y0)
@@ -78,63 +90,49 @@ def rk_4(y0, t, f):
     return y
 
 
-import matplotlib.pyplot as plt
-import math
-import scipy as sc
-import numpy as np
+def rk_butcher(y0, t, f, a, b):
+    """
+    Generic RK method, using a Butcher tableau (*a*, *b*, *c*)
 
-global t
-global Temps1
-global Temps2
-Temps1 = []
-Temps2 = []
+    The *c* array is deduced from the *a* and the *b* array so that the method is consistent:
+    :math:`c_{i}=\sum _{k=0}^{i-1}a_{ik}`
 
-
-def F(y, t):
-    return 2 * y + 0 * t
-
-
-def Sol_Exacte(y0, t0, tf, n):
-    t = t0
-    y = y0
-    global Temps2
-    Temps2 = [t0]
-    Sol_Exacte = [y0]
-    for i in range(n):
-        t += 0.1
-        y = np.exp(2 * t)
-        Temps2.append(t)
-        Sol_Exacte.append(y)
-    # plt.plot(Temps,Sol_Exacte,'r')
-    # plt.show()
-    return Sol_Exacte
-
-
-def Euler_explicit(f, t0, tf, y0, n):
-    t = t0
-    y = y0
-    h = (tf - t0) / float(n)
-    global Temps1
-    Temps1 = [t0]
-    Approx_solution = [y0]
-
-    for i in range(n):
-        y += h * f(y, t)
-        t += h
-        Approx_solution.append(y)
-        Temps1.append(t)
-
-    # plt.plot(Temps,Approx_solution,'b')
-    plt.xlabel("Temps")
-    plt.ylabel("y(t)")
-    # plt.show()
-    return Approx_solution, Temps1
+    :param y0: array_like -
+        Initial value, may be multi-dimensional of size d
+    :param t: 1D_array -
+        Array of time steps, of size n
+    :param f: func -
+        Function with well shaped input and output
+    :param a: 2D_array -
+        The *a* array of the Butcher tableau
+    :param b: 2D_array -
+        The *b* array of the Butcher tableau
+    :return: numpy.ndarray -
+        the solution, of shape (n, d)
+    """
+    q = a.shape[0]
+    c = np.array([np.sum(a[i, :i]) for i in range(q)])
+    try:
+        n, d = len(t), len(y0)
+        y = np.zeros((n, d))
+    except TypeError:
+        n = len(t)
+        y = np.zeros((n,))
+    y[0] = y0
+    for i in range(n - 1):
+        h = t[i + 1] - t[i]
+        p = np.zeros(q)
+        for j in range(q):
+            p[j] = f(y[i] + h * np.sum(a[j, :j] * p[:j]), t[i] + h * c[j])
+        y[i + 1] = y[i] + h * np.sum(b * p)
+    return y
 
 
-Euler_explicit(F, 0, 5, 1, 200)
-Sol_Exacte(1, 0, 5, 50)
+A_RK4 = np.array([[0., 0., 0, 0],
+                  [.5, 0., 0, 0],
+                  [.0, .5, 0, 0],
+                  [.0, 0., 1, 0]])
+"""The *a* array for the RK4 Butcher tableau"""
 
-plt.plot(Temps1, Euler_explicit(F, 0, 5, 1, 200), 'b', label="Sol_Aprox")
-plt.plot(Temps2, Sol_Exacte(1, 0, 5, 50), 'r', label="Sol_Exacte")
-plt.legend(loc='upper left')
-plt.show()
+B_RK4 = np.array([1 / 6, 1 / 3, 1 / 3, 1 / 6])
+"""The *b* array for the RK4 Butcher tableau"""
