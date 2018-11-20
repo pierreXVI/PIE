@@ -14,7 +14,7 @@ def rk_1(y0, t, f):
     :param f: func -
         Function with well shaped input and output
     :return: numpy.ndarray -
-        the solution, of shape (n, d)
+        The solution, of shape (n, d)
     """
     try:
         n, d = len(t), len(y0)
@@ -41,7 +41,7 @@ def rk_2(y0, t, f):
     :param f: func -
         Function with well shaped input and output
     :return: numpy.ndarray -
-        the solution, of shape (n, d)
+        The solution, of shape (n, d)
     """
     try:
         n, d = len(t), len(y0)
@@ -71,7 +71,7 @@ def rk_4(y0, t, f):
     :param f: func -
         Function with well shaped input and output
     :return: numpy.ndarray -
-        the solution, of shape (n, d)
+        The solution, of shape (n, d)
     """
     try:
         n, d = len(t), len(y0)
@@ -108,7 +108,7 @@ def rk_butcher(y0, t, f, a, b):
     :param b: 2D_array -
         The *b* array of the Butcher tableau
     :return: numpy.ndarray -
-        the solution, of shape (n, d)
+        The solution, of shape (n, d)
     """
     q = a.shape[0]
     c = np.array([np.sum(a[i, :i]) for i in range(q)])
