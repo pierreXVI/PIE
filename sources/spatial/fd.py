@@ -30,6 +30,14 @@ class FiniteDifferenceMethod:
             self.x[i * self.p:(i + 1) * self.p] = self.mesh[i] + scale * (self.cell + 1) / 2
         self.x[self.n_pts] = self.mesh[-1] + self.x[0] - self.mesh[0]
 
+        dx = (np.roll(self.x, -1) - self.x)[:-1]
+        dx_min = min(dx)
+        dx_max = max(dx)
+        if abs(1 - dx_max / dx_min) < 1E-10:
+            self.dx = (dx_min,)
+        else:
+            self.dx = (dx_min, dx_max)
+
     def rhs(self, y, t):
         """
         Return the right hand side for the convection equation
@@ -54,13 +62,10 @@ class FiniteDifferenceMethod:
     def __repr__(self):
         foo = "Finite difference Method, on [{0}, {1}] (periodic)".format(self.mesh[0], self.mesh[-1])
 
-        dx = (np.roll(self.x, -1) - self.x)[:-1]
-        dx_min = min(dx)
-        dx_max = max(dx)
-        if abs(1 - dx_max / dx_min) < 1E-10:
-            foo += "\ndx = {0:0.3E}".format(dx_min)
+        if len(self.dx) == 2:
+            foo += "\ndx_min = {0:0.3E}, dx_max = {1:0.3E}".format(*self.dx)
         else:
-            foo += "\ndx_min = {0:0.3E}, dx_max = {1:0.3E}".format(dx_min, dx_max)
+            foo += "\ndx = {0:0.3E}".format(*self.dx)
 
         foo += "\nn_cell = {0}, n_pts = {1}, p = {2} ".format(self.n_cell, self.n_pts, self.p)
 
