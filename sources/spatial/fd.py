@@ -3,12 +3,14 @@ import numpy as np
 
 class FiniteDifferenceMethod:
     """
-    Upwind (as regard of the convection speed) scheme for convection flux
-    """
+    Upwind (as regard of the convection speed) scheme for convection flux,
+    with a periodic boundary condition.
 
+
+    """
     def __init__(self, mesh, order, conv):
         """
-
+        Desc
         :param mesh: array_like
         :param order: int
         :param conv: float
@@ -54,13 +56,10 @@ class FiniteDifferenceMethod:
             self._jac = -self.c * j
 
     def rhs(self, y, t):
-        """
-        Return the right hand side for the convection equation
-
+        r"""
         :param y: array_like
         :param t: float
-        :return: numpy.ndarray -
-            The RHS, with the same shape as y
+        :return: numpy.ndarray - the right hand side :math:`RHS\left(y, t\right)`
         """
         # Can also be written :
         # flux = -self.c * (np.roll(y, -1) - y) / (np.roll(self.x, -1) - self.x)[:-1]
@@ -77,13 +76,10 @@ class FiniteDifferenceMethod:
         return flux
 
     def jac(self, y, t):
-        """
-        Return the jacobian :math:`\frac{\partial RHS}{\partial y}\left(y, t\right)`
-
+        r"""
         :param y: array_like
         :param t: float
-        :return: numpy.ndarray -
-            The jacobian, of shape (len(y), len(y))
+        :return: numpy.ndarray - the jacobian :math:`\frac{\partial RHS}{\partial y}\left(y, t\right)`
         """
 
         return self._jac
