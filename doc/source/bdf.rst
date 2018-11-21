@@ -18,5 +18,7 @@ Backward Differentiation Formula methods
         Array of time steps, of size n
     :param f: func -
         Function with well shaped input and output
+    :param jac: func or None, optional -
+        If given, the Jacobian of f
     :return: numpy.ndarray -
-        the solution, of shape (n, d)
+        The solution, of shape (n, d)

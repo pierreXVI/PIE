@@ -22,6 +22,7 @@ The different methods are used to solve the ODE:
    bdf.rst
    stability.rst
    test.rst
+   spatial.rst
 
 
 
