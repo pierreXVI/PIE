@@ -1,12 +1,12 @@
 TODO :
 
 - [ ] Adapt the spatial code to a generic temporal scheme
-	On a classic methods :
+	- On a classic methods :
 		- [x] Define a generic temporal scheme
 		- [x] Adapt the spatial code
 		- [x] Combine spatial and temporal code
 		- [ ] Try on test cases
-	On new methods :
+	- On new methods :
 		- [ ] Understand the spatial code
 		- [ ] Adapt the spatial code
 		- [ ] Combine spatial and temporal code
