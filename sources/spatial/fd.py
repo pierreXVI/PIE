@@ -19,17 +19,20 @@ class FiniteDifferenceMethod:
         self.n_pts = order * self.n_cell
         self.c = conv
 
+        # Setting the solution points in a [-1, 1] cell
         # Gauss points
         self.cell = np.array([-np.cos(np.pi * (2 * i + 1) / (2 * order)) for i in range(order)])
         # Uniform distribution
         # self.cell = np.array([(2 * i + 1) / order - 1 for i in range(order)])
 
+        # Setting the coordinates of all solutions points, with a phantom point at the end
         self.x = np.zeros(self.n_pts + 1)
         for i in range(self.n_cell):
             scale = self.mesh[i + 1] - self.mesh[i]
             self.x[i * self.p:(i + 1) * self.p] = self.mesh[i] + scale * (self.cell + 1) / 2
         self.x[self.n_pts] = self.mesh[-1] + self.x[0] - self.mesh[0]
 
+        # Getting the space steps
         dx = (np.roll(self.x, -1) - self.x)[:-1]
         dx_min = min(dx)
         dx_max = max(dx)
@@ -37,6 +40,18 @@ class FiniteDifferenceMethod:
             self.dx = (dx_min,)
         else:
             self.dx = (dx_min, dx_max)
+
+        # Setting the RHS jacobian, constant here
+        if self.c < 0:
+            dx = 1 / (np.roll(self.x, -1) - self.x)[:-1]
+            j = np.diagflat(dx[:-1], 1) - np.diagflat(dx)
+            j[-1, 0] = dx[-1]
+            self._jac = -self.c * j
+        else:
+            dx = 1 / np.roll((self.x - np.roll(self.x, 1))[1:], 1)
+            j = np.diagflat(dx) - np.diagflat(dx[1:], -1)
+            j[0, -1] = -dx[0]
+            self._jac = -self.c * j
 
     def rhs(self, y, t):
         """
@@ -51,6 +66,8 @@ class FiniteDifferenceMethod:
         # flux = -self.c * (np.roll(y, -1) - y) / (np.roll(self.x, -1) - self.x)[:-1]
         # if self.c > 0:
         #     flux = np.roll(flux, -1)
+        # Or :
+        # flux = np.dot(self._jac, y)
         if self.c < 0:
             # Downstream flux
             flux = -self.c * (np.roll(y, -1) - y) / (np.roll(self.x, -1) - self.x)[:-1]
@@ -58,6 +75,18 @@ class FiniteDifferenceMethod:
             # Upstream flux
             flux = -self.c * (y - np.roll(y, 1)) / np.roll((self.x - np.roll(self.x, 1))[1:], 1)
         return flux
+
+    def jac(self, y, t):
+        """
+        Return the jacobian :math:`\frac{\partial RHS}{\partial y}\left(y, t\right)`
+
+        :param y: array_like
+        :param t: float
+        :return: numpy.ndarray -
+            The jacobian, of shape (len(y), len(y))
+        """
+
+        return self._jac
 
     def __repr__(self):
         foo = "Finite difference Method, on [{0}, {1}] (periodic)".format(self.mesh[0], self.mesh[-1])
