@@ -5,10 +5,9 @@ class FiniteDifferenceMethod:
     """
     Upwind (as regard of the convection speed) scheme for convection flux,
     with a periodic boundary condition.
-
-
     """
-    def __init__(self, mesh, order, conv):
+
+    def __init__(self, mesh, order, conv, distribution='Gauss'):
         """
         Desc
         :param mesh: array_like
@@ -17,15 +16,17 @@ class FiniteDifferenceMethod:
         """
         self.mesh = mesh
         self.n_cell = len(mesh) - 1
-        self.p = order
-        self.n_pts = order * self.n_cell
+        self.p = order + 1
+        self.n_pts = self.p * self.n_cell
         self.c = conv
 
         # Setting the solution points in a [-1, 1] cell
-        # Gauss points
-        self.cell = np.array([-np.cos(np.pi * (2 * i + 1) / (2 * order)) for i in range(order)])
-        # Uniform distribution
-        # self.cell = np.array([(2 * i + 1) / order - 1 for i in range(order)])
+        if distribution == 'Gauss':
+            # Gauss points
+            self.cell = np.array([-np.cos(np.pi * (2 * i + 1) / (2 * self.p)) for i in range(self.p)])
+        else:
+            # Uniform distribution
+            self.cell = np.array([(2 * i + 1) / self.p - 1 for i in range(self.p)])
 
         # Setting the coordinates of all solutions points, with a phantom point at the end
         self.x = np.zeros(self.n_pts + 1)
@@ -105,8 +106,8 @@ class FiniteDifferenceMethod:
 
 if __name__ == '__main__':
     n = 100
-    p = 5
+    order = 3
     c = 1
     mesh1 = np.linspace(0, 10, n)
-    method = FiniteDifferenceMethod(mesh1, p, c)
+    method = FiniteDifferenceMethod(mesh1, order, c)
     print(method)
