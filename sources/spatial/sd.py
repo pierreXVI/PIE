@@ -1,4 +1,5 @@
 import numpy as np
+from spatial.method import SpatialMethod
 
 import matplotlib.pyplot as plt
 from spatial.fd import FiniteDifferenceMethod
@@ -11,45 +12,17 @@ from spatial.fd import FiniteDifferenceMethod
 # TODO: Write jac(self, y, t)
 # TODO: Validate then clean tests
 
-class SpectralDifferenceMethod:
+class SpectralDifferenceMethod(SpatialMethod):
     """
     """
 
     def __init__(self, mesh, order, conv):
-        """
-        Desc
-        :param mesh: array_like
-        :param order: int
-        :param conv: float
-        """
-        self.mesh = mesh
-        self.n_cell = len(mesh) - 1
-        self.p = order + 1
-        self.n_pts = self.p * self.n_cell
-        self.c = conv
+        super(SpectralDifferenceMethod, self).__init__(mesh, order, conv)
 
-        # Setting the solution points in a [-1, 1] cell
-        # Gauss points
-        self.cell = np.array([-np.cos(np.pi * (2 * i + 1) / (2 * self.p)) for i in range(self.p)])
-        # Legendre roots
+        # Setting the solution points in a [-1, 1] cell as the Legendre roots
         self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots(order * [0] + [1]), 1))
 
-        # Setting the coordinates of all solutions points, with a phantom point at the end
-        self.x = np.zeros(self.n_pts + 1)
-        for i in range(self.n_cell):
-            scale = self.mesh[i + 1] - self.mesh[i]
-            self.x[i * self.p:(i + 1) * self.p] = self.mesh[i] + scale * (self.cell + 1) / 2
-        self.x[self.n_pts] = self.mesh[-1] + self.x[0] - self.mesh[0]
-
-        # Getting the space steps
-        dx = (np.roll(self.x, -1) - self.x)[:-1]
-        dx_min = min(dx)
-        dx_max = max(dx)
-        if abs(1 - dx_max / dx_min) < 1E-10:
-            self.dx = (dx_min,)
-        else:
-            self.dx = (dx_min, dx_max)
-
+        # Setting the needed matrices
         self.sol_to_flux = np.zeros((self.p + 1, self.p))
         self.flux_to_sol = np.zeros((self.p, self.p + 1))
         self.d_in_flux = np.zeros((self.p + 1, self.p + 1))
@@ -62,12 +35,6 @@ class SpectralDifferenceMethod:
                 self.d_in_flux[i, j] = d_lagrange(self.flux_pts[i], self.flux_pts, j)
 
     def rhs(self, y, t):
-        r"""
-        :param y: array_like
-        :param t: float
-        :return: numpy.ndarray - the right hand side :math:`RHS\left(y, t\right)`
-        """
-
         sol_in_sol_point = np.zeros(y.shape)
         sol_in_flux_point = np.zeros(y.ndim * [self.n_cell * (self.p + 1)])
 
@@ -189,29 +156,10 @@ class SpectralDifferenceMethod:
         plt.show()
 
     def jac(self, y, t):
-        r"""
-        :param y: array_like
-        :param t: float
-        :return: numpy.ndarray - the jacobian :math:`\frac{\partial RHS}{\partial y}\left(y, t\right)`
-        """
         pass
 
     def __repr__(self):
-        foo = "Spectral difference Method, on [{0}, {1}] (periodic)".format(self.mesh[0], self.mesh[-1])
-
-        if len(self.dx) == 2:
-            foo += "\ndx_min = {0:0.3E}, dx_max = {1:0.3E}".format(*self.dx)
-        else:
-            foo += "\ndx = {0:0.3E}".format(*self.dx)
-
-        foo += "\nn_cell = {0}, n_pts = {1}, p = {2} ".format(self.n_cell, self.n_pts, self.p)
-
-        foo += "\nCell [-1, 1] :"
-        cell_str = '   '.join(map('{0:0.2f}'.format, self.cell))
-        cell = len(cell_str) * ['-']
-        for i in self.cell:
-            cell[int(len(cell) * (1 + i) / 2)] = '|'
-        foo += "\n[{0}]\n[{1}]".format(cell_str, ''.join(cell))
+        foo = "Spectral difference " + super(SpectralDifferenceMethod, self).__repr__()
 
         foo += "\n\nFlux points [-1, 1] :"
         cell_str = '   '.join(map('{0:0.2f}'.format, self.flux_pts))
@@ -260,17 +208,18 @@ def d_lagrange(x, x_i, i):
 
 if __name__ == '__main__':
     n = 3
-    p = 10
+    p = 4
     c = 1
     L = 1
     mesh1 = np.linspace(0, L, n + 1)
 
     method = SpectralDifferenceMethod(mesh1, p, c)
     # method_fd = FiniteDifferenceMethod(mesh1, p, c)
+    print(method)
 
-    x = method.x[:-1]
-    y0 = np.sin(2 * np.pi * x / L)
-    method.rhs_test()
+    # x = method.x[:-1]
+    # y0 = np.sin(2 * np.pi * x / L)
+    # method.rhs_test()
 
     # print(method.d_in_flux)
 
