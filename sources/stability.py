@@ -11,14 +11,11 @@ def stability_rk1(alpha, dt_0, n_0, nb_test=4):
 
     for different values of the time step : (``dt_0``, ``dt_0 * 1E-1``, ..., ``dt_0 * 1E-(nb_tests - 1)``)
 
-    :param alpha: float -
-        The linear coefficient
-    :param dt_0: float -
-        The larger time step
-    :param n_0: int -
-        The number of points computed with dt = dt_0
-    :param nb_test: int, optional -
-        The number of times steps tested
+    :param float alpha: The linear coefficient
+    :param float dt_0: The larger time step
+    :param int n_0: The number of points computed with dt = dt_0
+    :param nb_test: The number of times steps tested
+    :type nb_test: int, optional
     """
     if nb_test < 1:
         return
@@ -53,14 +50,11 @@ def stability_bdf1(alpha, dt_0, n_0, nb_test=4):
 
     for different values of the time step : (``dt_0``, ``dt_0 * 1E-1``, ..., ``dt_0 * 1E-(nb_tests - 1)``)
 
-    :param alpha: float -
-        The linear coefficient
-    :param dt_0: float -
-        The larger time step
-    :param n_0: int -
-        The number of points computed with dt = dt_0
-    :param nb_test: int, optional -
-        The number of times steps tested
+    :param float alpha: The linear coefficient
+    :param float dt_0: The larger time step
+    :param int n_0: The number of points computed with dt = dt_0
+    :param nb_test: The number of times steps tested
+    :type nb_test: int, optional
     """
     if nb_test < 1:
         return

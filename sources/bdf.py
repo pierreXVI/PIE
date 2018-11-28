@@ -27,16 +27,12 @@ def bdf_1(y0, t, f, jac=None):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: array_like -
-        Initial value, may be multi-dimensional of size d
-    :param t: 1D_array -
-        Array of time steps, of size n
-    :param f: func -
-        Function with well shaped input and output
-    :param jac: func or None, optional -
-        If given, the Jacobian of f
-    :return: numpy.ndarray -
-        The solution, of shape (n, d)
+    :param array_like y0: Initial value, may be multi-dimensional of size d
+    :param 1D_array t: Array of time steps, of size n
+    :param func f: Function with well shaped input and output
+    :param jac: If given, the Jacobian of f
+    :type jac: func or None, optional
+    :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
     def func_to_minimise(u, t0, t1, u0):
@@ -58,16 +54,12 @@ def bdf_2(y0, t, f, jac=None):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: array_like -
-        Initial value, may be multi-dimensional of size d
-    :param t: 1D_array -
-        Array of time steps, of size n
-    :param f: func -
-        Function with well shaped input and output
-    :param jac: func or None, optional -
-        If given, the Jacobian of f
-    :return: numpy.ndarray -
-        The solution, of shape (n, d)
+    :param array_like y0: Initial value, may be multi-dimensional of size d
+    :param 1D_array t: Array of time steps, of size n
+    :param func f: Function with well shaped input and output
+    :param jac: If given, the Jacobian of f
+    :type jac: func or None, optional
+    :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
     def func_to_minimise(u, t1, t2, u0, u1):
@@ -89,16 +81,12 @@ def bdf_3(y0, t, f, jac=None):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: array_like -
-        Initial value, may be multi-dimensional of size d
-    :param t: 1D_array -
-        Array of time steps, of size n
-    :param f: func -
-        Function with well shaped input and output
-    :param jac: func or None, optional -
-        If given, the Jacobian of f
-    :return: numpy.ndarray -
-        The solution, of shape (n, d)
+    :param array_like y0: Initial value, may be multi-dimensional of size d
+    :param 1D_array t: Array of time steps, of size n
+    :param func f: Function with well shaped input and output
+    :param jac: If given, the Jacobian of f
+    :type jac: func or None, optional
+    :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
     def func_to_minimise(u, t2, t3, u0, u1, u2):
@@ -120,16 +108,12 @@ def bdf_4(y0, t, f, jac=None):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: array_like -
-        Initial value, may be multi-dimensional of size d
-    :param t: 1D_array -
-        Array of time steps, of size n
-    :param f: func -
-        Function with well shaped input and output
-    :param jac: func or None, optional -
-        If given, the Jacobian of f
-    :return: numpy.ndarray -
-        The solution, of shape (n, d)
+    :param array_like y0: Initial value, may be multi-dimensional of size d
+    :param 1D_array t: Array of time steps, of size n
+    :param func f: Function with well shaped input and output
+    :param jac: If given, the Jacobian of f
+    :type jac: func or None, optional
+    :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
     def func_to_minimise(u, t3, t4, u0, u1, u2, u3):
@@ -151,16 +135,12 @@ def bdf_5(y0, t, f, jac=None):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: array_like -
-        Initial value, may be multi-dimensional of size d
-    :param t: 1D_array -
-        Array of time steps, of size n
-    :param f: func -
-        Function with well shaped input and output
-    :param jac: func or None, optional -
-        If given, the Jacobian of f
-    :return: numpy.ndarray -
-        The solution, of shape (n, d)
+    :param array_like y0: Initial value, may be multi-dimensional of size d
+    :param 1D_array t: Array of time steps, of size n
+    :param func f: Function with well shaped input and output
+    :param jac: If given, the Jacobian of f
+    :type jac: func or None, optional
+    :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
     def func_to_minimise(u, t4, t5, u0, u1, u2, u3, u4):
@@ -183,16 +163,12 @@ def bdf_6(y0, t, f, jac=None):
     y' = f(y, t)
     y(t[0]) = y0
 
-    :param y0: array_like -
-        Initial value, may be multi-dimensional of size d
-    :param t: 1D_array -
-        Array of time steps, of size n
-    :param f: func -
-        Function with well shaped input and output
-    :param jac: func or None, optional -
-        If given, the Jacobian of f
-    :return: numpy.ndarray -
-        The solution, of shape (n, d)
+    :param array_like y0: Initial value, may be multi-dimensional of size d
+    :param 1D_array t: Array of time steps, of size n
+    :param func f: Function with well shaped input and output
+    :param jac: If given, the Jacobian of f
+    :type jac: func or None, optional
+    :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
     def func_to_minimise(u, t5, t6, u0, u1, u2, u3, u4, u5):

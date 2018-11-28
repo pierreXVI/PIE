@@ -9,12 +9,9 @@ def compare_methods(pb, h, t_max):
     r"""
     Compare methods in ``METHODS``
 
-    :param pb: tuple -
-        The problem to solve : y' = pb[0](y, t) with y = pb[1] as solution
-    :param h: float -
-        The time step
-    :param t_max: float -
-        Solve on [0, t_max]
+    :param tuple pb: The problem to solve : y' = pb[0](y, t) with y = pb[1] as solution
+    :param float h: The time step
+    :param float t_max: Solve on [0, t_max]
     """
     fig = plt.figure()
     ax1 = fig.add_subplot(211)
@@ -48,12 +45,9 @@ def compare_methods_2d(pb, h, t_max):
     r"""
     Compare methods in ``METHODS`` on a 2D problem
 
-    :param pb: tuple -
-        The problem to solve : [y, y']' = pb[0]([y, y'], t) with y = pb[1] as solution and [y, y'](0) = pb[2]
-    :param h: float -
-        The time step
-    :param t_max: float -
-        Solve on [0, t_max]
+    :param tuple pb: The problem to solve : [y, y']' = pb[0]([y, y'], t) with y = pb[1] as solution and [y, y'](0) = pb[2]
+    :param float h: The time step
+    :param float t_max: Solve on [0, t_max]
     """
     fig = plt.figure()
     ax1 = fig.add_subplot(211)

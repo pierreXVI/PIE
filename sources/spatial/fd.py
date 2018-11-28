@@ -3,9 +3,20 @@ from spatial.method import SpatialMethod
 
 
 class FiniteDifferenceMethod(SpatialMethod):
-    """
+    r"""
     Upwind (as regard of the convection speed) scheme for convection flux,
     with a periodic boundary condition.
+
+    .. math::
+       \frac{\partial y}{\partial x}\ _i \simeq
+       \left\{\begin{aligned}
+       &\frac{y_i - y_{i-1}}{x_i - x_{i-1}} &\text{if $c \gt 0$}\\ \\
+       &\frac{y_{i+1} - y_i}{x_{i+1} - x_i} &\text{otherwise}
+       \end{aligned}\right.
+
+    This method gives a linear right hand side so it has a constant jacobian, stored as a private attribute.
+
+    :ivar array_like jac: The constant jacobian
     """
 
     def __init__(self, mesh, order, conv):

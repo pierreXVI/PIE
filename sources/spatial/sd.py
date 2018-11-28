@@ -2,15 +2,13 @@ import numpy as np
 from spatial.method import SpatialMethod
 
 
-# TODO: Check the flux continuity
-# --> should the flux or the RHS be continuous
-# --> is the symmetric boundary condition well written
-# --> is it working for convection to the left (negative self.c)
 # TODO: Write jac(self, y, t)
-# TODO: Validate then clean tests
+# TODO: Write the doc
+# TODO: Optimise the code
 
 class SpectralDifferenceMethod(SpatialMethod):
     """
+
     """
 
     def __init__(self, mesh, order, conv):
@@ -91,39 +89,39 @@ class SpectralDifferenceMethod(SpatialMethod):
         return foo
 
 
-def lagrange(x, x_i, i):
-    """
-    Evaluate in x the i polynomial of the Lagrange base on the points x_i
+def lagrange(x, interpolation_points, i):
+    r"""
+    Evaluate in ``x`` the ``i`` Lagrange basis polynomial on the points ``interpolation_points``
 
     Returns :math:`L_i\left(x\right)`
-    with :math:`L_i\left(x_i\left[j\right]\right) = \delta_{ij}`
+    with :math:`L_i\left(interpolation\_points\left[j\right]\right) = \delta_{ij}`
 
-    :param x: float
-    :param x_i: array_like
-    :param i: int
+    :param float x:
+    :param array_like interpolation_points:
+    :param int i:
     :return: float
     """
-    foo = np.delete(x_i, i)
-    return np.prod((x - foo) / (x_i[i] - foo))
+    foo = np.delete(interpolation_points, i)
+    return np.prod((x - foo) / (interpolation_points[i] - foo))
 
 
-def d_lagrange(x, x_i, i):
+def d_lagrange(x, interpolation_points, i):
     r"""
-    Evaluate in x the derivative of the i polynomial of the Lagrange base on the points x_i
+    Evaluate in ``x`` the derivative of the ``i`` Lagrange basis polynomial on the points ``interpolation_points``
 
     Returns :math:`\frac{\mathrm{d}L_i}{\mathrm{d}x}\left(x\right)`
-    with :math:`L_i\left(x_i\left[j\right]\right) = \delta_{ij}`
+    with :math:`L_i\left(interpolation\_points\left[j\right]\right) = \delta_{ij}`
 
-    :param x: float
-    :param x_i: array_like
-    :param i: int
+    :param float x:
+    :param array_like interpolation_points:
+    :param int i:
     :return: float
     """
     val = 0
-    foo = np.delete(x_i, i)
+    foo = np.delete(interpolation_points, i)
     for k in range(len(foo)):
         val += np.prod(x - np.delete(foo, k))
-    return val / np.prod(x_i[i] - foo)
+    return val / np.prod(interpolation_points[i] - foo)
 
 
 if __name__ == '__main__':
