@@ -4,7 +4,6 @@ from spatial.method import SpatialMethod
 
 # TODO: Write jac(self, y, t)
 # TODO: Write the doc
-# TODO: Optimise the code
 
 class SpectralDifferenceMethod(SpatialMethod):
     """
@@ -35,11 +34,9 @@ class SpectralDifferenceMethod(SpatialMethod):
         flux_in_flux_point = np.zeros((self.n_cell, self.p + 1))
         rhs_in_sol_point = np.zeros((self.n_cell, self.p))
 
+        # Getting solution in sol points then the flux in flux points
         for i in range(self.n_cell):
-            # Getting solution in sol points
             sol_in_sol_point = y[i * self.p:(i + 1) * self.p] * 2 / (self.mesh[i + 1] - self.mesh[i])
-
-            # Getting the flux in flux points
             flux_in_flux_point[i] = -self.c * (self.sol_to_flux @ sol_in_sol_point)
 
         # Ensuring the flux continuity
@@ -49,8 +46,8 @@ class SpectralDifferenceMethod(SpatialMethod):
             else:
                 flux_in_flux_point[i - 1, -1] = flux_in_flux_point[i, 0]
 
+        # Getting the rhs in sol points
         for i in range(self.n_cell):
-            # Getting the rhs in sol points
             rhs_in_sol_point[i] = self.d_in_flux_to_sol @ flux_in_flux_point[i]
 
         return rhs_in_sol_point.reshape(y.shape)
@@ -116,12 +113,3 @@ if __name__ == '__main__':
 
     y0 = np.sin(2 * np.pi * method.x / L)
     method.rhs(y0, 0)
-
-    import time
-
-    n_iter = 100000
-    t0 = time.process_time()
-    for i in range(n_iter):
-        method.rhs(y0, 0)
-    t0 = time.process_time() - t0
-    print('Elapsed : {0:0.7f}s (previous 0.0000760s)'.format(t0 / n_iter))
