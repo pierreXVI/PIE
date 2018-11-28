@@ -3,7 +3,7 @@ import numpy as np
 
 class SpatialMethod:
     """
-    Generic structure for spatial methods
+    Generic structure for spatial methods on periodic mesh
     """
 
     def __init__(self, mesh, order, conv):
