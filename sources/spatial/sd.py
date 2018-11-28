@@ -29,50 +29,31 @@ class SpectralDifferenceMethod(SpatialMethod):
             for j in range(self.p + 1):
                 self.d_in_flux[i, j] = d_lagrange(self.flux_pts[i], self.flux_pts, j)
 
+        self.d_in_flux_to_sol = self.flux_to_sol @ self.d_in_flux
+
     def rhs(self, y, t):
-        sol_in_sol_point = np.zeros(y.shape)
-        sol_in_flux_point = np.zeros(y.ndim * [self.n_cell * (self.p + 1)])
+        flux_in_flux_point = np.zeros((self.n_cell, self.p + 1))
+        rhs_in_sol_point = np.zeros((self.n_cell, self.p))
 
-        flux_in_flux_point = np.zeros(y.ndim * [self.n_cell * (self.p + 1)])
-
-        rhs_in_sol_point = np.zeros(y.shape)
-        rhs_in_flux_point = np.zeros(y.ndim * [self.n_cell * (self.p + 1)])
-
-        # Getting solution in sol points
         for i in range(self.n_cell):
-            sol = y[i * self.p:(i + 1) * self.p] * 2 / (self.mesh[i + 1] - self.mesh[i])
-            sol_in_sol_point[i * self.p:(i + 1) * self.p] = sol
+            # Getting solution in sol points
+            sol_in_sol_point = y[i * self.p:(i + 1) * self.p] * 2 / (self.mesh[i + 1] - self.mesh[i])
 
-        # Getting solution in flux points
-        for i in range(self.n_cell):
-            sol_in_flux_point[i * (self.p + 1):(i + 1) * (self.p + 1)] = np.dot(self.sol_to_flux,
-                                                                                sol_in_sol_point[i * self.p:
-                                                                                                 (i + 1) * self.p])
+            # Getting the flux in flux points
+            flux_in_flux_point[i] = -self.c * (self.sol_to_flux @ sol_in_sol_point)
 
-        # Getting the flux in flux points
-        for i in range(self.n_cell):
-            a, b = i * (self.p + 1), (i + 1) * (self.p + 1)
-            flux_in_flux_point[a:b] = -self.c * sol_in_flux_point[a:b]
-
-        # Setting the flux continuity
+        # Ensuring the flux continuity
         for i in range(self.n_cell):
             if self.c > 0:
-                flux_in_flux_point[i * (self.p + 1)] = flux_in_flux_point[i * (self.p + 1) - 1]
+                flux_in_flux_point[i, 0] = flux_in_flux_point[i - 1, -1]
             else:
-                flux_in_flux_point[(i - 1) * (self.p + 1) - 1] = flux_in_flux_point[(i - 1) * (self.p + 1)]
+                flux_in_flux_point[i - 1, -1] = flux_in_flux_point[i, 0]
 
-        # Getting the rhs in flux points
         for i in range(self.n_cell):
-            a, b = i * (self.p + 1), (i + 1) * (self.p + 1)
-            rhs_in_flux_point[a:b] = np.dot(self.d_in_flux, flux_in_flux_point[a:b])
+            # Getting the rhs in sol points
+            rhs_in_sol_point[i] = self.d_in_flux_to_sol @ flux_in_flux_point[i]
 
-        # Getting the rhs in sol points
-        for i in range(self.n_cell):
-            rhs_in_sol_point[i * self.p:(i + 1) * self.p] = np.dot(self.flux_to_sol,
-                                                                   rhs_in_flux_point[i * (self.p + 1):
-                                                                                     (i + 1) * (self.p + 1)])
-
-        return rhs_in_sol_point
+        return rhs_in_sol_point.reshape(y.shape)
 
     def jac(self, y, t):
         pass
@@ -125,11 +106,22 @@ def d_lagrange(x, interpolation_points, i):
 
 
 if __name__ == '__main__':
-    n = 100
-    p = 3
+    n = 5
+    p = 2
     c = 1
     L = 1
     mesh1 = np.linspace(0, L, n + 1)
 
     method = SpectralDifferenceMethod(mesh1, p, c)
-    print(method)
+
+    y0 = np.sin(2 * np.pi * method.x / L)
+    method.rhs(y0, 0)
+
+    import time
+
+    n_iter = 100000
+    t0 = time.process_time()
+    for i in range(n_iter):
+        method.rhs(y0, 0)
+    t0 = time.process_time() - t0
+    print('Elapsed : {0:0.7f}s (previous 0.0000760s)'.format(t0 / n_iter))
