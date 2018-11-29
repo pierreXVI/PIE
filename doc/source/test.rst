@@ -2,17 +2,17 @@
 Methods plot tests
 ==================
 
-.. automodule:: test
+.. automodule:: temporal.test
    :members: compare_methods, compare_methods_2d
 
-.. autodata:: METHODS
+.. autodata:: temporal.test.METHODS
    :annotation:
-.. autodata:: pb_1
+.. autodata:: temporal.test.pb_1
    :annotation:
-.. autodata:: pb_2
+.. autodata:: temporal.test.pb_2
    :annotation:
-.. autodata:: pb2d_1
+.. autodata:: temporal.test.pb2d_1
    :annotation:
-.. autodata:: pb2d_2
+.. autodata:: temporal.test.pb2d_2
    :annotation:
 

@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import rk
-import bdf
+from temporal import rk, bdf
 
 
 def stability_rk1(alpha, dt_0, n_0, nb_test=4):

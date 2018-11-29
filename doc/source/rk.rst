@@ -11,12 +11,14 @@ Runge Kutta methods
    :param array_like y0: Initial value, may be multi-dimensional of size d
    :param 1D_array t: Array of time steps, of size n
    :param func f: Function with well shaped input and output
+   :param verbose: If True or a string, displays a progress bar
+   :type verbose: bool or str, optional
    :return: numpy.ndarray - The solution, of shape (n, d)
 
 
-.. autofunction:: rk.rk_butcher
+.. autofunction:: temporal.rk_butcher
 
-.. autodata:: rk.A_RK4
+.. autodata:: temporal.rk.A_RK4
    :annotation:
-.. autodata:: rk.B_RK4
+.. autodata:: temporal.rk.B_RK4
    :annotation:

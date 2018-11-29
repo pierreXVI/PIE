@@ -2,26 +2,36 @@ import numpy as np
 import scipy.optimize
 import warnings
 from temporal.rk import rk_4
+from temporal.commons import Counter
 
 
-def _bdf_i(i, y0, t, f, func_to_minimise, jac):
+def _bdf_i(i, y0, t, f, func_to_minimise, jac, verbose):
     try:
         n, d = len(t), len(y0)
         y = np.zeros((n, d))
     except TypeError:
         n = len(t)
         y = np.zeros((n,))
-    y[:i] = rk_4(y0, t[:i], f)
+
+    if verbose is False:
+        count = Counter('', 0)
+    elif verbose is True:
+        count = Counter('BDF{0}'.format(i), n)
+    else:
+        count = Counter(verbose, n)
+
+    y[:i] = rk_4(y0, t[:i], f, verbose=False)
     for k in range(n - i):
         result = scipy.optimize.root(func_to_minimise, y[k + i - 1],
                                      args=(t[k + i - 1], t[k + i], *y[k:k + i]), jac=jac)
         if not result.success:
             warnings.warn(result.message)
         y[k + i] = result.x
+        count(k + i)
     return y
 
 
-def bdf_1(y0, t, f, jac=None):
+def bdf_1(y0, t, f, jac=None, verbose=True):
     """
     BDF1 or Implicit Euler method
     y' = f(y, t)
@@ -32,6 +42,8 @@ def bdf_1(y0, t, f, jac=None):
     :param func f: Function with well shaped input and output
     :param jac: If given, the Jacobian of f
     :type jac: func or None, optional
+    :param verbose: If True or a string, displays a progress bar
+    :type verbose: bool or str, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
@@ -45,10 +57,10 @@ def bdf_1(y0, t, f, jac=None):
             foo = jac(u, t1)
             return np.eye(*foo.shape) - (t1 - t0) * foo
 
-    return _bdf_i(1, y0, t, f, func_to_minimise, jacobian)
+    return _bdf_i(1, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_2(y0, t, f, jac=None):
+def bdf_2(y0, t, f, jac=None, verbose=True):
     """
     BDF2 method
     y' = f(y, t)
@@ -59,6 +71,8 @@ def bdf_2(y0, t, f, jac=None):
     :param func f: Function with well shaped input and output
     :param jac: If given, the Jacobian of f
     :type jac: func or None, optional
+    :param verbose: If True or a string, displays a progress bar
+    :type verbose: bool or str, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
@@ -72,10 +86,10 @@ def bdf_2(y0, t, f, jac=None):
             foo = jac(u, t2)
             return np.eye(*foo.shape) - 2 * (t2 - t1) * foo / 3
 
-    return _bdf_i(2, y0, t, f, func_to_minimise, jacobian)
+    return _bdf_i(2, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_3(y0, t, f, jac=None):
+def bdf_3(y0, t, f, jac=None, verbose=True):
     """
     BDF3 method
     y' = f(y, t)
@@ -86,6 +100,8 @@ def bdf_3(y0, t, f, jac=None):
     :param func f: Function with well shaped input and output
     :param jac: If given, the Jacobian of f
     :type jac: func or None, optional
+    :param verbose: If True or a string, displays a progress bar
+    :type verbose: bool or str, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
@@ -99,10 +115,10 @@ def bdf_3(y0, t, f, jac=None):
             foo = jac(u, t3)
             return np.eye(*foo.shape) - 6 * (t3 - t2) * foo / 11
 
-    return _bdf_i(3, y0, t, f, func_to_minimise, jacobian)
+    return _bdf_i(3, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_4(y0, t, f, jac=None):
+def bdf_4(y0, t, f, jac=None, verbose=True):
     """
     BDF4 method
     y' = f(y, t)
@@ -113,6 +129,8 @@ def bdf_4(y0, t, f, jac=None):
     :param func f: Function with well shaped input and output
     :param jac: If given, the Jacobian of f
     :type jac: func or None, optional
+    :param verbose: If True or a string, displays a progress bar
+    :type verbose: bool or str, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
@@ -126,10 +144,10 @@ def bdf_4(y0, t, f, jac=None):
             foo = jac(u, t4)
             return np.eye(*foo.shape) - 12 * (t4 - t3) * foo / 25
 
-    return _bdf_i(4, y0, t, f, func_to_minimise, jacobian)
+    return _bdf_i(4, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_5(y0, t, f, jac=None):
+def bdf_5(y0, t, f, jac=None, verbose=True):
     """
     BDF5 method
     y' = f(y, t)
@@ -140,6 +158,8 @@ def bdf_5(y0, t, f, jac=None):
     :param func f: Function with well shaped input and output
     :param jac: If given, the Jacobian of f
     :type jac: func or None, optional
+    :param verbose: If True or a string, displays a progress bar
+    :type verbose: bool or str, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
@@ -154,10 +174,10 @@ def bdf_5(y0, t, f, jac=None):
             foo = jac(u, t5)
             return np.eye(*foo.shape) - 60 * (t5 - t4) * foo / 137
 
-    return _bdf_i(5, y0, t, f, func_to_minimise, jacobian)
+    return _bdf_i(5, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_6(y0, t, f, jac=None):
+def bdf_6(y0, t, f, jac=None, verbose=True):
     """
     BDF6 method
     y' = f(y, t)
@@ -168,6 +188,8 @@ def bdf_6(y0, t, f, jac=None):
     :param func f: Function with well shaped input and output
     :param jac: If given, the Jacobian of f
     :type jac: func or None, optional
+    :param verbose: If True or a string, displays a progress bar
+    :type verbose: bool or str, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
 
@@ -182,7 +204,7 @@ def bdf_6(y0, t, f, jac=None):
             foo = jac(u, t6)
             return np.eye(*foo.shape) - 60 * (t6 - t5) * foo / 147
 
-    return _bdf_i(6, y0, t, f, func_to_minimise, jacobian)
+    return _bdf_i(6, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
 if __name__ == '__main__':
