@@ -1,11 +1,11 @@
 import numpy as np
-from spatial.method import SpatialMethod
+from spatial.method import _SpatialMethod
 
 
 # TODO: Write jac(self, y, t)
 # TODO: Write the doc
 
-class SpectralDifferenceMethod(SpatialMethod):
+class SpectralDifferenceMethod(_SpatialMethod):
     """
 
     """

@@ -1,8 +1,8 @@
 import numpy as np
-from spatial.method import SpatialMethod
+from spatial.method import _SpatialMethod
 
 
-class FiniteDifferenceMethod(SpatialMethod):
+class FiniteDifferenceMethod(_SpatialMethod):
     r"""
     Upwind (as regard of the convection speed) scheme for convection flux,
     with a periodic boundary condition.
