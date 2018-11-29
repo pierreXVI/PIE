@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.optimize
 import warnings
-from rk import rk_4
+from temporal.rk import rk_4
 
 
 def _bdf_i(i, y0, t, f, func_to_minimise, jac):

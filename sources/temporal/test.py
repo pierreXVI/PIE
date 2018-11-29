@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import rk
-import bdf
-import exp_rk
+from temporal import rk
+from temporal import bdf
 
 
 def compare_methods(pb, h, t_max):
@@ -78,7 +77,7 @@ def compare_methods_2d(pb, h, t_max):
 
 
 METHODS = (
-    rk.rk_1,
+    # rk.rk_1,
     rk.rk_2,
     rk.rk_4,
     bdf.bdf_1,
