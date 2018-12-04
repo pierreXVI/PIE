@@ -21,8 +21,8 @@ for an explicit right hand side, and the package ``spatial`` is used to compute 
    :maxdepth: 2
    :caption: Contents:
    
-   temporal.rst
-   spatial.rst
+   temporal/temporal.rst
+   spatial/spatial.rst
 
 
 
