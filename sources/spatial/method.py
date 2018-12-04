@@ -11,7 +11,7 @@ class _SpatialMethod(object):
 
     :ivar array_like mesh: The mesh, an array of size `n_cell + 1`
     :ivar int n_cell: The number of cells
-    :ivar int order: The number of solution points inside a cell
+    :ivar int order: The degree of the interpolating polynomial
     :ivar int n_pts: The total number of solution points, is equal to `n_cell` \* `p`
     :ivar float c: The convection parameter
     :ivar numpy.ndarray cell: The repartition of the solution points inside a [-1, 1] cell
