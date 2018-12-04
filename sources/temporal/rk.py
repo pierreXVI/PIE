@@ -106,52 +106,51 @@ def rk_4(y0, t, f, verbose=True):
     return y
 
 
-def rk_butcher(y0, t, f, a, b, verbose=True):
+def rk_butcher(a, b):
     """
     Generic RK method, using a Butcher tableau (*a*, *b*, *c*)
 
     The *c* array is deduced from the *a* and the *b* array so that the method is consistent:
     :math:`c_{i}=\sum _{k=0}^{i-1}a_{ik}`
 
-    :param array_like y0: Initial value, may be multi-dimensional of size d
-    :param 1D_array t: Array of time steps, of size n
-    :param func f: Function with well shaped input and output
     :param 2D_array a: The *a* array of the Butcher tableau
     :param 2D_array b: The *b* array of the Butcher tableau
-    :param verbose: If True or a string, displays a progress bar
-    :type verbose: bool or str, optional
-    :return: numpy.ndarray - The solution, of shape (n, d)
+    :return: func - the wanted Runge Kutta method
     """
     q = a.shape[0]
     c = np.array([np.sum(a[i, :i]) for i in range(q)])
-    try:
-        n, d = len(t), len(y0)
-        y = np.zeros((n, d))
-        p = np.zeros((q, d))
-    except TypeError:
-        n = len(t)
-        y = np.zeros((n,))
-        p = np.zeros((q,))
-    if verbose is False:
-        count = Counter('', 0)
-    elif verbose is True:
-        count = Counter('RK_butcher', n)
-    else:
-        count = Counter(verbose, n)
-    y[0] = y0
-    for i in range(n - 1):
-        h = t[i + 1] - t[i]
-        for j in range(q):
-            if p.ndim > 1:
-                p[j] = f(y[i] + h * np.sum(a[j, :j, None] * p[:j], axis=0), t[i] + h * c[j])
-            else:
-                p[j] = f(y[i] + h * np.sum(a[j, :j] * p[:j]), t[i] + h * c[j])
-        if p.ndim > 1:
-            y[i + 1] = y[i] + h * np.sum(b[:, None] * p, axis=0)
+
+    def rk_method(y0, t, f, verbose=True):
+        try:
+            n, d = len(t), len(y0)
+            y = np.zeros((n, d))
+            p = np.zeros((q, d))
+        except TypeError:
+            n = len(t)
+            y = np.zeros((n,))
+            p = np.zeros((q,))
+        if verbose is False:
+            count = Counter('', 0)
+        elif verbose is True:
+            count = Counter('RK_butcher', n)
         else:
-            y[i + 1] = y[i] + h * np.sum(b * p)
-        count(i + 1)
-    return y
+            count = Counter(verbose, n)
+        y[0] = y0
+        for i in range(n - 1):
+            h = t[i + 1] - t[i]
+            for j in range(q):
+                if p.ndim > 1:
+                    p[j] = f(y[i] + h * np.sum(a[j, :j, None] * p[:j], axis=0), t[i] + h * c[j])
+                else:
+                    p[j] = f(y[i] + h * np.sum(a[j, :j] * p[:j]), t[i] + h * c[j])
+            if p.ndim > 1:
+                y[i + 1] = y[i] + h * np.sum(b[:, None] * p, axis=0)
+            else:
+                y[i + 1] = y[i] + h * np.sum(b * p)
+            count(i + 1)
+        return y
+
+    return rk_method
 
 
 A_RK4 = np.array([[0., 0., 0, 0],
