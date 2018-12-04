@@ -22,8 +22,8 @@ def _bdf_i(i, y0, t, f, func_to_minimise, jac, verbose):
 
     y[:i] = rk_4(y0, t[:i], f, verbose=False)
     for k in range(n - i):
-        result = scipy.optimize.root(func_to_minimise, y[k + i - 1],
-                                     args=(t[k + i - 1], t[k + i], *y[k:k + i]), jac=jac)
+        result = scipy.optimize.root(func_to_minimise, y[k + i - 1], jac=jac,
+                                     args=tuple([t[k + i - 1], t[k + i]] + [y[k + j] for j in range(i)]))
         if not result.success:
             warnings.warn(result.message)
         y[k + i] = result.x
@@ -31,11 +31,9 @@ def _bdf_i(i, y0, t, f, func_to_minimise, jac, verbose):
     return y
 
 
-def bdf_1(y0, t, f, jac=None, verbose=True):
+def bdf_1(y0, t, f, verbose=True, jac=None, **_):
     """
     BDF1 or Implicit Euler method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -53,18 +51,16 @@ def bdf_1(y0, t, f, jac=None, verbose=True):
     if jac is None:
         jacobian = None
     else:
-        def jacobian(u, t0, t1, *args):
+        def jacobian(u, t0, t1, *_):
             foo = jac(u, t1)
             return np.eye(*foo.shape) - (t1 - t0) * foo
 
     return _bdf_i(1, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_2(y0, t, f, jac=None, verbose=True):
+def bdf_2(y0, t, f, verbose=True, jac=None, **_):
     """
     BDF2 method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -82,18 +78,16 @@ def bdf_2(y0, t, f, jac=None, verbose=True):
     if jac is None:
         jacobian = None
     else:
-        def jacobian(u, t1, t2, *args):
+        def jacobian(u, t1, t2, *_):
             foo = jac(u, t2)
             return np.eye(*foo.shape) - 2 * (t2 - t1) * foo / 3
 
     return _bdf_i(2, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_3(y0, t, f, jac=None, verbose=True):
+def bdf_3(y0, t, f, verbose=True, jac=None, **_):
     """
     BDF3 method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -111,18 +105,16 @@ def bdf_3(y0, t, f, jac=None, verbose=True):
     if jac is None:
         jacobian = None
     else:
-        def jacobian(u, t2, t3, *args):
+        def jacobian(u, t2, t3, *_):
             foo = jac(u, t3)
             return np.eye(*foo.shape) - 6 * (t3 - t2) * foo / 11
 
     return _bdf_i(3, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_4(y0, t, f, jac=None, verbose=True):
+def bdf_4(y0, t, f, verbose=True, jac=None, **_):
     """
     BDF4 method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -140,18 +132,16 @@ def bdf_4(y0, t, f, jac=None, verbose=True):
     if jac is None:
         jacobian = None
     else:
-        def jacobian(u, t3, t4, *args):
+        def jacobian(u, t3, t4, *_):
             foo = jac(u, t4)
             return np.eye(*foo.shape) - 12 * (t4 - t3) * foo / 25
 
     return _bdf_i(4, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_5(y0, t, f, jac=None, verbose=True):
+def bdf_5(y0, t, f, verbose=True, jac=None, **_):
     """
     BDF5 method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -170,18 +160,16 @@ def bdf_5(y0, t, f, jac=None, verbose=True):
     if jac is None:
         jacobian = None
     else:
-        def jacobian(u, t4, t5, *args):
+        def jacobian(u, t4, t5, *_):
             foo = jac(u, t5)
             return np.eye(*foo.shape) - 60 * (t5 - t4) * foo / 137
 
     return _bdf_i(5, y0, t, f, func_to_minimise, jacobian, verbose)
 
 
-def bdf_6(y0, t, f, jac=None, verbose=True):
+def bdf_6(y0, t, f, verbose=True, jac=None, **_):
     """
     BDF6 method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -200,7 +188,7 @@ def bdf_6(y0, t, f, jac=None, verbose=True):
     if jac is None:
         jacobian = None
     else:
-        def jacobian(u, t5, t6, *args):
+        def jacobian(u, t5, t6, *_):
             foo = jac(u, t6)
             return np.eye(*foo.shape) - 60 * (t6 - t5) * foo / 147
 

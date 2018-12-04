@@ -2,11 +2,9 @@ import numpy as np
 from temporal.commons import Counter
 
 
-def rk_1(y0, t, f, verbose=True):
+def rk_1(y0, t, f, verbose=True, **_):
     """
     RK1 or Explicit Euler method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -34,11 +32,9 @@ def rk_1(y0, t, f, verbose=True):
     return y
 
 
-def rk_2(y0, t, f, verbose=True):
+def rk_2(y0, t, f, verbose=True, **_):
     """
     RK2 or midpoint method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -69,11 +65,9 @@ def rk_2(y0, t, f, verbose=True):
     return y
 
 
-def rk_4(y0, t, f, verbose=True):
+def rk_4(y0, t, f, verbose=True, **_):
     """
     RK4 method
-    y' = f(y, t)
-    y(t[0]) = y0
 
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
@@ -120,7 +114,17 @@ def rk_butcher(a, b):
     q = a.shape[0]
     c = np.array([np.sum(a[i, :i]) for i in range(q)])
 
-    def rk_method(y0, t, f, verbose=True):
+    def rk_method(y0, t, f, verbose=True, **_):
+        """
+        RK method from given Butcher tableau
+
+        :param array_like y0: Initial value, may be multi-dimensional of size d
+        :param 1D_array t: Array of time steps, of size n
+        :param func f: Function with well shaped input and output
+        :param verbose: If True or a string, displays a progress bar
+        :type verbose: bool or str, optional
+        :return: numpy.ndarray - The solution, of shape (n, d)
+        """
         try:
             n, d = len(t), len(y0)
             y = np.zeros((n, d))

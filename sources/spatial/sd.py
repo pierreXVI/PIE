@@ -28,7 +28,7 @@ class SpectralDifferenceMethod(_SpatialMethod):
             for j in range(self.p + 1):
                 self.d_in_flux[i, j] = d_lagrange(self.flux_pts[i], self.flux_pts, j)
 
-        self.d_in_flux_to_sol = self.flux_to_sol @ self.d_in_flux
+        self.d_in_flux_to_sol = np.dot(self.flux_to_sol, self.d_in_flux)
 
     def rhs(self, y, t):
         flux_in_flux_point = np.zeros((self.n_cell, self.p + 1))
@@ -37,7 +37,7 @@ class SpectralDifferenceMethod(_SpatialMethod):
         # Getting solution in sol points then the flux in flux points
         for i in range(self.n_cell):
             sol_in_sol_point = y[i * self.p:(i + 1) * self.p] * 2 / (self.mesh[i + 1] - self.mesh[i])
-            flux_in_flux_point[i] = -self.c * (self.sol_to_flux @ sol_in_sol_point)
+            flux_in_flux_point[i] = -self.c * (np.dot(self.sol_to_flux, sol_in_sol_point))
 
         # Ensuring the flux continuity
         for i in range(self.n_cell):
@@ -48,7 +48,7 @@ class SpectralDifferenceMethod(_SpatialMethod):
 
         # Getting the rhs in sol points
         for i in range(self.n_cell):
-            rhs_in_sol_point[i] = self.d_in_flux_to_sol @ flux_in_flux_point[i]
+            rhs_in_sol_point[i] = np.dot(self.d_in_flux_to_sol, flux_in_flux_point[i])
 
         return rhs_in_sol_point.reshape(y.shape)
 

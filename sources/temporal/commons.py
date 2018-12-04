@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 
 
@@ -30,6 +31,8 @@ class Counter:
         try:
             terminal_width = os.get_terminal_size()[0]
         except OSError:
+            terminal_width = 80
+        except AttributeError:
             terminal_width = 80
         bar_width = terminal_width + -len(self.name) - 10
         print('\r{0} - |{1:<{bar_width}}| {2:=4.0%}'
