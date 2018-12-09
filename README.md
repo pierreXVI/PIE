@@ -10,7 +10,7 @@ This module can be installed either from a local or from a remote version of the
 
 Add the `-e` option to install in editable mode.
 
-#####Without `pip`:
+##### Without `pip`:
 
 - `python install /path/to/local/repository/setup.py install`
 
