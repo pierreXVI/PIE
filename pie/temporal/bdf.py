@@ -1,8 +1,8 @@
 import numpy as np
 import scipy.optimize
 import warnings
-from temporal.rk import rk_4
-from temporal.commons import Counter
+from pie.temporal.rk import rk_4
+from pie.temporal.commons import Counter
 
 
 def _bdf_i(i, y0, t, f, func_to_minimise, jac, verbose):

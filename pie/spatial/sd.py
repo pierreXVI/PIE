@@ -1,5 +1,5 @@
 import numpy as np
-from spatial.method import _SpatialMethod
+from pie.spatial.method import _SpatialMethod
 
 
 # TODO: Write jac(self, y, t)

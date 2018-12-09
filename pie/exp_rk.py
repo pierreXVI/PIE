@@ -1,5 +1,5 @@
 import numpy as np
-import utils
+from . import utils
 
 
 def exp_euler(y0, t, f):

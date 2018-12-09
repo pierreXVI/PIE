@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from temporal import rk
-from temporal import bdf
+from pie.temporal import rk, bdf
 
 
 def compare_methods(pb, h, t_max):

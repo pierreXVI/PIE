@@ -1,5 +1,5 @@
 import numpy as np
-from temporal.commons import Counter
+from pie.temporal.commons import Counter
 
 
 def rk_1(y0, t, f, verbose=True, **_):
