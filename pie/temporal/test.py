@@ -77,9 +77,9 @@ def compare_methods_2d(pb, h, t_max):
 
 
 METHODS = (
-    # rk.rk_1,
-    # rk.rk_2,
-    # rk.rk_4,
+    rk.rk_1,
+    rk.rk_2,
+    rk.rk_4,
     rk.rk_butcher(rk.A_RK4, rk.B_RK4),
     # bdf.bdf_1,
     # bdf.bdf_2,
@@ -117,7 +117,8 @@ pb2d_1 = (lambda y, t: np.array([y[1], -y[0]]),
           np.array([1, 0]))
 r"""
 Harmonic problem :
-:math:`\left\{\begin{aligned}\ddot{y} + y &= 0 \\\left(y, \dot{y}\right)_{t = 0} &= \left(1, 0\right)\end{aligned}\right.`
+:math:`\left\{\begin{aligned}\ddot{y} + y &= 0 \\
+\left(y, \dot{y}\right)_{t = 0} &= \left(1, 0\right)\end{aligned}\right.`
 with :math:`y = \cos\left(t\right)` as solution
 
 """

@@ -10,11 +10,11 @@ class SpectralDifferenceMethod(_SpatialMethod):
 
     """
 
-    def __init__(self, mesh, order, conv):
-        super(SpectralDifferenceMethod, self).__init__(mesh, order, conv)
+    def __init__(self, mesh, p, conv):
+        super(SpectralDifferenceMethod, self).__init__(mesh, p, conv)
 
         # Setting the solution points in a [-1, 1] cell as the Legendre roots
-        self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots(order * [0] + [1]), 1))
+        self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots((self.p - 1) * [0] + [1]), 1))
 
         # Setting the needed matrices
         self.sol_to_flux = np.zeros((self.p + 1, self.p))
@@ -100,16 +100,3 @@ def d_lagrange(x, interpolation_points, i):
     for k in range(len(foo)):
         val += np.prod(x - np.delete(foo, k))
     return val / np.prod(interpolation_points[i] - foo)
-
-
-if __name__ == '__main__':
-    n = 5
-    p = 2
-    c = 1
-    L = 1
-    mesh1 = np.linspace(0, L, n + 1)
-
-    method = SpectralDifferenceMethod(mesh1, p, c)
-
-    y0 = np.sin(2 * np.pi * method.x / L)
-    method.rhs(y0, 0)

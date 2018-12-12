@@ -2,7 +2,7 @@
 Methods plot tests
 ==================
 
-.. automodule:: temporal.test
+.. automodule:: pie.temporal.test
    :members: compare_methods, compare_methods_2d
 
 .. autodata:: temporal.test.METHODS

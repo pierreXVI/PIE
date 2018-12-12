@@ -17,7 +17,7 @@ The temporal method is a function used to solve the equation for a given right h
    :param func f: Function with well shaped input and output
    :param verbose: If True or a string, displays a progress bar
    :type verbose: bool or str, optional
-   :param **kwargs: More optional keyword arguments that might be needed
+   :param \*\*kwargs: More optional keyword arguments that might be needed
    :return: numpy.ndarray - The solution, of shape (n, d)
 
 .. toctree::

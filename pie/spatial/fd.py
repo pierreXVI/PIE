@@ -19,8 +19,8 @@ class FiniteDifferenceMethod(_SpatialMethod):
     :ivar array_like jac: The constant jacobian
     """
 
-    def __init__(self, mesh, order, conv):
-        super(FiniteDifferenceMethod, self).__init__(mesh, order, conv)
+    def __init__(self, mesh, p, conv):
+        super(FiniteDifferenceMethod, self).__init__(mesh, p, conv)
 
         # Setting the RHS jacobian, constant here
         if self.c < 0:
@@ -56,12 +56,3 @@ class FiniteDifferenceMethod(_SpatialMethod):
     def __repr__(self):
         foo = "Finite difference " + super(FiniteDifferenceMethod, self).__repr__()
         return foo
-
-
-if __name__ == '__main__':
-    n = 100
-    order = 3
-    c = 1
-    mesh1 = np.linspace(0, 10, n)
-    method = FiniteDifferenceMethod(mesh1, order, c)
-    print(method)
