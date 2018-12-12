@@ -7,7 +7,17 @@ from pie.spatial.method import _SpatialMethod
 
 class SpectralDifferenceMethod(_SpatialMethod):
     """
+    Spatial scheme for convection flux, with a periodic boundary condition, using the spectral difference method.
 
+    This method uses p + 1 flux points in the [-1, 1] cell, computed as the Legendre polynomial roots.
+    This method gives a linear right hand side so it has a constant jacobian, stored as a private attribute.
+
+    :ivar array_like flux_pts: The repartition of the flux points inside a [-1, 1] cell
+    :ivar array_like sol_to_flux: The extrapolation matrix, from sol points to flux points, of size `(p + 1, p)`
+    :ivar array_like flux_to_sol: The interpolation matrix, from flux points to sol points, of size `(p, p + 1)`
+    :ivar array_like d_in_flux: Matrix of the derivative operator in the flux points basis, of size `(p + 1, p + 1)`
+    :ivar array_like d_in_flux_to_sol: `flux_to_sol` x `d_in_flux`
+    :ivar array_like jac: The constant jacobian
     """
 
     def __init__(self, mesh, p, conv):
@@ -27,10 +37,30 @@ class SpectralDifferenceMethod(_SpatialMethod):
         for i in range(self.p + 1):
             for j in range(self.p + 1):
                 self.d_in_flux[i, j] = d_lagrange(self.flux_pts[i], self.flux_pts, j)
-
         self.d_in_flux_to_sol = np.dot(self.flux_to_sol, self.d_in_flux)
 
+        sol_to_flux = np.zeros((self.n_cell * (self.p + 1), self.n_cell * self.p))
+        d_in_flux_to_sol = np.zeros((self.n_cell * self.p, self.n_cell * (self.p + 1)))
+        for i in range(self.n_cell):
+            index_flux = slice(i * (self.p + 1), (i + 1) * (self.p + 1))
+            inex_sol = slice(i * self.p, (i + 1) * self.p)
+            sol_to_flux[index_flux, inex_sol] = self.sol_to_flux * 2 / (self.mesh[i + 1] - self.mesh[i])
+            d_in_flux_to_sol[inex_sol, index_flux] = self.d_in_flux_to_sol
+
+        continuity = np.eye(self.n_cell * (self.p + 1))
+        if self.c > 0:
+            for i in range(self.n_cell):
+                continuity[i * (self.p + 1), i * (self.p + 1)] = 0
+                continuity[i * (self.p + 1), i * (self.p + 1) - 1] = 1
+        else:
+            for i in range(self.n_cell):
+                continuity[i * (self.p + 1) - 1, i * (self.p + 1) - 1] = 0
+                continuity[i * (self.p + 1) - 1, i * (self.p + 1)] = 1
+
+        self._jac = -self.c * np.dot(np.dot(d_in_flux_to_sol, continuity), sol_to_flux)
+
     def rhs(self, y, t):
+        """
         flux_in_flux_point = np.zeros((self.n_cell, self.p + 1))
         rhs_in_sol_point = np.zeros((self.n_cell, self.p))
 
@@ -51,9 +81,11 @@ class SpectralDifferenceMethod(_SpatialMethod):
             rhs_in_sol_point[i] = np.dot(self.d_in_flux_to_sol, flux_in_flux_point[i])
 
         return rhs_in_sol_point.reshape(y.shape)
+        """
+        return np.dot(self._jac, y)
 
     def jac(self, y, t):
-        pass
+        return self._jac
 
     def __repr__(self):
         foo = "Spectral difference " + super(SpectralDifferenceMethod, self).__repr__()
