@@ -1,3 +1,4 @@
+from __future__ import print_function
 import matplotlib.pyplot as plt
 import numpy as np
 from pie.temporal import rk, bdf
@@ -78,18 +79,14 @@ def compare_methods_2d(pb, h, t_max):
 METHODS = (
     # rk.rk_1,
     # rk.rk_2,
-    rk.rk_4,
-    lambda y0, t, f: rk.rk_butcher(y0, t, f, rk.A_RK4, rk.B_RK4),
+    # rk.rk_4,
+    rk.rk_butcher(rk.A_RK4, rk.B_RK4),
     # bdf.bdf_1,
     # bdf.bdf_2,
     # bdf.bdf_3,
     # bdf.bdf_4,
     # bdf.bdf_5,
     # bdf.bdf_6,
-    # implex.euler_implex,
-    # implex.implex_2
-    # exp_rk.exp_euler,
-    # exp_rk.exp_rosen
 )
 """The methods that are going to be tested"""
 
@@ -141,9 +138,9 @@ with :math:`y = \cos\left(t\right)` as solution
 """
 
 if __name__ == '__main__':
-    compare_methods(pb_1, t_max=10, h=0.1)
-    compare_methods(pb_2, t_max=30, h=0.1)
-    compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
-    compare_methods_2d(pb2d_2, t_max=100, h=0.1)
+    # compare_methods(pb_1, t_max=10, h=0.1)
+    # compare_methods(pb_2, t_max=30, h=0.1)
+    # compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
+    compare_methods_2d(pb2d_2, t_max=10000, h=0.1)
 
     pass

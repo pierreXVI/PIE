@@ -163,5 +163,5 @@ A_RK4 = np.array([[0., 0., 0, 0],
                   [.0, 0., 1, 0]])
 """The *a* array for the RK4 Butcher tableau"""
 
-B_RK4 = np.array([1 / 6, 1 / 3, 1 / 3, 1 / 6])
+B_RK4 = np.array([1. / 6, 1. / 3, 1. / 3, 1. / 6])
 """The *b* array for the RK4 Butcher tableau"""
