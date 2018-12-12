@@ -17,7 +17,7 @@ class SpectralDifferenceMethod(_SpatialMethod):
     :ivar array_like flux_to_sol: The interpolation matrix, from flux points to sol points, of size `(p, p + 1)`
     :ivar array_like d_in_flux: Matrix of the derivative operator in the flux points basis, of size `(p + 1, p + 1)`
     :ivar array_like d_in_flux_to_sol: `flux_to_sol` x `d_in_flux`
-    :ivar array_like jac: The constant jacobian
+    :ivar array_like _jac: The constant jacobian
     """
 
     def __init__(self, mesh, p, conv):
