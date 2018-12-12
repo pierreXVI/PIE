@@ -16,7 +16,7 @@ class FiniteDifferenceMethod(_SpatialMethod):
 
     This method gives a linear right hand side so it has a constant jacobian, stored as a private attribute.
 
-    :ivar array_like jac: The constant jacobian
+    :ivar array_like _jac: The constant jacobian
     """
 
     def __init__(self, mesh, p, conv):

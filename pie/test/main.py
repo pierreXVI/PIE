@@ -5,14 +5,14 @@ from pie import temporal
 from pie import spatial
 
 
-def solve(n, x_max, order, c, cfl, n_period, init_cond, spatial_method, temporal_method):
+def solve(n, x_max, p, c, cfl, n_period, init_cond, spatial_method, temporal_method):
     # Spatial
     mesh = np.linspace(0, x_max, n + 1)
-    method = spatial_method(mesh, order, c)
+    method = spatial_method(mesh, p, c)
 
     # Temporal
-    dt = cfl * method.dx[0] / c
-    t = np.append(np.arange(0, n_period * x_max / c, dt), n_period * x_max / c)
+    dt = cfl * method.dx[0] / abs(c)
+    t = np.append(np.arange(0, n_period * x_max / abs(c), dt), n_period * x_max / abs(c))
 
     # Initial condition
     x = method.x
@@ -86,9 +86,9 @@ def compare_spatial_order(n_min, x_max, order_max, c, dt, n_period, init_cond, s
 
 
 if __name__ == '__main__':
-    solve(n=50, x_max=1, order=2, c=1, cfl=1, n_period=1,
+    solve(n=50, x_max=1, p=4, c=-1, cfl=1, n_period=1,
           init_cond=initial_condition.sine(2),
-          spatial_method=spatial.FiniteDifferenceMethod, temporal_method=temporal.rk_1)
+          spatial_method=spatial.SpectralDifferenceMethod, temporal_method=temporal.rk_4)
     # compare_spatial_order(n_min=20, x_max=1, order_max=5, c=1, dt=1E-3, n_period=2,
     #                       initial_condition=test.initial_condition.sine(2),
     #                       spatial_method=spatial.SpectralDifferenceMethod, temporal_method=temporal.rk_4)
