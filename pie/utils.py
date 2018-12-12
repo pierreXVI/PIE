@@ -20,8 +20,8 @@ def phi_1(z, eps=1E-12):
     If z is invertible, phi_1(z) = (exp(z) - Id) . z^-1
     Else, phi_1(z) = \sum_{n \gt 0} z^n/(n + 1)!
 
-    :param z: array_like
-    :param eps: Convergence criteria used by to approximate the function
+    :param array_like z:
+    :param float eps: Convergence criteria used by to approximate the function
     :return: phi_1(z)
     """
     if type(z) == np.ndarray:

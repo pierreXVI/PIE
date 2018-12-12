@@ -2,5 +2,5 @@
 Stability analysis
 ==================
 
-.. automodule:: stability
+.. automodule:: temporal.stability
    :members:

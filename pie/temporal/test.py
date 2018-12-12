@@ -1,20 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import rk
-import bdf
-import exp_rk
+from pie.temporal import rk, bdf
 
 
 def compare_methods(pb, h, t_max):
     r"""
     Compare methods in ``METHODS``
 
-    :param pb: tuple -
-        The problem to solve : y' = pb[0](y, t) with y = pb[1] as solution
-    :param h: float -
-        The time step
-    :param t_max: float -
-        Solve on [0, t_max]
+    :param tuple pb: The problem to solve : y' = pb[0](y, t) with y = pb[1] as solution
+    :param float h: The time step
+    :param float t_max: Solve on [0, t_max]
     """
     fig = plt.figure()
     ax1 = fig.add_subplot(211)
@@ -48,12 +43,9 @@ def compare_methods_2d(pb, h, t_max):
     r"""
     Compare methods in ``METHODS`` on a 2D problem
 
-    :param pb: tuple -
-        The problem to solve : [y, y']' = pb[0]([y, y'], t) with y = pb[1] as solution and [y, y'](0) = pb[2]
-    :param h: float -
-        The time step
-    :param t_max: float -
-        Solve on [0, t_max]
+    :param tuple pb: The problem to solve : [y, y']' = pb[0]([y, y'], t) with y = pb[1] as solution and [y, y'](0) = pb[2]
+    :param float h: The time step
+    :param float t_max: Solve on [0, t_max]
     """
     fig = plt.figure()
     ax1 = fig.add_subplot(211)
@@ -84,15 +76,16 @@ def compare_methods_2d(pb, h, t_max):
 
 
 METHODS = (
-    rk.rk_1,
-    rk.rk_2,
+    # rk.rk_1,
+    # rk.rk_2,
     rk.rk_4,
-    bdf.bdf_1,
-    bdf.bdf_2,
-    bdf.bdf_3,
-    bdf.bdf_4,
-    bdf.bdf_5,
-    bdf.bdf_6,
+    lambda y0, t, f: rk.rk_butcher(y0, t, f, rk.A_RK4, rk.B_RK4),
+    # bdf.bdf_1,
+    # bdf.bdf_2,
+    # bdf.bdf_3,
+    # bdf.bdf_4,
+    # bdf.bdf_5,
+    # bdf.bdf_6,
     # implex.euler_implex,
     # implex.implex_2
     # exp_rk.exp_euler,
@@ -148,9 +141,9 @@ with :math:`y = \cos\left(t\right)` as solution
 """
 
 if __name__ == '__main__':
-    # compare_methods(pb_1, t_max=10, h=0.1)
-    compare_methods(pb_2, t_max=300, h=0.1)
-    # compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
-    # compare_methods_2d(pb2d_2, t_max=100, h=0.1)
+    compare_methods(pb_1, t_max=10, h=0.1)
+    compare_methods(pb_2, t_max=30, h=0.1)
+    compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
+    compare_methods_2d(pb2d_2, t_max=100, h=0.1)
 
     pass

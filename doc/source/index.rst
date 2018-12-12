@@ -6,22 +6,23 @@
 Welcome to PIE's documentation!
 ===============================
 
-The different methods are used to solve the ODE:
+The packages documented here are used to solve the PDE:
 
 .. math::
    \left\{\begin{aligned}
-    \dot{y}\left(t\right) &= f\left(y, t\right) \\
+    \dot{y}\left(t\right) &= RHS\left(y, t\right) \\
     y\left(t_0\right) &= y_0
    \end{aligned}\right.
+
+The package ``temporal`` is used to solve :math:`\dot{y}\left(t\right) = f\left(y, t\right)`
+for an explicit right hand side, and the package ``spatial`` is used to compute a right hand side with x-derivatives.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
    
-   rk.rst
-   bdf.rst
-   stability.rst
-   test.rst
+   temporal/temporal.rst
+   spatial/spatial.rst
 
 
 
