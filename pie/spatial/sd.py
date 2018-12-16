@@ -2,9 +2,6 @@ import numpy as np
 from pie.spatial.method import _SpatialMethod
 
 
-# TODO: Write jac(self, y, t)
-# TODO: Write the doc
-
 class SpectralDifferenceMethod(_SpatialMethod):
     """
     Spatial scheme for convection flux, with a periodic boundary condition, using the spectral difference method.
@@ -132,3 +129,20 @@ def d_lagrange(x, interpolation_points, i):
     for k in range(len(foo)):
         val += np.prod(x - np.delete(foo, k))
     return val / np.prod(interpolation_points[i] - foo)
+
+
+def lagrange_extrapolation(x, y, x_new):
+    """
+    Evaluate in x_new the Lagrange interpolation polynomial on the points (x, y)
+    Returns :math:`L\left(x\_new\right)` where :math:`L\left(x_i\right) = y_i`
+
+    :param array_like x:
+    :param array_like y:
+    :param array_like x_new:
+    :return: array_like
+    """
+
+    y_new = np.zeros(x_new.shape)
+    for i in range(len(x)):
+        y_new += np.array([y[i] * lagrange(s, x, i) for s in x_new])
+    return y_new
