@@ -193,7 +193,3 @@ def bdf_6(y0, t, f, verbose=True, jac=None, **_):
             return np.eye(*foo.shape) - 60 * (t6 - t5) * foo / 147
 
     return _bdf_i(6, y0, t, f, func_to_minimise, jacobian, verbose)
-
-
-if __name__ == '__main__':
-    pass
