@@ -2,18 +2,25 @@ import math
 
 import numpy as np
 import scipy as sc
+import matplotlib.pyplot as plt
 from scipy import misc
 from pie import utils
+from pie import exp_rk
 
-#global u0
-#u0=1
+def sol_exa(t,u0,t0):
+   # res = np.zeros(len(t))
+   # for i in range(len(t)):
+        #res[i] = u0/(1+u0*(t[i]-t0))
+        #
+    return u0*np.exp((t-t0)) #res
 
 def f(u, t):
-    return u^2
+    #return -u
+    return u
+    #return u*u    
 
 def jacf(u, t):
-    return  2*u #jacobian(f,u,t,eps=1E-5)
-    
+    return utils.jacobian(f,u0,t0, eps=1E-5)
 
 def dfdt(u, t):
     return 0
@@ -48,7 +55,7 @@ def expanded_matrix(u0, t0, f, jacf, dfdt, p=2):
     fi[:, 0] = f(u0, t0) - np.dot(a0,u0)
     # ji[:, :, 0] c deja 0
     wi[:, 0] = fi[:, 0]
-    wi[:, 1] = ji[:, :, 0]*fi[:, 0] + dfdt(u0, t0) # partielle(dg/du)*du/dt + partielle(dg/dt)
+    wi[:, 1] = ji[:, :, 0]*fi[:, 0] + dfdt(u0, t0)     # partielle(dg/du)*du/dt + partielle(dg/dt)
 
     for i in range(p - 1):
         W[:, i] = wi[:, i]
@@ -93,8 +100,26 @@ def expanded_method(u0, t0, f, jacf, dfdt, h, p=2):
 if __name__ == '__main__':
     pass
     # test_phi_1()
-     #test_jacobian()
-    print(expanded_matrix(1, 0, f, jacf, dfdt))
-    print(expanded_vector(1))
-    print(expanded_method(1, 0, f, jacf, dfdt, 0.01))
-    print(1/(1-0.01))
+    #test_jacobian()
+    #print(expanded_matrix(1, 0, f, jacf, dfdt))
+    #print(expanded_vector(1))
+    #print(expanded_method(1, 0, f, jacf, dfdt, 0.01))
+    #print(1/(1-0.01))
+    t0 = 0;
+    u0 = 10;
+    t = np.arange(0,10,0.1)
+
+    u_exa = sol_exa(t,u0,t0)
+
+    u_expd = np.zeros(len(t));
+    for i in range(len(t)):
+        u_expd[i]= expanded_method(u0, t0, f, jacf, dfdt, t[i]) # Méthode matrice augmenter 
+
+    u_approx = exp_rk.exp_euler(u0, t, f)   # méthode Pierre 
+    
+    plt.figure()
+    plt.plot(t,u_approx, label="u_approx", linestyle=':', color='b')
+    plt.plot(t,u_exa, label="u_exa", color='r', linestyle="-.")
+    plt.plot(t,u_expd, label="u_expd", linestyle='--',color='g')
+    plt.legend()
+    plt.show()
