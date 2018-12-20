@@ -24,13 +24,9 @@ class SpectralDifferenceMethod(_SpatialMethod):
         self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots((self.p - 1) * [0] + [1]), 1))
 
         # Setting the needed matrices
-        self.sol_to_flux = np.zeros((self.p + 1, self.p))
-        self.flux_to_sol = np.zeros((self.p, self.p + 1))
+        self.sol_to_flux = lagrange_extrapolation_matrix(self.cell, self.flux_pts)
+        self.flux_to_sol = lagrange_extrapolation_matrix(self.flux_pts, self.cell)
         self.d_in_flux = np.zeros((self.p + 1, self.p + 1))
-        for i in range(self.p):
-            for j in range(self.p + 1):
-                self.sol_to_flux[j, i] = lagrange(self.flux_pts[j], self.cell, i)
-                self.flux_to_sol[i, j] = lagrange(self.cell[i], self.flux_pts, j)
         for i in range(self.p + 1):
             for j in range(self.p + 1):
                 self.d_in_flux[i, j] = d_lagrange(self.flux_pts[i], self.flux_pts, j)
@@ -131,18 +127,18 @@ def d_lagrange(x, interpolation_points, i):
     return val / np.prod(interpolation_points[i] - foo)
 
 
-def lagrange_extrapolation(x, y, x_new):
+def lagrange_extrapolation_matrix(x, x_new):
     """
-    Evaluate in x_new the Lagrange interpolation polynomial on the points (x, y)
-    Returns :math:`L\left(x\_new\right)` where :math:`L\left(x_i\right) = y_i`
+    Returns the change of basis matrix from the Lagrange interpolation polynomial on the points x
+    to the Lagrange interpolation polynomial on the points x_new
 
     :param array_like x:
-    :param array_like y:
     :param array_like x_new:
     :return: array_like
     """
-
-    y_new = np.zeros(x_new.shape)
-    for i in range(len(x)):
-        y_new += np.array([y[i] * lagrange(s, x, i) for s in x_new])
-    return y_new
+    a, b = len(x), len(x_new)
+    foo = np.zeros((b, a))
+    for i in range(a):
+        for j in range(b):
+            foo[j, i] = lagrange(x_new[j], x, i)
+    return foo
