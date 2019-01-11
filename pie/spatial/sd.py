@@ -17,8 +17,8 @@ class SpectralDifferenceMethod(_SpatialMethod):
     :ivar array_like _jac: The constant jacobian
     """
 
-    def __init__(self, mesh, p, conv):
-        super(SpectralDifferenceMethod, self).__init__(mesh, p, conv)
+    def __init__(self, mesh, p, conv, diff):
+        super(SpectralDifferenceMethod, self).__init__(mesh, p, conv, diff)
 
         # Setting the solution points in a [-1, 1] cell as the Legendre roots
         self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots((self.p - 1) * [0] + [1]), 1))

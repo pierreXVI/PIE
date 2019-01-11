@@ -8,23 +8,26 @@ class _SpatialMethod(object):
     :param array_like mesh:
     :param int p:
     :param float conv:
+    :param float diff:
 
     :ivar array_like mesh: The mesh, an array of size `n_cell + 1`
     :ivar int n_cell: The number of cells
     :ivar int p: The number of points inside a cell
     :ivar int n_pts: The total number of solution points, is equal to `n_cell` \* `p`
     :ivar float c: The convection parameter
+    :ivar float c: The diffusion parameter
     :ivar numpy.ndarray cell: The repartition of the solution points inside a [-1, 1] cell
     :ivar numpy.ndarray x: The position of all the solution points
     :ivar tuple dx: The smallest and the biggest space steps. If they are the same, this tuple contains only one element
     """
 
-    def __init__(self, mesh, p, conv):
+    def __init__(self, mesh, p, conv, diff):
         self.mesh = mesh
         self.n_cell = len(mesh) - 1
         self.p = p
         self.n_pts = self.p * self.n_cell
         self.c = conv
+        self.d = diff
 
         # Setting the solution points in a [-1, 1] cell as the Gauss points
         self.cell = np.array([-np.cos(np.pi * (2 * i + 1) / (2 * self.p)) for i in range(self.p)])
