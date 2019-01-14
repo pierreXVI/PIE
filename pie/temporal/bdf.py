@@ -5,7 +5,7 @@ from pie.temporal.rk import rk_4
 from pie.temporal.commons import Counter
 
 
-def _bdf_i(i, y0, t, f, func_to_minimise, jac, verbose):
+def _bdf_i(i, y0, t, f, func_to_minimise, jac_func_to_minimise, verbose):
     try:
         n, d = len(t), len(y0)
         y = np.zeros((n, d))
@@ -22,7 +22,7 @@ def _bdf_i(i, y0, t, f, func_to_minimise, jac, verbose):
 
     y[:i] = rk_4(y0, t[:i], f, verbose=False)
     for k in range(n - i):
-        result = scipy.optimize.root(func_to_minimise, y[k + i - 1], jac=jac,
+        result = scipy.optimize.root(func_to_minimise, y[k + i - 1], jac=jac_func_to_minimise,
                                      args=tuple([t[k + i - 1], t[k + i]] + [y[k + j] for j in range(i)]))
         if not result.success:
             warnings.warn(result.message)
@@ -38,7 +38,7 @@ def bdf_1(y0, t, f, verbose=True, jac=None, **_):
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
     :param func f: Function with well shaped input and output
-    :param jac: If given, the Jacobian of f
+    :param jac: If given, the Jacobian of f, must return an array
     :type jac: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
@@ -65,7 +65,7 @@ def bdf_2(y0, t, f, verbose=True, jac=None, **_):
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
     :param func f: Function with well shaped input and output
-    :param jac: If given, the Jacobian of f
+    :param jac: If given, the Jacobian of f, must return an array
     :type jac: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
@@ -92,7 +92,7 @@ def bdf_3(y0, t, f, verbose=True, jac=None, **_):
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
     :param func f: Function with well shaped input and output
-    :param jac: If given, the Jacobian of f
+    :param jac: If given, the Jacobian of f, must return an array
     :type jac: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
@@ -119,7 +119,7 @@ def bdf_4(y0, t, f, verbose=True, jac=None, **_):
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
     :param func f: Function with well shaped input and output
-    :param jac: If given, the Jacobian of f
+    :param jac: If given, the Jacobian of f, must return an array
     :type jac: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
@@ -146,7 +146,7 @@ def bdf_5(y0, t, f, verbose=True, jac=None, **_):
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
     :param func f: Function with well shaped input and output
-    :param jac: If given, the Jacobian of f
+    :param jac: If given, the Jacobian of f, must return an array
     :type jac: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
@@ -174,7 +174,7 @@ def bdf_6(y0, t, f, verbose=True, jac=None, **_):
     :param array_like y0: Initial value, may be multi-dimensional of size d
     :param 1D_array t: Array of time steps, of size n
     :param func f: Function with well shaped input and output
-    :param jac: If given, the Jacobian of f
+    :param jac: If given, the Jacobian of f, must return an array
     :type jac: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
@@ -182,7 +182,13 @@ def bdf_6(y0, t, f, verbose=True, jac=None, **_):
     """
 
     def func_to_minimise(u, t5, t6, u0, u1, u2, u3, u4, u5):
-        return u - 360. * u5 / 147. + 450. * u4 / 147. - 400. * u3 / 147. + 225. * u2 / 147. - 72. * u1 / 147. + 10. * u0 / 147. \
+        return u \
+               - 360. * u5 / 147. \
+               + 450. * u4 / 147. \
+               - 400. * u3 / 147. \
+               + 225. * u2 / 147. \
+               - 72. * u1 / 147. \
+               + 10. * u0 / 147. \
                - 60 * (t6 - t5) * f(u, t6) / 147.
 
     if jac is None:
