@@ -1,7 +1,7 @@
 from __future__ import print_function
 import matplotlib.pyplot as plt
 import numpy as np
-from pie.temporal import rk, bdf
+from pie.temporal import rk, bdf, exp
 
 
 def compare_methods(pb, h, t_max):
@@ -23,12 +23,12 @@ def compare_methods(pb, h, t_max):
 
     x = np.linspace(0, t_max, int(t_max / h))
 
-    y_exact = pb[1](x)
+    y_exact = pb[2](x)
     ax1.plot(x, y_exact, c='k', label=r'$y_{exact}$')
 
     score = dict()
     for method in METHODS:
-        y = method(pb[1](0), x, pb[0])
+        y = method(pb[2](0), x, pb[0], jac=pb[1])
         color = ax1.plot(x, y, '+', label=method.__name__)[0].get_color()
         ax2.semilogy(x, abs(y - y_exact), c=color)
         score[method.__name__] = np.sum(abs(y - y_exact))
@@ -59,12 +59,12 @@ def compare_methods_2d(pb, h, t_max):
 
     x = np.linspace(0, t_max, int(t_max / h))
 
-    y_exact = pb[1](x)
+    y_exact = pb[2](x)
     ax1.plot(x, y_exact, '+-', c='k', label=r'$y_{exact}$')
 
     score = dict()
     for method in METHODS:
-        y = method(pb[2], x, pb[0])
+        y = method(pb[3], x, pb[0], jac=pb[1])
         color = ax1.plot(x, y[:, 0], '+', label=method.__name__)[0].get_color()
         ax2.semilogy(x, abs(y[:, 0] - y_exact), c=color)
         score[method.__name__] = np.sum(abs(y[:, 0] - y_exact))
@@ -78,19 +78,21 @@ def compare_methods_2d(pb, h, t_max):
 
 METHODS = (
     rk.rk_1,
-    rk.rk_2,
-    rk.rk_4,
-    rk.rk_butcher(rk.A_RK4, rk.B_RK4),
-    # bdf.bdf_1,
+    # rk.rk_2,
+    # rk.rk_4,
+    # rk.rk_butcher(rk.A_RK4, rk.B_RK4),
+    bdf.bdf_1,
     # bdf.bdf_2,
     # bdf.bdf_3,
     # bdf.bdf_4,
     # bdf.bdf_5,
     # bdf.bdf_6,
+    # exp.taylor_exp,
 )
 """The methods that are going to be tested"""
 
 pb_1 = (lambda y, t: y * (np.sin(t) ** 2),
+        lambda y, t: (np.sin(t) ** 2),
         lambda t: np.exp(t / 2 - np.sin(2 * t) / 4))
 r"""
 From the `Wikipedia article <https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods>`_ on RK methods
@@ -103,6 +105,7 @@ From the `Wikipedia article <https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_m
 """
 
 pb_2 = (lambda y, t: np.cos(t) * np.exp(np.cos(t)) - y * y * np.exp(-np.cos(t)),
+        lambda y, t: - 2 * y * np.exp(-np.cos(t)),
         lambda t: np.sin(t) * np.exp(np.cos(t)))
 r"""
 .. math::
@@ -113,6 +116,7 @@ r"""
 """
 
 pb2d_1 = (lambda y, t: np.array([y[1], -y[0]]),
+          lambda y, t: np.array([[0, 1], [-1, 0]]),
           lambda t: np.cos(t),
           np.array([1, 0]))
 r"""
@@ -124,6 +128,7 @@ with :math:`y = \cos\left(t\right)` as solution
 """
 
 pb2d_2 = (lambda y, t: np.array([y[1], -(1 + 2 * np.cos(t)) * y[0] - np.sin(t) * y[1]]),
+          lambda y, t: np.array([[0, 1], [-(1 + 2 * np.cos(t)), - np.sin(t)]]),
           lambda t: np.sin(t) * np.exp(np.cos(t)),
           np.array([0, np.e]))
 r"""
@@ -141,7 +146,7 @@ with :math:`y = \cos\left(t\right)` as solution
 if __name__ == '__main__':
     # compare_methods(pb_1, t_max=10, h=0.1)
     # compare_methods(pb_2, t_max=30, h=0.1)
-    # compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
-    compare_methods_2d(pb2d_2, t_max=10000, h=0.1)
+    compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
+    # compare_methods_2d(pb2d_2, t_max=10, h=0.01)
 
     pass
