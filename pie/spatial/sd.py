@@ -4,7 +4,8 @@ from pie.spatial.method import _SpatialMethod
 
 class SpectralDifferenceMethod(_SpatialMethod):
     """
-    Spatial scheme for convection flux, with a periodic boundary condition, using the spectral difference method.
+    Spatial scheme for convection - diffusion flux,
+    with a periodic boundary condition, using the spectral difference method.
 
     This method uses p + 1 flux points in the [-1, 1] cell, computed as the Legendre polynomial roots.
     This method gives a linear right hand side so it has a constant jacobian, stored as a private attribute.
@@ -150,8 +151,8 @@ def d_lagrange(x, interpolation_points, i):
 
 def lagrange_extrapolation_matrix(x, x_new):
     """
-    Returns the change of basis matrix from the Lagrange interpolation polynomial on the points x
-    to the Lagrange interpolation polynomial on the points x_new
+    Returns the change of basis matrix from the Lagrange interpolation polynomial on the points ``x``
+    to the Lagrange interpolation polynomial on the points ``x_new``
 
     :param array_like x:
     :param array_like x_new:

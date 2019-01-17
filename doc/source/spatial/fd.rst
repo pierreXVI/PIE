@@ -1,4 +1,3 @@
-
 Finite Difference Method
 ========================
 

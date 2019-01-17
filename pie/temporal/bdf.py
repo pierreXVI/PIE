@@ -1,3 +1,7 @@
+r"""
+`BDF methods <https://en.wikipedia.org/wiki/Backward_differentiation_formula>`_ on Wikipedia.
+"""
+
 import numpy as np
 import scipy.optimize
 import warnings

@@ -1,8 +1,7 @@
+Runge - Kutta methods
+=====================
 
-Runge Kutta methods
-===================
-
-`RK methods <https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods>`_ on Wikipedia.
+.. automodule:: temporal.rk
 
 .. py:function:: rk.rk_1(y0, t, f, verbose=true)
 .. py:function:: rk.rk_2(y0, t, f, verbose=true)

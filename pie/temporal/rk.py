@@ -1,3 +1,7 @@
+r"""
+`RK methods <https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods>`_ on Wikipedia.
+"""
+
 import numpy as np
 from pie.temporal.commons import Counter
 

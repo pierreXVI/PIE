@@ -9,7 +9,7 @@ def compare_methods(pb, h, t_max):
     Compare methods in ``METHODS``
 
     :param tuple pb: The problem to solve : y' = pb[0](y, t)
-    with pb[1](y, t) the jacobian of pb[0] and y = pb[1] as solution
+     with pb[1](y, t) the jacobian of pb[0] and y = pb[1] as solution
     :param float h: The time step
     :param float t_max: Solve on [0, t_max]
     """
@@ -46,7 +46,7 @@ def compare_methods_2d(pb, h, t_max):
     Compare methods in ``METHODS`` on a 2D problem
 
     :param tuple pb: The problem to solve : [y, y']' = pb[0]([y, y'], t)
-    with pb[1]([y, y'], t) the jacobian of pb[0], y = pb[2] as solution and [y, y'](0) = pb[3]
+     with pb[1]([y, y'], t) the jacobian of pb[0], y = pb[2] as solution and [y, y'](0) = pb[3]
     :param float h: The time step
     :param float t_max: Solve on [0, t_max]
     """
@@ -125,11 +125,27 @@ pb_3 = (lambda y, t: np.sin(y),
         lambda y, t: np.array([np.cos(y)]),
         lambda y, t: np.array([-np.sin(y)]),
         lambda t: 2 * np.arctan(np.tan(0.5) * np.exp(t)))
+r"""
+.. math::
+   \left\{\begin{aligned}
+    f\left(y, t\right) &= \sin\left(y\right) \\
+    y\left(t\right) &= 2\arctan\left(\tan\left(\frac{1}{2}\right)e^{-t}\right)
+   \end{aligned}\right.
+"""
 
 pb_4 = (lambda y, t: y * y,
         lambda y, t: np.array([2 * y]),
         lambda y, t: np.array([2]),
         lambda t: 0.1 / (1 - 0.1 * t))
+r"""
+The solutions of this equation do diverge in a finite time.
+
+.. math::
+   \left\{\begin{aligned}
+    f\left(y, t\right) &= y^2 \\
+    y\left(t\right) &= \frac{0.1}{1 - 0.1t}
+   \end{aligned}\right.
+"""
 
 pb2d_1 = (lambda y, t: np.array([y[1], -y[0]]),
           lambda y, t: np.array([[0, 1], [-1, 0]]),
@@ -161,11 +177,21 @@ Same problem as ``pb_2`` written in 2D
 with :math:`y = \cos\left(t\right)` as solution
 """
 
+# a, b = 1, 3
+# pb2d_3 = (
+#     lambda y, t: np.array([1 - (b + 1) * y[0] + a * y[0] * y[0] * y[1], b * y[0] - a * y[0] * y[0] * y[1]]),
+#     lambda y, t: np.array([[-(b + 1) + 2 * a * y[0] * y[1], a * y[0] * y[0]],
+#                            [b - 2 * a * y[0] * y[1], - a * y[0] * y[0]]]),
+#     lambda y, t: np.array([[[2 * a * y[1], 2 * a * y[0]], [2 * a * y[0], 0]],
+#                            [[- 2 * a * y[1], - 2 * a * y[1]], [-2 * a * y[0], 0]]]),
+#     lambda t: np.sin(t) * np.exp(np.cos(t)),
+#     np.array([1.5, 3]))
+
 if __name__ == '__main__':
     # compare_methods(pb_1, t_max=10, h=0.1)
-    compare_methods(pb_2, t_max=50, h=0.1)
+    # compare_methods(pb_2, t_max=50, h=0.1)
     # compare_methods(pb_3, t_max=30, h=0.1)
-    # compare_methods(pb_4, t_max=9, h=0.1)
+    compare_methods(pb_4, t_max=9, h=1)
     # compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
     # compare_methods_2d(pb2d_2, t_max=10, h=0.01)
 

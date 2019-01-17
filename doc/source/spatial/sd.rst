@@ -1,10 +1,8 @@
-
 Spectral Difference Method
 ==========================
 
 .. autoclass:: spatial.sd.SpectralDifferenceMethod
 
-
-.. autofunction:: spatial.sd.lagrange
-
-.. autofunction:: spatial.sd.d_lagrange
+.. automodule:: spatial.sd
+   :members: lagrange, d_lagrange, lagrange_extrapolation_matrix
+   :undoc-members: SpectralDifferenceMethod

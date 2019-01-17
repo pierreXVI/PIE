@@ -1,8 +1,7 @@
-
 Backward Differentiation Formula methods
 ========================================
 
-`BDF methods <https://en.wikipedia.org/wiki/Backward_differentiation_formula>`_ on Wikipedia.
+.. automodule:: temporal.bdf
 
 
 .. py:function:: temporal.bdf_1(y0, t, f, jac=None, verbose=true)

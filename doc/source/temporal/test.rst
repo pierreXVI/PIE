@@ -1,6 +1,5 @@
-
-Methods plot tests
-==================
+Tests on ODE
+============
 
 .. automodule:: pie.temporal.test
    :members: compare_methods, compare_methods_2d
@@ -10,6 +9,10 @@ Methods plot tests
 .. autodata:: temporal.test.pb_1
    :annotation:
 .. autodata:: temporal.test.pb_2
+   :annotation:
+.. autodata:: temporal.test.pb_3
+   :annotation:
+.. autodata:: temporal.test.pb_4
    :annotation:
 .. autodata:: temporal.test.pb2d_1
    :annotation:

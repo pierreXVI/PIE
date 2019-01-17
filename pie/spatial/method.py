@@ -15,7 +15,7 @@ class _SpatialMethod(object):
     :ivar int p: The number of points inside a cell
     :ivar int n_pts: The total number of solution points, is equal to `n_cell` \* `p`
     :ivar float c: The convection parameter
-    :ivar float c: The diffusion parameter
+    :ivar float d: The diffusion parameter
     :ivar numpy.ndarray cell: The repartition of the solution points inside a [-1, 1] cell
     :ivar numpy.ndarray x: The position of all the solution points
     :ivar tuple dx: The smallest and the biggest space steps. If they are the same, this tuple contains only one element
