@@ -11,6 +11,6 @@ The subpackage ``temporal`` is used to solve :math:`\dot{y}\left(t\right) = f\le
 for a given right hand side, and the subpackage ``spatial`` is used to compute a right hand side with x-derivatives.
 """
 
-import pie.temporal
-import pie.spatial
-import pie.test
+from . import temporal
+from . import spatial
+from . import test
