@@ -47,26 +47,26 @@ class FiniteDifferenceMethod(_SpatialMethod):
             a = (y[i + 1] - y[i]) / (self.x[i + 1] - self.x[i])
             b = (y[i] - y[i - 1]) / (self.x[i] - self.x[i - 1])
             if self.c > 0:
-                rhs[i] += -self.c * b
+                rhs[i] = -self.c * b
             else:
-                rhs[i] += -self.c * a
-            rhs[i] += self.d * 2 * (a - b) / (self.x[i + 1] - self.x[i - 1])
+                rhs[i] = -self.c * a
+            rhs[i] += self.d * (a - b) * 2 / (self.x[i + 1] - self.x[i - 1])
 
         a = (y[1] - y[0]) / (self.x[1] - self.x[0])
         b = (y[0] - y[-1]) / (self.x[0] - self.x[- 1] + self.mesh[-1])
         if self.c > 0:
-            rhs[0] += -self.c * b
+            rhs[0] = -self.c * b
         else:
-            rhs[0] += -self.c * a
-        rhs[0] += self.d * 2 * (a - b) / (self.x[1] - self.x[-1] + self.mesh[-1])
+            rhs[0] = -self.c * a
+        rhs[0] += self.d * (a - b) * 2 / (self.x[1] - self.x[-1] + self.mesh[-1])
 
         a = (y[0] - y[-1]) / (self.mesh[-1] + self.x[0] - self.x[-1])
         b = (y[-1] - y[-2]) / (self.x[-1] - self.x[-2])
         if self.c > 0:
-            rhs[-1] += -self.c * b
+            rhs[-1] = -self.c * b
         else:
-            rhs[-1] += -self.c * a
-        rhs[-1] += self.d * 2 * (a - b) / (self.mesh[-1] + self.x[0] - self.x[-2])
+            rhs[-1] = -self.c * a
+        rhs[-1] += self.d * (a - b) * 2 / (self.mesh[-1] + self.x[0] - self.x[-2])
         return rhs
         """
         return np.dot(self._jac, y)
