@@ -53,13 +53,12 @@ class FiniteDifferenceMethodBurgers(_SpatialMethod):
             rhs[-1] += -y[-1] * a
         rhs[-1] += self.d * 2 * (a - b) / (self.mesh[-1] + self.x[0] - self.x[-2])
         """
-        foo = self.j1 * (y > 0)[:, None] + self.j2 * (y < 0)[:, None]
-        return np.dot(self._jac_diff, y) - y * np.dot(foo, y)
+        j = self.j1 * (y > 0)[:, None] + self.j2 * (y < 0)[:, None]
+        return np.dot(self._jac_diff, y) - y * np.dot(j, y)
 
     def jac(self, y, t):
-        foo = -self.j1 * (y > 0)[:, None] - self.j2 * (y < 0)[:, None]
-        j = y[:, None] * foo + np.diagflat(np.dot(foo, y))
-        return j + self._jac_diff
+        j = self.j1 * (y > 0)[:, None] + self.j2 * (y < 0)[:, None]
+        return j + self._jac_diff - (y[:, None] * j + np.diagflat(np.dot(j, y)))
 
     def __repr__(self):
         return "Finite difference for Burgers' equation " + super(FiniteDifferenceMethodBurgers, self).__repr__()

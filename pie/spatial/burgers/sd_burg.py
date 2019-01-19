@@ -19,7 +19,35 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         # Setting the solution points in a [-1, 1] cell as the Legendre roots
         self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots((self.p - 1) * [0] + [1]), 1))
 
+        # Setting the needed matrices
+        sol_to_flux = sd.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
+        flux_to_sol = sd.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
+        d_in_flux = np.zeros((self.p + 1, self.p + 1))
+        for i in range(self.p + 1):
+            for j in range(self.p + 1):
+                d_in_flux[i, j] = sd.d_lagrange(self.flux_pts[i], self.flux_pts, j)
+
+        # Working with full size matrices
+        isoparametric_scale = 2 / (np.roll(self.mesh, -1) - self.mesh)[:-1]
+        self.sol_to_flux_conv_full = np.kron(np.diagflat(isoparametric_scale), sol_to_flux)
+        sol_to_flux_diff_full = np.kron(np.diagflat(isoparametric_scale ** 2), sol_to_flux)
+        d_in_flux_full = np.kron(np.eye(self.n_cell), d_in_flux)
+        self.d_in_flux_to_sol_full = np.kron(np.eye(self.n_cell), np.dot(flux_to_sol, d_in_flux))
+
+        # Continuity between cells
+        riemann_diff = np.eye(self.n_cell * (self.p + 1))
+        for i in range(self.n_cell):
+            riemann_diff[i * (self.p + 1), i * (self.p + 1)] = 0.5
+            riemann_diff[i * (self.p + 1), i * (self.p + 1) - 1] = 0.5
+            riemann_diff[i * (self.p + 1) - 1, i * (self.p + 1)] = 0.5
+            riemann_diff[i * (self.p + 1) - 1, i * (self.p + 1) - 1] = 0.5
+
+        self._jac_diff = self.d * np.dot(self.d_in_flux_to_sol_full,
+                                         np.dot(riemann_diff, np.dot(d_in_flux_full,
+                                                                     np.dot(riemann_diff, sol_to_flux_diff_full))))
+
     def rhs(self, y, t):
+        """
         # Setting the needed matrices
         sol_to_flux = sd.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
         flux_to_sol = sd.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
@@ -60,10 +88,34 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         for i in range(self.n_cell):
             rhs_in_sol_point[i] = np.dot(d_in_flux_to_sol, flux_in_flux_point_conv[i] + flux_in_flux_point_diff[i])
         return rhs_in_sol_point.reshape(y.shape)
+        """
+        j = np.dot(self.d_in_flux_to_sol_full, np.dot(self._riemann_solver(y), self.sol_to_flux_conv_full))
+        return np.dot(self._jac_diff, y) - np.dot(j, y * y) / 2
 
     def jac(self, y, t):
-        # TODO
-        pass
+        j = np.dot(self.d_in_flux_to_sol_full, np.dot(self._riemann_solver(y), self.sol_to_flux_conv_full))
+        from pie.utils import jacobian as jacutils
+        foo = self._jac_diff - j * y[None, :]
+        bar = jacutils(self.rhs, y, t)
+        print(np.max(abs(foo - bar)))
+        return self._jac_diff - j * y[None, :]
+
+    def _riemann_solver(self, y):
+        """
+
+        :param array_like y: The flux
+        :return: numpy.ndarray - the continuity matrix expressed in the flux points
+        """
+        # Continuity between cells
+        riemann_conv = np.eye(self.n_cell * (self.p + 1))
+        for i in range(self.n_cell):
+            if y[i * self.p] + y[i * self.p - 1] > 0:
+                riemann_conv[i * (self.p + 1), i * (self.p + 1)] = 0
+                riemann_conv[i * (self.p + 1), i * (self.p + 1) - 1] = 1
+            else:
+                riemann_conv[i * (self.p + 1) - 1, i * (self.p + 1) - 1] = 0
+                riemann_conv[i * (self.p + 1) - 1, i * (self.p + 1)] = 1
+        return riemann_conv
 
     def __repr__(self):
         foo = "Spectral difference for Burger's equation " + super(SpectralDifferenceMethodBurgers, self).__repr__()
