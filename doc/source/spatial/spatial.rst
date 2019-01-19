@@ -13,3 +13,4 @@ Spatial Methods
 
    fd.rst
    sd.rst
+   burgers.rst
