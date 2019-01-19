@@ -1,17 +1,32 @@
 import numpy as np
 from pie.spatial.method import _SpatialMethod
+from pie.spatial import FiniteDifferenceMethod
 
 
 class FiniteDifferenceMethodBurgers(_SpatialMethod):
     r"""
     Upwind (as regard of the convection speed) scheme for viscous Burgers' equation,
     with a periodic boundary condition.
+
+    :ivar array_like _j1: The constant jacobian for left convection
+    :ivar array_like _j2: The constant jacobian for right convection
+    :ivar array_like _jac_diff: The constant jacobian for the diffusion part
     """
 
     def __init__(self, mesh, p, diff):
         super(FiniteDifferenceMethodBurgers, self).__init__(mesh, p, 0, diff)
 
+        x = np.append(self.x, self.mesh[-1] + self.x[0] - self.mesh[0])
+        dx1 = np.roll((x - np.roll(x, 1))[1:], 1)
+        dx2 = (np.roll(x, -1) - x)[:-1]
+        self.j1 = np.diagflat(1 / dx1) - np.diagflat(1 / dx1[1:], -1)
+        self.j1[0, -1] = -1 / dx1[0]
+        self.j2 = np.diagflat(1 / dx2[:-1], 1) - np.diagflat(1 / dx2)
+        self.j2[-1, 0] = 1 / dx2[-1]
+        self._jac_diff = self.d * 2 * (self.j2 - self.j1) / (dx1[:, None] + dx2[:, None])
+
     def rhs(self, y, t):
+        """
         rhs = np.zeros(y.shape)
         for i in range(1, len(y) - 1):
             a = (y[i + 1] - y[i]) / (self.x[i + 1] - self.x[i])
@@ -37,11 +52,14 @@ class FiniteDifferenceMethodBurgers(_SpatialMethod):
         else:
             rhs[-1] += -y[-1] * a
         rhs[-1] += self.d * 2 * (a - b) / (self.mesh[-1] + self.x[0] - self.x[-2])
-        return rhs
+        """
+        foo = self.j1 * (y > 0)[:, None] + self.j2 * (y < 0)[:, None]
+        return np.dot(self._jac_diff, y) - y * np.dot(foo, y)
 
     def jac(self, y, t):
-        # TODO
-        pass
+        foo = -self.j1 * (y > 0)[:, None] - self.j2 * (y < 0)[:, None]
+        j = y[:, None] * foo + np.diagflat(np.dot(foo, y))
+        return j + self._jac_diff
 
     def __repr__(self):
         return "Finite difference for Burgers' equation " + super(FiniteDifferenceMethodBurgers, self).__repr__()

@@ -5,3 +5,5 @@ This subpackage implements spatial method for viscous Burger's equation :
 
 from .fd_burg import FiniteDifferenceMethodBurgers
 from .sd_burg import SpectralDifferenceMethodBurgers
+
+# TODO: check if the shock moves at the right speed
