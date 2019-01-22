@@ -1,6 +1,7 @@
 import numpy as np
-from pie.spatial.method import _SpatialMethod
+
 from pie.spatial import sd
+from pie.spatial.method import _SpatialMethod
 
 
 class SpectralDifferenceMethodBurgers(_SpatialMethod):
@@ -11,6 +12,12 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
     This method uses p + 1 flux points in the [-1, 1] cell, computed as the Legendre polynomial roots.
 
     :ivar array_like flux_pts: The repartition of the flux points inside a [-1, 1] cell
+    :ivar array_like _sol_to_flux_conv_full: A needed matrix,
+     ``_sol_to_flux_conv_full`` @ ``y`` is the flux expressed in the flux points multiplied by the scaling factor
+    :ivar array_like _d_in_flux_to_sol_full: A needed matrix,
+     ``_d_in_flux_to_sol_full`` @ ``f`` is the derivative of ``f`` expressed in the solution points,
+     with ``f`` given in the flux points
+    :ivar array_like _jac_diff: The constant jacobian for the diffusion part
     """
 
     def __init__(self, mesh, p, diff):
@@ -29,10 +36,10 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
 
         # Working with full size matrices
         isoparametric_scale = 2 / (np.roll(self.mesh, -1) - self.mesh)[:-1]
-        self.sol_to_flux_conv_full = np.kron(np.diagflat(isoparametric_scale), sol_to_flux)
+        self._sol_to_flux_conv_full = np.kron(np.diagflat(isoparametric_scale), sol_to_flux)
         sol_to_flux_diff_full = np.kron(np.diagflat(isoparametric_scale ** 2), sol_to_flux)
         d_in_flux_full = np.kron(np.eye(self.n_cell), d_in_flux)
-        self.d_in_flux_to_sol_full = np.kron(np.eye(self.n_cell), np.dot(flux_to_sol, d_in_flux))
+        self._d_in_flux_to_sol_full = np.kron(np.eye(self.n_cell), np.dot(flux_to_sol, d_in_flux))
 
         # Continuity between cells
         riemann_diff = np.eye(self.n_cell * (self.p + 1))
@@ -42,7 +49,7 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
             riemann_diff[i * (self.p + 1) - 1, i * (self.p + 1)] = 0.5
             riemann_diff[i * (self.p + 1) - 1, i * (self.p + 1) - 1] = 0.5
 
-        self._jac_diff = self.d * np.dot(self.d_in_flux_to_sol_full,
+        self._jac_diff = self.d * np.dot(self._d_in_flux_to_sol_full,
                                          np.dot(riemann_diff, np.dot(d_in_flux_full,
                                                                      np.dot(riemann_diff, sol_to_flux_diff_full))))
 
@@ -65,7 +72,7 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         for i in range(self.n_cell):
             s = slice(i * self.p, (i + 1) * self.p)
             scale = 2 / (self.mesh[i + 1] - self.mesh[i])
-            flux_in_flux_point_conv[i] = -(np.dot(sol_to_flux, y[s] * y[s] * scale / 2))
+            flux_in_flux_point_conv[i] = -(np.dot(self.sol_to_flux, y[s] * y[s] * scale / 2))
             flux_in_flux_point_diff[i] = self.d * (np.dot(sol_to_flux, y[s] * scale * scale))
         # Ensuring the flux continuity
         for i in range(self.n_cell):
@@ -87,17 +94,14 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         # Getting the rhs in sol points
         for i in range(self.n_cell):
             rhs_in_sol_point[i] = np.dot(d_in_flux_to_sol, flux_in_flux_point_conv[i] + flux_in_flux_point_diff[i])
-        return rhs_in_sol_point.reshape(y.shape)
+        # return rhs_in_sol_point.reshape(y.shape)
+        foo = rhs_in_sol_point.reshape(y.shape)
         """
-        j = np.dot(self.d_in_flux_to_sol_full, np.dot(self._riemann_solver(y), self.sol_to_flux_conv_full))
+        j = np.dot(self._d_in_flux_to_sol_full, np.dot(self._riemann_solver(y), self._sol_to_flux_conv_full))
         return np.dot(self._jac_diff, y) - np.dot(j, y * y) / 2
 
     def jac(self, y, t):
-        j = np.dot(self.d_in_flux_to_sol_full, np.dot(self._riemann_solver(y), self.sol_to_flux_conv_full))
-        from pie.utils import jacobian as jacutils
-        foo = self._jac_diff - j * y[None, :]
-        bar = jacutils(self.rhs, y, t)
-        print(np.max(abs(foo - bar)))
+        j = np.dot(self._d_in_flux_to_sol_full, np.dot(self._riemann_solver(y), self._sol_to_flux_conv_full))
         return self._jac_diff - j * y[None, :]
 
     def _riemann_solver(self, y):
