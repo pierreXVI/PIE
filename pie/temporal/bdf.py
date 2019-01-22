@@ -2,11 +2,13 @@ r"""
 `BDF methods <https://en.wikipedia.org/wiki/Backward_differentiation_formula>`_ on Wikipedia.
 """
 
+import warnings
+
 import numpy as np
 import scipy.optimize
-import warnings
-from pie.temporal.rk import rk_4
+
 from pie.temporal.commons import Counter
+from pie.temporal.rk import rk_4
 
 
 def _bdf_i(i, y0, t, f, func_to_minimise, jac_func_to_minimise, verbose):

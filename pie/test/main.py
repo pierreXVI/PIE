@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from pie.test import initial_condition, sd_error
-from pie import temporal
+
 from pie import spatial
+from pie import temporal
+from pie.test import initial_condition
 
 
 def solve(n, x_max, p, conv, diff, cfl, t_max, init_cond, spatial_method, temporal_method):
@@ -24,7 +25,7 @@ def solve(n, x_max, p, conv, diff, cfl, t_max, init_cond, spatial_method, tempor
     y0 = init_cond(x)
 
     # Solving
-    y = temporal_method(y0, t, method.rhs,
+    y = temporal_method(y0, t, method.rhs, jac=method.jac,
                         verbose='{0} + {1}'.format(temporal_method.__name__, spatial_method.__name__))
 
     return method, t, y

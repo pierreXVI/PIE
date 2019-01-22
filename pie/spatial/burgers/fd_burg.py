@@ -1,6 +1,6 @@
 import numpy as np
+
 from pie.spatial.method import _SpatialMethod
-from pie.spatial import FiniteDifferenceMethod
 
 
 class FiniteDifferenceMethodBurgers(_SpatialMethod):

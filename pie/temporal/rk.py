@@ -3,6 +3,7 @@ r"""
 """
 
 import numpy as np
+
 from pie.temporal.commons import Counter
 
 

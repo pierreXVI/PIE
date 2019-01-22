@@ -1,6 +1,12 @@
-import scipy as sp
 import numpy as np
+import scipy as sp
+
 from pie.temporal.commons import Counter
+
+
+# TODO:
+#  add the t dependency on g (through w)
+#  recursively compute w_i for any order p
 
 
 def taylor_exp(y0, t, f, jac, p=2, verbose=True, **_):

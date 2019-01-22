@@ -1,4 +1,5 @@
 import numpy as np
+
 from pie.spatial.method import _SpatialMethod
 
 
