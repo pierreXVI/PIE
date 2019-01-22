@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.linalg
+import scipy as sc
 
 
 def err(foo, bar, eps=1E-12):
@@ -44,6 +45,52 @@ def _phi_1_approx(z, eps=1E-12):
         if np.linalg.norm(u) / np.linalg.norm(s) < eps:
             return s
 
+def arnoldi_decompostion(A, v, m):
+    # Generates an orhonormal basis Vm = [v1, v2,..., vm]
+    # of the Krylov subspace
+
+    try:
+        n = len(v)
+        V = np.zeros((n, m+1))
+        h = np.zeros((m+1, n))
+    except TypeError:
+        V = np.zeros((1, m+1))
+        h = np.zeros((m+1, 1))
+
+    beta = np.linalg.norm(v)
+    V[:,0] = v/beta
+
+    for j in range(m):   # for range(m), the last vector V does
+                         # not belong to the orthogonal basis
+                         # but otherwise the Hm is not entirely built
+        p = np.dot(A, V[:,j])
+        for i in range(j+1):
+            h[i,j] = np.dot(V[:,i],p)
+            p = p - h[i,j]*V[:,i]
+        h[j+1,j] = np.linalg.norm(p)
+        V[:,j+1] = p/h[j+1,j]
+
+    e = np.zeros(m)
+    e[m-1] = 1.0 # En el paper pone 1 en vez de m...
+
+    Vm = V[:,0:m]
+    Hm = h[0:m,0:m]
+
+    return(Vm,Hm)
+
+def test_krylov():
+    A = np.random.rand(3,3)
+    v = np.dot(np.random.randint(20, size=(3, 3)),np.random.rand(3))
+    beta = np.linalg.norm(v)
+    m = 3
+    [Vm,Hm] = arnoldi_decompostion(A, v, m)
+
+    uopt = np.dot(np.dot(np.dot(Vm, np.transpose(Vm)),sc.linalg.expm(A)),v)
+
+    e1 = np.zeros(m)
+    e1[0] = 1.0
+    uopth = beta*np.dot(np.dot(Vm,sc.linalg.expm(Hm)),e1)
+    print(uopt-uopth)
 
 def test_phi_1(eps=1E-10):
     phi1_1 = 1.718281828459045235360287471352662497757247093699959574966
@@ -126,4 +173,5 @@ def test_jacobian():
 
 if __name__ == '__main__':
     # test_phi_1()
-    test_jacobian()
+    # test_jacobian()
+    test_krylov()
