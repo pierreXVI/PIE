@@ -73,24 +73,31 @@ def arnoldi_decompostion(A, v, m):
     e = np.zeros(m)
     e[m-1] = 1.0 # En el paper pone 1 en vez de m...
 
+    Vm1 = V[:,0:m+1]
     Vm = V[:,0:m]
     Hm = h[0:m,0:m]
 
-    return(Vm,Hm)
+    # print(np.dot(Hm, np.dot(np.dot(np.transpose(Vm), V[:, m]), e)) - np.dot(
+    #    np.dot(np.dot(np.transpose(Vm), V[:, m]), e), Hm))
 
-def test_krylov():
-    A = np.random.rand(3,3)
-    v = np.dot(np.random.randint(20, size=(3, 3)),np.random.rand(3))
-    beta = np.linalg.norm(v)
-    m = 3
-    [Vm,Hm] = arnoldi_decompostion(A, v, m)
-
-    uopt = np.dot(np.dot(np.dot(Vm, np.transpose(Vm)),sc.linalg.expm(A)),v)
-
+    c = h[m, m - 1] *np.dot(np.transpose(Vm),np.outer(V[:, m], e))
     e1 = np.zeros(m)
     e1[0] = 1.0
-    uopth = beta*np.dot(np.dot(Vm,sc.linalg.expm(Hm)),e1)
-    print(uopt-uopth)
+    prodH = beta * np.dot(np.dot(Vm, sc.linalg.expm(Hm+c)), e1)
+
+    return(prodH)
+
+def test_krylov():
+    A = np.random.rand(20,20)
+    v = np.dot(np.random.randint(5, size=(20, 20)),np.random.rand(20))
+    beta = np.linalg.norm(v)
+    m = 10
+
+    prod = np.dot(sc.linalg.expm(A), v)
+    prodH = arnoldi_decompostion(A, v, m)
+
+    print(prod-prodH)
+
 
 def test_phi_1(eps=1E-10):
     phi1_1 = 1.718281828459045235360287471352662497757247093699959574966
