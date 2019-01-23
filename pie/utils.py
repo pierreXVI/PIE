@@ -47,7 +47,7 @@ def _phi_1_approx(z, eps=1E-12):
 
 def arnoldi_decompostion(A, v, m):
     # Generates an orhonormal basis Vm = [v1, v2,..., vm]
-    # of the Krylov subspace
+    # of the Krylov subspace Vm = [v, Av,..., A^(m-1)v]
 
     try:
         n = len(v)
@@ -60,9 +60,7 @@ def arnoldi_decompostion(A, v, m):
     beta = np.linalg.norm(v)
     V[:,0] = v/beta
 
-    for j in range(m):   # for range(m), the last vector V does
-                         # not belong to the orthogonal basis
-                         # but otherwise the Hm is not entirely built
+    for j in range(m):
         p = np.dot(A, V[:,j])
         for i in range(j+1):
             h[i,j] = np.dot(V[:,i],p)
@@ -71,19 +69,17 @@ def arnoldi_decompostion(A, v, m):
         V[:,j+1] = p/h[j+1,j]
 
     e = np.zeros(m)
-    e[m-1] = 1.0 # En el paper pone 1 en vez de m...
+    e[m-1] = 1.0 # Dans le document il y a écrit 1 à la place de m...
 
-    Vm1 = V[:,0:m+1]
     Vm = V[:,0:m]
     Hm = h[0:m,0:m]
-
-    # print(np.dot(Hm, np.dot(np.dot(np.transpose(Vm), V[:, m]), e)) - np.dot(
-    #    np.dot(np.dot(np.transpose(Vm), V[:, m]), e), Hm))
 
     c = h[m, m - 1] *np.dot(np.transpose(Vm),np.outer(V[:, m], e))
     e1 = np.zeros(m)
     e1[0] = 1.0
-    prodH = beta * np.dot(np.dot(Vm, sc.linalg.expm(Hm+c)), e1)
+    # prodH = beta * np.dot(np.dot(Vm, sc.linalg.expm(Hm+c)), e1) # Ce n'est pas non plus la version du document,
+                                                                # car elle n'est pas claire
+    prodH = beta * np.dot(Vm, sc.linalg.expm(Hm + c))[:,0] # Ça devrait être un peu plus rapide comme ça
 
     return(prodH)
 
