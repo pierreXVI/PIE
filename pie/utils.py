@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.linalg
+import scipy as sc
 
 
 def err(foo, bar, eps=1E-12):
@@ -43,6 +44,55 @@ def _phi_1_approx(z, eps=1E-12):
 
         if np.linalg.norm(u) / np.linalg.norm(s) < eps:
             return s
+
+def arnoldi_decompostion(A, v, m):
+    # Generates an orhonormal basis Vm = [v1, v2,..., vm]
+    # of the Krylov subspace Vm = [v, Av,..., A^(m-1)v]
+
+    try:
+        n = len(v)
+        V = np.zeros((n, m+1))
+        h = np.zeros((m+1, n))
+    except TypeError:
+        V = np.zeros((1, m+1))
+        h = np.zeros((m+1, 1))
+
+    beta = np.linalg.norm(v)
+    V[:,0] = v/beta
+
+    for j in range(m):
+        p = np.dot(A, V[:,j])
+        for i in range(j+1):
+            h[i,j] = np.dot(V[:,i],p)
+            p = p - h[i,j]*V[:,i]
+        h[j+1,j] = np.linalg.norm(p)
+        V[:,j+1] = p/h[j+1,j]
+
+    e = np.zeros(m)
+    e[m-1] = 1.0 # Dans le document il y a écrit 1 à la place de m...
+
+    Vm = V[:,0:m]
+    Hm = h[0:m,0:m]
+
+    c = h[m, m - 1] *np.dot(np.transpose(Vm),np.outer(V[:, m], e))
+    e1 = np.zeros(m)
+    e1[0] = 1.0
+    # prodH = beta * np.dot(np.dot(Vm, sc.linalg.expm(Hm+c)), e1) # Ce n'est pas non plus la version du document,
+                                                                # car elle n'est pas claire
+    prodH = beta * np.dot(Vm, sc.linalg.expm(Hm + c))[:,0] # Ça devrait être un peu plus rapide comme ça
+
+    return(prodH)
+
+def test_krylov():
+    A = np.random.rand(20,20)
+    v = np.dot(np.random.randint(5, size=(20, 20)),np.random.rand(20))
+    beta = np.linalg.norm(v)
+    m = 10
+
+    prod = np.dot(sc.linalg.expm(A), v)
+    prodH = arnoldi_decompostion(A, v, m)
+
+    print(prod-prodH)
 
 
 def test_phi_1(eps=1E-10):
@@ -126,4 +176,5 @@ def test_jacobian():
 
 if __name__ == '__main__':
     # test_phi_1()
-    test_jacobian()
+    # test_jacobian()
+    test_krylov()
