@@ -2,7 +2,7 @@ import numpy as np
 import scipy as sp
 
 from pie.temporal.commons import Counter
-
+import pie.utils as ut
 
 # TODO:
 #  add the t dependency on g (through w)
@@ -38,7 +38,6 @@ def taylor_exp(y0, t, f, jac, p=2, verbose=True, **_):
         count(i + 1)
     return y
 
-
 def taylor_exp_1(y0, t, f, jac, verbose=True, **_):
     try:
         n, d = len(t), len(y0)
@@ -64,10 +63,10 @@ def taylor_exp_1(y0, t, f, jac, verbose=True, **_):
         expanded_vector[:d] = y[i]
         expanded_matrix[:d, :d] = j
         expanded_matrix[:d, -1:] = w
-        y[i + 1] = np.dot(sp.linalg.expm(h * expanded_matrix), expanded_vector)[:d]
+        # y[i + 1] = np.dot(sp.linalg.expm(h * expanded_matrix), expanded_vector)[:d]
+        y[i + 1] = ut.arnoldi_decompostion((h * expanded_matrix), expanded_vector, d // 10)[:d]
         count(i + 1)
     return y
-
 
 def taylor_exp_2(y0, t, f, jac, verbose=True, **_):
     try:
