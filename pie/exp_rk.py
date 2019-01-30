@@ -50,5 +50,5 @@ def exp_RK(y0,t,f,verbose=True, **_ ):
     y[0]=y0
     a = np.atleast_2d(utils.jacobian(f, y[i], t[i]))
     h = (t[i + 1] - t[i])
-    y[i + 1] = y[i] + np.dot(sp.linalg.expm(h*a), f(y[i], t[i]))
+    y[i + 1] = y[i] + np.dot(sp.linalg.expm(h*a), f(y[i], t[i]))+h*utils.phi_1(h*a)
     return y
