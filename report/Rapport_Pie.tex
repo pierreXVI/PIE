@@ -224,15 +224,15 @@ urlcolor=black}
 
 \chapter*{Introduction}
 Ce document est rédigé dans le cadre du Projet Ingénieurie et Entrepreneuriat en dernière année de l'ISAE SUPAERO. Il s'agit ici d'analyser les performances de schémas numériques d’intégration
-temporelle pour les simulations aux grandes échelles avec les méthodes spectrales discontinues d'ordre très élevé. Ces méthodes permettrait de pouvoir augmenter la pas de temps d'un calcul CFD. Et par conséquent semlbe très intéressant pour réduire les coûts de calcul.
+temporelle pour les simulations aux grandes échelles avec les méthodes spectrales discontinues d'ordre très élevé. Ces méthodes permettrait de pouvoir augmenter le pas de temps d'un calcul CFD. Et par conséquent semble très intéressant pour réduire les coûts de calcul.
 
-Le travail effectué se base donc sur la publication de papier scientifique. Notre objectif est donc d'implémenter ces nouveaux types de schémas dit \og exponentiels \fg{} en langage python mais aussi d'en assurer le couplage avec les méthodes spatiales. 
+Le travail effectué se base donc sur la publication de papiers scientifiques. Notre objectif est donc d'implémenter ces nouveaux types de schémas dit \og exponentiels \fg{} en langage python mais aussi d'en assurer le couplage avec la méthode spatiale de la différence spectrale. Cette méthode spatiale étant au préalable implémenter par des étudiants des années précédentes. 
 
 \part{Gestion de projet}
 
 \vfill
 
-Cette partie consiste à exposer la manière dont nous nous sommes organisé pour la réalisation de ce projet. Ce sujet de PIE s'insrit globalement dans une stratégie commune de recherche entre l'ISAE-SUPAERO et l'ONERA. L'objectif est l'amélioration du code de calcul JAGUAR basé sur les différences spectrales ayant pour objectifs d'effectuer des simulations LES.
+Cette partie consiste à exposer la manière dont nous nous sommes organisés pour la réalisation de ce projet. Ce sujet de PIE s'insrit globalement dans une stratégie commune de recherche entre l'ISAE-SUPAERO et l'ONERA. L'objectif est l'amélioration du code de calcul JAGUAR basé sur les différences spectrales ayant pour objectifs d'effectuer des simulations LES.
 
 
 Les méthodes spectrales discontinues consistent à représenter la solution par cellule de calcul sur une base de polynôme et à prendre en compte la discontinuité entre cellules par résolution d’un problème de Riemann. Assez récentes en CFD, leur application pour là LES (SGE en Français) est un sujet de recherche actuel. Aujourd’hui, les études se focalisent essentiellement sur la précision des schémas spatiaux pour la convection et la diffusion. Ici, on souhaite focaliser notre attention sur les schémas numériques d’intégration temporelle des équations dans un code 1D prototype. Après une analyse bibliographique (Runge‐Kutta, Méthode de Gear, exponentiels, schémas Rock...), nous proposons d’implanter plusieurs familles de schémas dans une maquette 1D puis de comparer les schémas.
