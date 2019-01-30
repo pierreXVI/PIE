@@ -72,7 +72,7 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         for i in range(self.n_cell):
             s = slice(i * self.p, (i + 1) * self.p)
             scale = 2 / (self.mesh[i + 1] - self.mesh[i])
-            flux_in_flux_point_conv[i] = -(np.dot(self.sol_to_flux, y[s] * y[s] * scale / 2))
+            flux_in_flux_point_conv[i] = -(np.dot(sol_to_flux, y[s] * y[s] * scale / 2))
             flux_in_flux_point_diff[i] = self.d * (np.dot(sol_to_flux, y[s] * scale * scale))
         # Ensuring the flux continuity
         for i in range(self.n_cell):
@@ -95,7 +95,7 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         for i in range(self.n_cell):
             rhs_in_sol_point[i] = np.dot(d_in_flux_to_sol, flux_in_flux_point_conv[i] + flux_in_flux_point_diff[i])
         # return rhs_in_sol_point.reshape(y.shape)
-        foo = rhs_in_sol_point.reshape(y.shape)
+        return rhs_in_sol_point.reshape(y.shape)
         """
         j = np.dot(self._d_in_flux_to_sol_full, np.dot(self._riemann_solver(y), self._sol_to_flux_conv_full))
         return np.dot(self._jac_diff, y) - np.dot(j, y * y) / 2
@@ -110,10 +110,15 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         :param array_like y: The flux
         :return: numpy.ndarray - the continuity matrix expressed in the flux points
         """
+        # TODO: u_L < 0 < u_R
         # Continuity between cells
         riemann_conv = np.eye(self.n_cell * (self.p + 1))
         for i in range(self.n_cell):
-            if y[i * self.p] + y[i * self.p - 1] > 0:
+            if y[i * self.p] >= 0 >= y[i * self.p - 1]:
+                print('HAHA')
+                riemann_conv[i * (self.p + 1), i * (self.p + 1)] = 0
+                riemann_conv[i * (self.p + 1) - 1, i * (self.p + 1) - 1] = 0
+            elif y[i * self.p] + y[i * self.p - 1] > 0:
                 riemann_conv[i * (self.p + 1), i * (self.p + 1)] = 0
                 riemann_conv[i * (self.p + 1), i * (self.p + 1) - 1] = 1
             else:
