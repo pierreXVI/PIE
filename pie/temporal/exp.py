@@ -1,7 +1,7 @@
 import scipy as sp
 import numpy as np
 from pie.temporal.commons import Counter
-
+import pie.utils as ut
 
 def taylor_exp(y0, t, f, jac, p=2, verbose=True, **_):
     # TODO: take the non linearity into account (the W array in the Koos paper)
@@ -32,7 +32,6 @@ def taylor_exp(y0, t, f, jac, p=2, verbose=True, **_):
         count(i + 1)
     return y
 
-
 def taylor_exp_1(y0, t, f, jac, verbose=True, **_):
     try:
         n, d = len(t), len(y0)
@@ -58,10 +57,10 @@ def taylor_exp_1(y0, t, f, jac, verbose=True, **_):
         expanded_vector[:d] = y[i]
         expanded_matrix[:d, :d] = j
         expanded_matrix[:d, -1:] = w
-        y[i + 1] = np.dot(sp.linalg.expm(h * expanded_matrix), expanded_vector)[:d]
+        # y[i + 1] = np.dot(sp.linalg.expm(h * expanded_matrix), expanded_vector)[:d]
+        y[i + 1] = ut.arnoldi_decompostion((h * expanded_matrix), expanded_vector, d // 10)[:d]
         count(i + 1)
     return y
-
 
 def taylor_exp_2(y0, t, f, jac, verbose=True, **_):
     try:
