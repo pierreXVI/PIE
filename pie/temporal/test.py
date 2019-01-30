@@ -149,6 +149,14 @@ The solutions of this equation do diverge in a finite time.
    \end{aligned}\right.
 """
 
+pb_5 = (lambda y, t: -50 * (y - np.cos(t)),
+        lambda y, t: np.array([-50]),
+        lambda y, t: np.array([0]),
+        lambda t: (0 - 2500 / 2501) * np.exp(-50 * t) + 50 * np.sin(t) / 2501 + 2500 * np.cos(t) / 2501)
+r"""
+Stiff equation, from Hairer & Wanner, 'Solving Ordinary Differential Equations II', chapter IV.1
+"""
+
 pb2d_1 = (lambda y, t: np.array([y[1], -y[0]]),
           lambda y, t: np.array([[0, 1], [-1, 0]]),
           lambda y, t: np.array([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]),
@@ -179,21 +187,12 @@ Same problem as ``pb_2`` written in 2D
 with :math:`y = \cos\left(t\right)` as solution
 """
 
-# a, b = 1, 3
-# pb2d_3 = (
-#     lambda y, t: np.array([1 - (b + 1) * y[0] + a * y[0] * y[0] * y[1], b * y[0] - a * y[0] * y[0] * y[1]]),
-#     lambda y, t: np.array([[-(b + 1) + 2 * a * y[0] * y[1], a * y[0] * y[0]],
-#                            [b - 2 * a * y[0] * y[1], - a * y[0] * y[0]]]),
-#     lambda y, t: np.array([[[2 * a * y[1], 2 * a * y[0]], [2 * a * y[0], 0]],
-#                            [[- 2 * a * y[1], - 2 * a * y[1]], [-2 * a * y[0], 0]]]),
-#     lambda t: np.sin(t) * np.exp(np.cos(t)),
-#     np.array([1.5, 3]))
-
 if __name__ == '__main__':
     # compare_methods(pb_1, t_max=10, h=0.1)
     # compare_methods(pb_2, t_max=50, h=0.1)
     # compare_methods(pb_3, t_max=30, h=0.1)
-    compare_methods(pb_4, t_max=9, h=1)
+    # compare_methods(pb_4, t_max=9, h=1)
+    compare_methods(pb_5, t_max=1.5, h=1.5/38)
     # compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
     # compare_methods_2d(pb2d_2, t_max=10, h=0.01)
 
