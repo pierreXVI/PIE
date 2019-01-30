@@ -69,7 +69,7 @@ def arnoldi_decompostion(A, v, m):
         V[:,j+1] = p/h[j+1,j]
 
     e = np.zeros(m)
-    e[m-1] = 1.0 # Dans le document il y a écrit 1 à la place de m...
+    e[m-1] = 1.0 # Dans le document il y a ecrit 1 a la place de m...
 
     Vm = V[:,0:m]
     Hm = h[0:m,0:m]
@@ -77,9 +77,7 @@ def arnoldi_decompostion(A, v, m):
     c = h[m, m - 1] *np.dot(np.transpose(Vm),np.outer(V[:, m], e))
     e1 = np.zeros(m)
     e1[0] = 1.0
-    # prodH = beta * np.dot(np.dot(Vm, sc.linalg.expm(Hm+c)), e1) # Ce n'est pas non plus la version du document,
-                                                                # car elle n'est pas claire
-    prodH = beta * np.dot(Vm, sc.linalg.expm(Hm + c))[:,0] # Ça devrait être un peu plus rapide comme ça
+    prodH = beta * np.dot(Vm, sc.linalg.expm(Hm + c))[:,0] 
 
     return(prodH)
 
