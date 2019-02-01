@@ -53,7 +53,7 @@ def trimmed_sine(x_max, n_period=1):
     return y0
 
 
-def rect(x_max):
+def rect(x_max, offset=0):
     r"""
 
     :param float x_max:
@@ -64,6 +64,6 @@ def rect(x_max):
 
     def y0(x):
         u = x / x_max
-        return np.ones(x.shape) * (u > 1 / 4) * (u < 3 / 4)
+        return np.ones(x.shape) * (u > 1 / 4) * (u < 3 / 4) + offset
 
     return y0
