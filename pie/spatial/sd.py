@@ -71,11 +71,12 @@ class SpectralDifferenceMethod(_SpatialMethod):
         flux_in_flux_point_diff = np.zeros((self.n_cell, self.p + 1))
         rhs_in_sol_point = np.zeros((self.n_cell, self.p))
 
-        # Getting solution in sol points then the flux in flux points
+        # Getting the flux in flux points
         for i in range(self.n_cell):
             scale = 2 / (self.mesh[i + 1] - self.mesh[i])
             flux_in_flux_point_conv[i] = -self.c * (np.dot(sol_to_flux, y[i * self.p:(i + 1) * self.p] * scale))
             flux_in_flux_point_diff[i] = self.d * (np.dot(sol_to_flux, y[i * self.p:(i + 1) * self.p] * scale * scale))
+
         # Ensuring the flux continuity
         for i in range(self.n_cell):
             if self.c > 0:
@@ -85,17 +86,21 @@ class SpectralDifferenceMethod(_SpatialMethod):
             riemann_diff = (flux_in_flux_point_diff[i, 0] + flux_in_flux_point_diff[i - 1, -1]) / 2
             flux_in_flux_point_diff[i, 0] = riemann_diff
             flux_in_flux_point_diff[i - 1, -1] = riemann_diff
+
         # Getting the flux in flux points for diffusion
         for i in range(self.n_cell):
             flux_in_flux_point_diff[i] = np.dot(d_in_flux, flux_in_flux_point_diff[i])
+
         # Ensuring the flux continuity for diffusion
         for i in range(self.n_cell):
             riemann_diff = (flux_in_flux_point_diff[i, 0] + flux_in_flux_point_diff[i - 1, -1]) / 2
             flux_in_flux_point_diff[i, 0] = riemann_diff
             flux_in_flux_point_diff[i - 1, -1] = riemann_diff
+
         # Getting the rhs in sol points
         for i in range(self.n_cell):
             rhs_in_sol_point[i] = np.dot(d_in_flux_to_sol, flux_in_flux_point_conv[i] + flux_in_flux_point_diff[i])
+
         return rhs_in_sol_point.reshape(y.shape)
         """
         return np.dot(self._jac, y)
