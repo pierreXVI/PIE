@@ -13,7 +13,7 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
 
     :ivar array_like flux_pts: The repartition of the flux points inside a [-1, 1] cell
     :ivar array_like _sol_to_flux_conv_full: A needed matrix,
-     ``_sol_to_flux_conv_full`` @ ``y`` is the flux expressed in the flux points multiplied by the scaling factor
+     ``_sol_to_flux_conv_full`` @ ``y`` is the flux expressed in the flux points
     :ivar array_like _d_in_flux_to_sol_full: A needed matrix,
      ``_d_in_flux_to_sol_full`` @ ``f`` is the derivative of ``f`` expressed in the solution points,
      with ``f`` given in the flux points
@@ -126,9 +126,9 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         return rhs
 
     def jac(self, y, t):
-        pass
-        # j = np.dot(self._d_in_flux_to_sol_full, np.dot(self._riemann_solver(y), self._sol_to_flux_conv_full))
-        # return self._jac_diff - j * y[None, :]
+        foo = np.dot(self._riemann_solver(y), self._sol_to_flux_full)
+        jac_conv = -np.dot(self._d_in_flux_to_sol_full, foo * (np.dot(foo, y)[:, None]))
+        return self._jac_diff + jac_conv
 
     def _riemann_solver(self, y):
         """
