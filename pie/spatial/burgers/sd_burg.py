@@ -1,6 +1,6 @@
 import numpy as np
 
-from pie.spatial import sd
+from pie.linalg import lagrange
 from pie.spatial.method import _SpatialMethod
 
 
@@ -27,12 +27,12 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots((self.p - 1) * [0] + [1]), 1))
 
         # Setting the needed matrices
-        sol_to_flux = sd.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
-        flux_to_sol = sd.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
+        sol_to_flux = lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
+        flux_to_sol = lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
         d_in_flux = np.zeros((self.p + 1, self.p + 1))
         for i in range(self.p + 1):
             for j in range(self.p + 1):
-                d_in_flux[i, j] = sd.d_lagrange(self.flux_pts[i], self.flux_pts, j)
+                d_in_flux[i, j] = lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
 
         # Working with full size matrices
         isoparametric_scale = 2 / (np.roll(self.mesh, -1) - self.mesh)[:-1]
