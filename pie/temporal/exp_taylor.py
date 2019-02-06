@@ -1,5 +1,5 @@
 import numpy as np
-import scipy as sp
+from scipy.linalg import expm as expm_sp
 
 from pie.temporal.commons import Counter
 
@@ -40,7 +40,7 @@ def taylor_exp_1(y0, t, f, jac, verbose=True, **_):
         w[:, -1] = f(y[i], t[i]) - np.dot(j, y[i])
         expanded_vector[:d] = y[i]
         expanded_matrix[:d, -1:] = w
-        y[i + 1] = np.dot(sp.linalg.expm(h * expanded_matrix), expanded_vector)[:d]
+        y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
         count(i + 1)
     return y
 
@@ -87,7 +87,7 @@ def taylor_exp_2(y0, t, f, jac, df_dt=None, verbose=True, **_):
         w[:, -2] = np.dot(jac(y[i], t[i]) - j, f(y[i], t[i])) + df_dt(y[i], t[i])
         expanded_vector[:d] = y[i]
         expanded_matrix[:d, -2:] = w
-        y[i + 1] = np.dot(sp.linalg.expm(h * expanded_matrix), expanded_vector)[:d]
+        y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
         count(i + 1)
     return y
 
@@ -148,6 +148,6 @@ def taylor_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, v
                    + d2f_dt2(y[i], t[i])
         expanded_vector[:d] = y[i]
         expanded_matrix[:d, -3:] = w
-        y[i + 1] = np.dot(sp.linalg.expm(h * expanded_matrix), expanded_vector)[:d]
+        y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
         count(i + 1)
     return y
