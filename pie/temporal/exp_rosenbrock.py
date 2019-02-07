@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.linalg import expm as expm_sp
 
-from pie.temporal.commons import Counter
+import pie.temporal.commons
 
 
 def rosen_exp_1(y0, t, f, jac, verbose=True, **_):
@@ -23,11 +23,11 @@ def rosen_exp_1(y0, t, f, jac, verbose=True, **_):
         n, d = len(t), 1
         y = np.zeros((n,))
     if verbose is False:
-        count = Counter('', 0)
+        count = pie.temporal.commons.Counter('', 0)
     elif verbose is True:
-        count = Counter('Taylor Exp 1', n)
+        count = pie.temporal.commons.Counter('Taylor Exp 1', n)
     else:
-        count = Counter(verbose, n)
+        count = pie.temporal.commons.Counter(verbose, n)
     y[0] = y0
     w = np.zeros((d, 1))
     expanded_vector = np.zeros((d + 1,))
@@ -66,11 +66,11 @@ def rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, **_):
         n, d = len(t), 1
         y = np.zeros((n,))
     if verbose is False:
-        count = Counter('', 0)
+        count = pie.temporal.commons.Counter('', 0)
     elif verbose is True:
-        count = Counter('Taylor Exp 2', n)
+        count = pie.temporal.commons.Counter('Taylor Exp 2', n)
     else:
-        count = Counter(verbose, n)
+        count = pie.temporal.commons.Counter(verbose, n)
     if df_dt is None:
         def df_dt(*_): return np.zeros((d,))
     y[0] = y0
@@ -118,11 +118,11 @@ def rosen_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, ve
         n, d = len(t), 1
         y = np.zeros((n,))
     if verbose is False:
-        count = Counter('', 0)
+        count = pie.temporal.commons.Counter('', 0)
     elif verbose is True:
-        count = Counter('Taylor Exp 3', n)
+        count = pie.temporal.commons.Counter('Taylor Exp 3', n)
     else:
-        count = Counter(verbose, n)
+        count = pie.temporal.commons.Counter(verbose, n)
     if df_dt is None:
         def df_dt(*_): return np.zeros((d,))
     if d2f_dt2 is None:

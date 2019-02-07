@@ -4,7 +4,7 @@ r"""
 
 import numpy as np
 
-from pie.temporal.commons import Counter
+import pie.temporal.commons
 
 
 def rk_1(y0, t, f, verbose=True, **_):
@@ -25,11 +25,11 @@ def rk_1(y0, t, f, verbose=True, **_):
         n = len(t)
         y = np.zeros((n,))
     if verbose is False:
-        count = Counter('', 0)
+        count = pie.temporal.commons.Counter('', 0)
     elif verbose is True:
-        count = Counter('RK1', n)
+        count = pie.temporal.commons.Counter('RK1', n)
     else:
-        count = Counter(verbose, n)
+        count = pie.temporal.commons.Counter(verbose, n)
     y[0] = y0
     for i in range(n - 1):
         y[i + 1] = y[i] + (t[i + 1] - t[i]) * f(y[i], t[i])
@@ -55,11 +55,11 @@ def rk_2(y0, t, f, verbose=True, **_):
         n = len(t)
         y = np.zeros((n,))
     if verbose is False:
-        count = Counter('', 0)
+        count = pie.temporal.commons.Counter('', 0)
     elif verbose is True:
-        count = Counter('RK2', n)
+        count = pie.temporal.commons.Counter('RK2', n)
     else:
-        count = Counter(verbose, n)
+        count = pie.temporal.commons.Counter(verbose, n)
     y[0] = y0
     for i in range(n - 1):
         h = t[i + 1] - t[i]
@@ -88,11 +88,11 @@ def rk_4(y0, t, f, verbose=True, **_):
         n = len(t)
         y = np.zeros((n,))
     if verbose is False:
-        count = Counter('', 0)
+        count = pie.temporal.commons.Counter('', 0)
     elif verbose is True:
-        count = Counter('RK4', n)
+        count = pie.temporal.commons.Counter('RK4', n)
     else:
-        count = Counter(verbose, n)
+        count = pie.temporal.commons.Counter(verbose, n)
     y[0] = y0
     for i in range(n - 1):
         h = t[i + 1] - t[i]
@@ -139,11 +139,11 @@ def rk_butcher(a, b):
             y = np.zeros((n,))
             p = np.zeros((q,))
         if verbose is False:
-            count = Counter('', 0)
+            count = pie.temporal.commons.Counter('', 0)
         elif verbose is True:
-            count = Counter('RK_butcher', n)
+            count = pie.temporal.commons.Counter('RK_butcher', n)
         else:
-            count = Counter(verbose, n)
+            count = pie.temporal.commons.Counter(verbose, n)
         y[0] = y0
         for i in range(n - 1):
             h = t[i + 1] - t[i]

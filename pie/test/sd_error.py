@@ -1,6 +1,6 @@
 import numpy as np
 
-from pie.spatial import sd
+import pie.spatial
 
 
 def extrapolate_sd(method, y, n_extra=100):
@@ -14,7 +14,7 @@ def extrapolate_sd(method, y, n_extra=100):
     y_extra = np.zeros((method.n_cell * n_extra,))
     for i in range(method.n_cell):
         y_cell = y[i * method.p:(i + 1) * method.p]
-        y_extra[i * n_extra:(i + 1) * n_extra] = sd.lagrange_extrapolation(method.cell, y_cell, cell_extra)
+        y_extra[i * n_extra:(i + 1) * n_extra] = pie.spatial.sd.lagrange_extrapolation(method.cell, y_cell, cell_extra)
 
     return x_extra, y_extra
 

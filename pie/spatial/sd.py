@@ -1,10 +1,10 @@
 import numpy as np
 
-from pie.linalg import lagrange
-from pie.spatial.method import _SpatialMethod
+import pie.linalg.lagrange
+import pie.spatial.method
 
 
-class SpectralDifferenceMethod(_SpatialMethod):
+class SpectralDifferenceMethod(pie.spatial.method.SpatialMethod):
     """
     Spatial scheme for convection - diffusion flux,
     with a periodic boundary condition, using the spectral difference method.
@@ -23,12 +23,12 @@ class SpectralDifferenceMethod(_SpatialMethod):
         self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots((self.p - 1) * [0] + [1]), 1))
 
         # Setting the needed matrices
-        sol_to_flux = lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
-        flux_to_sol = lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
+        sol_to_flux = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
+        flux_to_sol = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
         d_in_flux = np.zeros((self.p + 1, self.p + 1))
         for i in range(self.p + 1):
             for j in range(self.p + 1):
-                d_in_flux[i, j] = lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
+                d_in_flux[i, j] = pie.linalg.lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
 
         # Working with full size matrices
         isoparametric_scale = 2 / (np.roll(self.mesh, -1) - self.mesh)[:-1]

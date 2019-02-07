@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pie import spatial
-from pie import temporal
-from pie.test import initial_condition
+import pie
 
 
 def solve(n, x_max, p, conv, diff, cfl, t_max, init_cond, spatial_method, temporal_method):
@@ -45,6 +43,6 @@ def plot(method, t, y, temporal_method_name='temporal_method'):
 
 
 if __name__ == '__main__':
-    plot(*solve(n=50, x_max=1, p=4, conv=1, diff=0, cfl=1, t_max=8.8,
-                init_cond=initial_condition.sine(1),
-                spatial_method=spatial.SpectralDifferenceMethod, temporal_method=temporal.rk_4))
+    plot(*solve(n=50, x_max=1, p=4, conv=1, diff=0, cfl=5, t_max=1,
+                init_cond=pie.test.initial_condition.sine(1),
+                spatial_method=pie.spatial.SpectralDifferenceMethod, temporal_method=pie.temporal.taylor_exp_1))

@@ -7,8 +7,8 @@ import warnings
 import numpy as np
 import scipy.optimize
 
-from pie.temporal.commons import Counter
-from pie.temporal.rk import rk_4
+import pie.temporal.commons
+import pie.temporal.rk
 
 
 def _bdf_i(i, y0, t, f, func_to_minimise, jac_func_to_minimise, verbose):
@@ -20,13 +20,13 @@ def _bdf_i(i, y0, t, f, func_to_minimise, jac_func_to_minimise, verbose):
         y = np.zeros((n,))
 
     if verbose is False:
-        count = Counter('', 0)
+        count = pie.temporal.commons.Counter('', 0)
     elif verbose is True:
-        count = Counter('BDF{0}'.format(i), n)
+        count = pie.temporal.commons.Counter('BDF{0}'.format(i), n)
     else:
-        count = Counter(verbose, n)
+        count = pie.temporal.commons.Counter(verbose, n)
 
-    y[:i] = rk_4(y0, t[:i], f, verbose=False)
+    y[:i] = pie.temporal.rk_4(y0, t[:i], f, verbose=False)
     for k in range(n - i):
         result = scipy.optimize.root(func_to_minimise, y[k + i - 1], jac=jac_func_to_minimise,
                                      args=tuple([t[k + i - 1], t[k + i]] + [y[k + j] for j in range(i)]))
