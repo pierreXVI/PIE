@@ -1,5 +1,9 @@
+import time
+
 import numpy as np
 from scipy.linalg import expm as expm_sp
+
+import pie.temporal.commons
 
 
 def expm_krylov(a, b, k, eps=1E-12):
@@ -25,27 +29,40 @@ def expm_krylov(a, b, k, eps=1E-12):
     return np.dot(v_k.T, np.dot(expm_sp(h_k), np.dot(v_k, b)))
 
 
-if __name__ == '__main__':
-    d = 1000
-    k = 10
+def test_expm_krylov(d, k, n):
+    timer_sp = 0
+    timer_kr = 0
+    abs_err = []
+    rel_err = []
+    c = pie.temporal.commons.Counter('Test krylov vs scpy', n)
+    for i in range(n):
+        # a = np.random.rand(d, d)
+        a = 100 * np.diagflat(np.random.rand(d))
+        # a = np.diagflat(np.random.rand(d)) \
+        #     + np.diagflat(np.random.rand(d - 1), k=1) \
+        #     + np.diagflat(np.random.rand(d - 1), k=-1)
+        b = np.random.rand(d)
 
-    # a = np.random.rand(d, d)
-    a = np.diagflat(np.random.rand(d)) \
-        + np.diagflat(np.random.rand(d - 1), k=1) \
-        + np.diagflat(np.random.rand(d - 1), k=-1)
-    b = np.random.rand(d)
-    print(np.max(expm_sp(a)))
-    import time
+        t = time.time()
+        foo = np.dot(expm_sp(a), b)
+        timer_sp += time.time() - t
 
-    t = time.time()
-    foo = np.dot(expm_sp(a), b)
-    print('Ellapsed scipy : {0:0.3f}'.format(time.time() - t))
+        t = time.time()
+        bar = expm_krylov(a, b, k)
+        timer_kr += time.time() - t
 
-    t = time.time()
-    bar = expm_krylov(a, b, k)
-    print('Ellapsed Krylov : {0:0.3f}'.format(time.time() - t))
+        abs_err.append(abs(foo - bar))
+        rel_err.append(abs((foo - bar) / foo))
+        c(i)
 
-    print('Relative error : {0:0.1%} (avg), {1:0.1%} (max)'
-          .format(np.mean(abs(foo - bar) / foo), np.max(abs(foo - bar) / foo)))
+    print("Mean elapsed time for {0} iterations : {1:0.1f} ms (scipy), {2:0.1f} ms (krylov)"
+          .format(n, 1E3 * timer_sp / n, 1E3 * timer_kr / n))
+
+    print('Relative error : {0:0.1E} (avg), {1:0.1E} (max)'
+          .format(np.mean(rel_err), np.max(rel_err)))
     print('Absolute error : {0:0.1E} (avg), {1:0.1E} (max)'
-          .format(np.mean(abs(foo - bar)), np.max(abs(foo - bar))))
+          .format(np.mean(abs_err), np.max(abs_err)))
+
+
+if __name__ == '__main__':
+    test_expm_krylov(10, 5, 10)
