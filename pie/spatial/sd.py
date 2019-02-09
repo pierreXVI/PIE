@@ -1,10 +1,10 @@
 import numpy as np
 
 import pie.linalg.lagrange
-import pie.spatial.method
+from .method import _SpatialMethod
 
 
-class SpectralDifferenceMethod(pie.spatial.method.SpatialMethod):
+class SpectralDifferenceMethod(_SpatialMethod):
     """
     Spatial scheme for convection - diffusion flux,
     with a periodic boundary condition, using the spectral difference method.

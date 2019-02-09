@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class SpatialMethod(object):
+class _SpatialMethod(object):
     r"""
     Generic structure for spatial methods on periodic mesh
 

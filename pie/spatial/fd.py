@@ -1,9 +1,9 @@
 import numpy as np
 
-import pie.spatial.method
+from .method import _SpatialMethod
 
 
-class FiniteDifferenceMethod(pie.spatial.method.SpatialMethod):
+class FiniteDifferenceMethod(_SpatialMethod):
     r"""
     Upwind (as regard of the convection speed) scheme for convection - diffusion flux,
     with a periodic boundary condition.

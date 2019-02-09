@@ -1,9 +1,9 @@
 import numpy as np
 
-import pie.spatial.method
+from ..method import _SpatialMethod
 
 
-class FiniteDifferenceMethodBurgers(pie.spatial.method.SpatialMethod):
+class FiniteDifferenceMethodBurgers(_SpatialMethod):
     r"""
     Upwind (as regard of the convection speed) scheme for viscous Burgers' equation,
     with a periodic boundary condition.

@@ -1,10 +1,10 @@
 import numpy as np
 
 import pie.linalg.lagrange
-import pie.spatial.method
+from ..method import _SpatialMethod
 
 
-class SpectralDifferenceMethodBurgers(pie.spatial.method.SpatialMethod):
+class SpectralDifferenceMethodBurgers(_SpatialMethod):
     """
     Spatial scheme for viscous Burgers' equation,
     with a periodic boundary condition, using the spectral difference method.
