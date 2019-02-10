@@ -3,13 +3,13 @@ from __future__ import print_function
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pie.temporal import rk, bdf, exp_taylor, exp_rosenbrock
+from pie.temporal import rk, bdf
+#exp_taylor, exp_rosenbrock
 
 
 def compare_methods(pb, h, t_max):
     r"""
     Compare methods in ``METHODS``
-
     :param tuple pb: The problem to solve : y' = pb[0](y, t)
      with pb[1](y, t) the jacobian of pb[0] and y = pb[1] as solution
     :param float h: The time step
@@ -46,7 +46,6 @@ def compare_methods(pb, h, t_max):
 def compare_methods_2d(pb, h, t_max):
     r"""
     Compare methods in ``METHODS`` on a 2D problem
-
     :param tuple pb: The problem to solve : [y, y']' = pb[0]([y, y'], t)
      with pb[1]([y, y'], t) the jacobian of pb[0], y = pb[2] as solution and [y, y'](0) = pb[3]
     :param float h: The time step
@@ -90,13 +89,13 @@ METHODS = (
     # bdf.bdf_3,
     # bdf.bdf_4,
     # bdf.bdf_5,
-    # bdf.bdf_6,
-    exp_taylor.taylor_exp_1,
-    exp_taylor.taylor_exp_2,
-    exp_taylor.taylor_exp_3,
-    exp_rosenbrock.rosen_exp_1,
-    exp_rosenbrock.rosen_exp_2,
-    exp_rosenbrock.rosen_exp_3,
+     bdf.bdf_6,
+    #exp_taylor.taylor_exp_1,
+    #exp_taylor.taylor_exp_2,
+    #exp_taylor.taylor_exp_3,
+    #exp_rosenbrock.rosen_exp_1,
+    #exp_rosenbrock.rosen_exp_2,
+    #exp_rosenbrock.rosen_exp_3,
 )
 """The methods that are going to be tested"""
 
@@ -106,7 +105,6 @@ pb_1 = (lambda y, t: y * (np.sin(t) ** 2),
         lambda t: np.exp(t / 2 - np.sin(2 * t) / 4))
 r"""
 From the `Wikipedia article <https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods>`_ on RK methods
-
 .. math::
    \left\{\begin{aligned}
     f\left(y, t\right) &= y\sin\left(t\right)^2 \\
@@ -144,7 +142,6 @@ pb_4 = (lambda y, t: y * y,
         lambda t: 0.1 / (1 - 0.1 * t))
 r"""
 The solutions of this equation do diverge in a finite time.
-
 .. math::
    \left\{\begin{aligned}
     f\left(y, t\right) &= y^2 \\
@@ -170,7 +167,6 @@ Harmonic problem :
 :math:`\left\{\begin{aligned}\ddot{y} + y &= 0 \\
 \left(y, \dot{y}\right)_{t = 0} &= \left(1, 0\right)\end{aligned}\right.`
 with :math:`y = \cos\left(t\right)` as solution
-
 """
 
 pb2d_2 = (lambda y, t: np.array([y[1], -(1 + 2 * np.cos(t)) * y[0] - np.sin(t) * y[1]]),
@@ -180,23 +176,21 @@ pb2d_2 = (lambda y, t: np.array([y[1], -(1 + 2 * np.cos(t)) * y[0] - np.sin(t) *
           np.array([0, np.e]))
 r"""
 Same problem as ``pb_2`` written in 2D
-
 .. math::
    \left\{\begin{aligned}
     &\ddot{y} = -\left(1 + 2\cos\left(t\right)\right)y - \sin\left(t\right)\dot{y} \\
     &\left(y, \dot{y}\right)_{t = 0} = \left(0, e\right)
    \end{aligned}\right.
-
 with :math:`y = \cos\left(t\right)` as solution
 """
 
 if __name__ == '__main__':
     # compare_methods(pb_1, t_max=10, h=0.1)
-    compare_methods(pb_2, t_max=50, h=0.1)
+    # compare_methods(pb_2, t_max=50, h=0.1)
     # compare_methods(pb_3, t_max=30, h=0.1)
-    # compare_methods(pb_4, t_max=9, h=1)
+     compare_methods(pb_4, t_max=9, h=1)
     # compare_methods(pb_5, t_max=1.5, h=1.5 / 38)
     # compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
     # compare_methods_2d(pb2d_2, t_max=10, h=0.01)
 
-    pass
+pass
