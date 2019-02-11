@@ -35,7 +35,7 @@ def rosen_exp_1(y0, t, f, jac, verbose=True, **_):
     expanded_matrix = np.zeros((d + 1, d + 1))
     for i in range(n - 1):
         h = t[i + 1] - t[i]
-        j = jac(y[0], t[0])
+        j = jac(y[i], t[i])
         expanded_matrix[:d, :d] = j
         w[:, -1] = f(y[i], t[i]) - np.dot(j, y[i])
         expanded_vector[:d] = y[i]
@@ -81,7 +81,7 @@ def rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, **_):
     expanded_matrix[-2:-1, -1:] = 1
     for i in range(n - 1):
         h = t[i + 1] - t[i]
-        j = jac(y[0], t[0])
+        j = jac(y[i], t[i])
         expanded_matrix[:d, :d] = j
         w[:, -1] = f(y[i], t[i]) - np.dot(j, y[i])
         w[:, -2] = np.dot(jac(y[i], t[i]) - j, f(y[i], t[i])) + df_dt(y[i], t[i])
@@ -137,7 +137,7 @@ def rosen_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, ve
     expanded_matrix[-3:-1, -2:] = np.eye(2)
     for i in range(n - 1):
         h = t[i + 1] - t[i]
-        j = jac(y[0], t[0])
+        j = jac(y[i], t[i])
         expanded_matrix[:d, :d] = j
         w[:, -1] = f(y[i], t[i]) - np.dot(j, y[i])
         w[:, -2] = np.dot(jac(y[i], t[i]) - j, f(y[i], t[i])) + df_dt(y[i], t[i])
