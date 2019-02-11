@@ -109,6 +109,9 @@ class SpectralDifferenceMethod(_SpatialMethod):
     def jac(self, y, t):
         return self._jac
 
+    def jac2(self, y, t):
+        return np.zeros((self.n_pts, self.n_pts, self.n_pts))
+
     def __repr__(self):
         foo = "Spectral difference " + super(SpectralDifferenceMethod, self).__repr__()
 
