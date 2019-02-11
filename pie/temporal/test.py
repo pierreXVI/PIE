@@ -79,20 +79,20 @@ def compare_methods_2d(pb, h, t_max):
 
 
 METHODS = (
-    rk.rk_1,
+    #rk.rk_1,
     # rk.rk_2,
-    rk.rk_4,
+     rk.rk_4,
     # rk.rk_butcher(rk.A_RK4, rk.B_RK4),
-    bdf.bdf_1,
+    # bdf.bdf_1,
     # bdf.bdf_2,
     # bdf.bdf_3,
-    # bdf.bdf_4,
+      bdf.bdf_4,
     # bdf.bdf_5,
-    bdf.bdf_6,
-    exp_taylor.taylor_exp_1,
+    # bdf.bdf_6,
+     exp_taylor.taylor_exp_1,
     # exp_taylor.taylor_exp_2,
     # exp_taylor.taylor_exp_3,
-    exp_rosenbrock.rosen_exp_1,
+     exp_rosenbrock.rosen_exp_1,
     # exp_rosenbrock.rosen_exp_2,
     # exp_rosenbrock.rosen_exp_3,
 )
@@ -184,12 +184,12 @@ with :math:`y = \cos\left(t\right)` as solution
 """
 
 if __name__ == '__main__':
-    # compare_methods(pb_1, t_max=10, h=0.1)
+    #compare_methods(pb_1, t_max=10, h=0.1)
     # compare_methods(pb_2, t_max=50, h=0.1)
     # compare_methods(pb_3, t_max=30, h=0.1)
-    compare_methods(pb_4, t_max=9, h=1)
+    # compare_methods(pb_4, t_max=9, h=1)
 # compare_methods(pb_5, t_max=1.5, h=1.5 / 38)
-# compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
+compare_methods_2d(pb2d_1, t_max=10 * np.pi, h=0.05)
 # compare_methods_2d(pb2d_2, t_max=10, h=0.01)
 
 pass
