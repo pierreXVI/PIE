@@ -2,25 +2,28 @@ Tests on ODE
 ============
 
 .. automodule:: pie.test.test_ode
-   :members: compare_methods, Problem
+   :members: compare_methods
 
 .. autodata:: pie.test.test_ode.METHODS
    :annotation:
 
 List of problems :
 
-.. autodata:: pie.test.test_ode.pb_1
+.. automodule:: pie.test.ode_problem
+   :members: Problem
+
+.. autodata:: pie.test.ode_problem.pb_1
    :annotation:
-.. autodata:: pie.test.test_ode.pb_2
+.. autodata:: pie.test.ode_problem.pb_2
    :annotation:
-.. autodata:: pie.test.test_ode.pb_3
+.. autodata:: pie.test.ode_problem.pb_3
    :annotation:
-.. autodata:: pie.test.test_ode.pb_4
+.. autodata:: pie.test.ode_problem.pb_4
    :annotation:
-.. autodata:: pie.test.test_ode.pb_5
+.. autodata:: pie.test.ode_problem.pb_5
    :annotation:
-.. autodata:: pie.test.test_ode.pb2d_1
+.. autodata:: pie.test.ode_problem.pb2d_1
    :annotation:
-.. autodata:: pie.test.test_ode.pb2d_2
+.. autodata:: pie.test.ode_problem.pb2d_2
    :annotation:
 
