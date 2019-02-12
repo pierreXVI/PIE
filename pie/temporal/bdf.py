@@ -31,7 +31,7 @@ def _bdf_i(i, y0, t, f, func_to_minimise, jac_func_to_minimise, verbose):
         result = scipy.optimize.root(func_to_minimise, y[k + i - 1], jac=jac_func_to_minimise,
                                      args=tuple([t[k + i - 1], t[k + i]] + [y[k + j] for j in range(i)]))
         if not result.success:
-            warnings.warn(result.message)
+            warnings.warn('\rBDF{0} : '.format(i) + result.message, stacklevel=2)
         y[k + i] = result.x
         count(k + i)
     return y
