@@ -9,7 +9,7 @@ Welcome to PIE's documentation!
    
    temporal/temporal.rst
    spatial/spatial.rst
-   test/initial_condition.rst
+   test/test.rst
 
 
 
