@@ -9,3 +9,4 @@ Temporal Methods
    
    rk.rst
    bdf.rst
+   exp.rst

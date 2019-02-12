@@ -24,6 +24,3 @@ from .bdf import bdf_1, bdf_2, bdf_3, bdf_4, bdf_5, bdf_6
 from .exp_rosenbrock import rosen_exp_1, rosen_exp_2, rosen_exp_3
 from .exp_taylor import taylor_exp_1, taylor_exp_2, taylor_exp_3
 from .rk import rk_1, rk_2, rk_4, rk_butcher
-
-# TODO: add an option not to keep all solutions y but only y[-1]
-#  throughout the computation in order to gain some memory space
