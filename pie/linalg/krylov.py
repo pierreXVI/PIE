@@ -30,6 +30,7 @@ def expm_krylov(a, b, k, eps=1E-12):
 
 
 def test_expm_krylov(d, k, n):
+    print('Vector size : {0}\t\tKrylov subspace dim : {1}'.format(d, k))
     timer_sp = 0
     timer_kr = 0
     abs_err = []
@@ -37,7 +38,7 @@ def test_expm_krylov(d, k, n):
     c = pie.temporal.commons.Counter('Test krylov vs scpy', n)
     for i in range(n):
         # a = np.random.rand(d, d)
-        a = 100 * np.diagflat(np.random.rand(d))
+        a = np.diagflat(np.random.rand(d))
         # a = np.diagflat(np.random.rand(d)) \
         #     + np.diagflat(np.random.rand(d - 1), k=1) \
         #     + np.diagflat(np.random.rand(d - 1), k=-1)
@@ -65,4 +66,4 @@ def test_expm_krylov(d, k, n):
 
 
 if __name__ == '__main__':
-    test_expm_krylov(10, 5, 10)
+    test_expm_krylov(1000, 20, 10)
