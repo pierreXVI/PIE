@@ -1,3 +1,7 @@
+r"""
+`Lagrange polynomial <https://en.wikipedia.org/wiki/Lagrange_polynomial>`_ on Wikipedia.
+"""
+
 import numpy as np
 
 

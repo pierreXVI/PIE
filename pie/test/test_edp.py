@@ -7,7 +7,7 @@ import pie
 def solve(n, x_max, p, conv, diff, cfl, t_max, init_cond, spatial_method, temporal_method):
     # Spatial
     mesh = np.linspace(0, x_max, n + 1)
-    method = spatial_method(mesh, p, conv, diff)
+    method = spatial_method(mesh, p, conv=conv, diff=diff)
 
     # Temporal
     dt = np.inf
@@ -43,6 +43,7 @@ def plot(method, t, y, temporal_method_name='temporal_method'):
 
 
 if __name__ == '__main__':
-    plot(*solve(n=50, x_max=1, p=4, conv=1, diff=0, cfl=5, t_max=1,
+    plot(*solve(n=50, x_max=1, p=4, conv=1, diff=0, cfl=10, t_max=0.07,
                 init_cond=pie.test.initial_condition.sine(1),
-                spatial_method=pie.spatial.SpectralDifferenceMethod, temporal_method=pie.temporal.taylor_exp_1))
+                spatial_method=pie.spatial.burgers.SpectralDifferenceMethodBurgers,
+                temporal_method=pie.temporal.rk_2))

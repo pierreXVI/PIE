@@ -107,7 +107,7 @@ pb_5 = Problem(
     jac2=lambda y, t: np.array([0])
 )
 r"""
-Stiff equation, from Hairer & Wanner, 'Solving Ordinary Differential Equations II', chapter IV.1
+Stiff equation, from `Hairer & Wanner, 'Solving Ordinary Differential Equations II', chapter IV.1`
 
 .. math::
    \left\{\begin{aligned}
