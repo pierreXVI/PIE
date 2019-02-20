@@ -7,6 +7,6 @@ For now, we look at a convection - diffusion equation, and therefore
 :math:`RHS\left(y, t\right) = -c\frac{\partial y}{\partial x} + d\frac{\partial^2y}{\partial x^2}`
 """
 
+from . import burgers
 from .fd import FiniteDifferenceMethod
 from .sd import SpectralDifferenceMethod
-from . import burgers

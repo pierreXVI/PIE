@@ -25,18 +25,3 @@ cd /path/to/local/repository/doc/
 make # to see a list of possible output format
 make html # to build the doc html format, in ./build/html
 ~~~
-
-### TODO:
-
-- [x] Adapt the spatial code to a generic temporal scheme
-
-- [ ] Compute the errors
-    - [ ] On spatial schemes
-    - [ ] On temporal schemes
-
-- [ ] Write exponential methods
-	- [ ] Understand the methods
-	- [ ] Write exponential methods on EDO
-		- [ ] Write needed matricial methods
-		- [ ] Write tests
-	- [ ] Test on EDP

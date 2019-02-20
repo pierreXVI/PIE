@@ -1,5 +1,6 @@
 import numpy as np
-from pie.spatial.method import _SpatialMethod
+
+from .method import _SpatialMethod
 
 
 class FiniteDifferenceMethod(_SpatialMethod):
@@ -73,6 +74,9 @@ class FiniteDifferenceMethod(_SpatialMethod):
 
     def jac(self, y, t):
         return self._jac
+
+    def jac2(self, y, t):
+        return np.zeros((self.n_pts, self.n_pts, self.n_pts))
 
     def __repr__(self):
         return "Finite difference " + super(FiniteDifferenceMethod, self).__repr__()

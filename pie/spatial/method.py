@@ -61,6 +61,13 @@ class _SpatialMethod(object):
         :return: numpy.ndarray - the jacobian :math:`\frac{\partial RHS}{\partial y}\left(y, t\right)`
         """
 
+    def jac2(self, y, t):
+        r"""
+        :param array_like y:
+        :param float t:
+        :return: numpy.ndarray - the jacobian of the jacobian :math:`\frac{\partial^2RHS}{\partial y^2}\left(y,t\right)`
+        """
+
     def __repr__(self):
         foo = "Method, on [{0}, {1}] (periodic)".format(self.mesh[0], self.mesh[-1])
 

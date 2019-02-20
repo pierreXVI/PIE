@@ -1,0 +1,31 @@
+\BOOKMARK [-1][-]{part.1}{I Gestion de projet}{}% 1
+\BOOKMARK [0][-]{chapter.1}{Description du projet}{part.1}% 2
+\BOOKMARK [1][-]{section.1.1}{Objectifs du projet, p\351rim\350tre et r\351sultats attendus}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.2}{Les parties prennantes du projet}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.3}{Les exigences de haut niveau}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.4}{Les contraintes identifi\351es}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.5}{Hypoth\350ses de travail}{chapter.1}% 7
+\BOOKMARK [0][-]{chapter.2}{Organisation}{part.1}% 8
+\BOOKMARK [1][-]{section.2.1}{Organisation de l\220\351quipe \(r\364les\)}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.2}{Organisation du travail \(m\351thodes et outils\)}{chapter.2}% 10
+\BOOKMARK [0][-]{chapter.3}{Processus du d\351veloppement}{part.1}% 11
+\BOOKMARK [1][-]{section.3.1}{Logique de d\351veloppement}{chapter.3}% 12
+\BOOKMARK [1][-]{section.3.2}{D\351finition des jalons}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.3}{Planning de projet \(diagramme de Gantt\)}{chapter.3}% 14
+\BOOKMARK [0][-]{chapter.4}{Definition d\351taill\351e du projet \(Diagrammes PBS et WBS}{part.1}% 15
+\BOOKMARK [0][-]{chapter.5}{Les livrables du projet}{part.1}% 16
+\BOOKMARK [1][-]{section.5.1}{Liste des produits livrables au client}{chapter.5}% 17
+\BOOKMARK [1][-]{section.5.2}{Liste des livrables demand\351s par l\220\351cole }{chapter.5}% 18
+\BOOKMARK [0][-]{chapter.6}{Risques et opportunit\351s}{part.1}% 19
+\BOOKMARK [0][-]{chapter.7}{Suivi et Contr\364le}{part.1}% 20
+\BOOKMARK [1][-]{section.7.1}{Tableau de bord de suivi}{chapter.7}% 21
+\BOOKMARK [1][-]{section.7.2}{Communication }{chapter.7}% 22
+\BOOKMARK [-1][-]{part.2}{II M\351thodes num\351riques}{}% 23
+\BOOKMARK [0][-]{chapter.8}{M\351thodes spectrales}{part.2}% 24
+\BOOKMARK [1][-]{section.8.1}{Int\351r\352t}{chapter.8}% 25
+\BOOKMARK [1][-]{section.8.2}{Formalisme}{chapter.8}% 26
+\BOOKMARK [1][-]{section.8.3}{M\351thode de reconstitution du Flux}{chapter.8}% 27
+\BOOKMARK [0][-]{chapter.9}{M\351thodes temporelles}{part.2}% 28
+\BOOKMARK [1][-]{section.9.1}{Exponentiel}{chapter.9}% 29
+\BOOKMARK [1][-]{section.9.2}{Rosenbroch}{chapter.9}% 30
+\BOOKMARK [-1][-]{part.3}{III Couplage spatial - temporel}{}% 31

@@ -1,6 +1,6 @@
 import numpy as np
-from pie.spatial.method import _SpatialMethod
-from pie.spatial import FiniteDifferenceMethod
+
+from ..method import _SpatialMethod
 
 
 class FiniteDifferenceMethodBurgers(_SpatialMethod):
@@ -58,7 +58,7 @@ class FiniteDifferenceMethodBurgers(_SpatialMethod):
 
     def jac(self, y, t):
         j = self.j1 * (y > 0)[:, None] + self.j2 * (y < 0)[:, None]
-        return j + self._jac_diff - (y[:, None] * j + np.diagflat(np.dot(j, y)))
+        return self._jac_diff - (y[:, None] * j + np.diagflat(np.dot(j, y)))
 
     def __repr__(self):
         return "Finite difference for Burgers' equation " + super(FiniteDifferenceMethodBurgers, self).__repr__()

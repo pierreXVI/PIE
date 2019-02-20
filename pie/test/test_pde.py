@@ -1,14 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from pie.test import initial_condition, sd_error
-from pie import temporal
-from pie import spatial
+
+import pie
 
 
 def solve(n, x_max, p, conv, diff, cfl, t_max, init_cond, spatial_method, temporal_method):
     # Spatial
     mesh = np.linspace(0, x_max, n + 1)
-    method = spatial_method(mesh, p, conv, diff)
+    method = spatial_method(mesh, p, conv=conv, diff=diff)
 
     # Temporal
     dt = np.inf
@@ -24,7 +23,7 @@ def solve(n, x_max, p, conv, diff, cfl, t_max, init_cond, spatial_method, tempor
     y0 = init_cond(x)
 
     # Solving
-    y = temporal_method(y0, t, method.rhs,
+    y = temporal_method(y0, t, method.rhs, jac=method.jac,
                         verbose='{0} + {1}'.format(temporal_method.__name__, spatial_method.__name__))
 
     return method, t, y
@@ -44,6 +43,7 @@ def plot(method, t, y, temporal_method_name='temporal_method'):
 
 
 if __name__ == '__main__':
-    plot(*solve(n=50, x_max=1, p=4, conv=1, diff=0, cfl=1, t_max=8.8,
-                init_cond=initial_condition.sine(1),
-                spatial_method=spatial.SpectralDifferenceMethod, temporal_method=temporal.rk_4))
+    plot(*solve(n=50, x_max=1, p=4, conv=1, diff=0, cfl=10, t_max=0.07,
+                init_cond=pie.test.initial_condition.sine(1),
+                spatial_method=pie.spatial.burgers.SpectralDifferenceMethodBurgers,
+                temporal_method=pie.temporal.rk_2))
