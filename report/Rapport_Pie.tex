@@ -223,10 +223,14 @@ urlcolor=black}
 %\frontmatter
 
 \chapter*{Introduction}
-Ce document est rédigé dans le cadre du Projet Ingénieurie et Entrepreneuriat en dernière année de l'ISAE SUPAERO. Il s'agit ici d'analyser les performances de schémas numériques d’intégration
-temporelle pour les simulations aux grandes échelles avec les méthodes spectrales discontinues d'ordre très élevé. Ces méthodes permettrait de pouvoir augmenter le pas de temps d'un calcul CFD. Et par conséquent semble très intéressant pour réduire les coûts de calcul.
+Ce document est rédigé dans le cadre du Projet Ingénieurie et Entrepreneuriat en dernière année de l'ISAE SUPAERO, en partenariat avec l'ONERA. Il s'agit ici d'analyser les performances de schémas numériques d’intégration
+temporelle pour la résolution de problème du type advection, diffusion rencontrés en mécanique des fluides. La particularité des problèmes de mécanique des fluides c'est que les équations qui régissent la physique sont des équations différentielles partielles. Ce qui implique qu'il faut savoir résoudre des équations à la fois en temps et en espace. Aujourd'hui de nombreuses recherches sur les méthodes de résolution spatiales ont permis d'obtenir des résultats très prometteurs. Mais peu de progrès ont été fait sur la résolution temporelle. C'est donc l'objet de ce projet. \\
 
-Le travail effectué se base donc sur la publication de papiers scientifiques. Notre objectif est donc d'implémenter ces nouveaux types de schémas dit \og exponentiels \fg{} en langage python mais aussi d'en assurer le couplage avec la méthode spatiale de la différence spectrale. Cette méthode spatiale étant au préalable implémenter par des étudiants des années précédentes. 
+En effet l'objectif c'est d'implémenter des méthodes numériques d'intégration temporelles dites \og exponentielles \fg{} d'ordre plus élevés que celles utilisées usuellement.  Ces méthodes permettraient de pouvoir augmenter le pas de temps d'un calcul CFD. Et par conséquent semble très intéressant pour réduire les coûts de calcul. Le deuxième objectif de ce projet c'est la réalisation du couplage avec les méthodes spatiales puisque l'objectif à terme c'est de pouvoir résoudre des problèmes de mécanique des fluides. 
+
+Le travail effectué se base donc sur la publication de papiers scientifiques. Afin de valider au fur et à mesure le travail effectué nous testerons nos méthodes sur des cas simples que nous complexifierons avec l'avancée du travail. Nous réaliserons la programmation avec le langage python qui est un langage open source et choisit par le client. 
+
+
 
 \part{Gestion de projet}
 
@@ -235,10 +239,9 @@ Le travail effectué se base donc sur la publication de papiers scientifiques. N
 Cette partie consiste à exposer la manière dont nous nous sommes organisés pour la réalisation de ce projet. Ce sujet de PIE s'insrit globalement dans une stratégie commune de recherche entre l'ISAE-SUPAERO et l'ONERA. L'objectif est l'amélioration du code de calcul JAGUAR basé sur les différences spectrales ayant pour objectifs d'effectuer des simulations numériques LES pour des applications CFD.
 
 
-Les méthodes spectrales discontinues consistent à représenter la solution par cellule de calcul sur une base de polynôme et à prendre en compte la discontinuité entre cellules par résolution d’un problème de Riemann. Assez récentes en CFD, leur application pour la LES (SGE en Français) est un sujet de recherche actuel. Aujourd’hui, les études se focalisent essentiellement sur la précision des schémas spatiaux pour la convection et la diffusion. Ici, on souhaite focaliser notre attention sur les schémas numériques d’intégration temporelle des équations dans un code 1D prototype. Après une analyse bibliographique (Runge‐Kutta, Méthode de Gear, exponentiels, schémas Rock...), nous proposons d’implémenter plusieurs familles de schémas dans une maquette 1D puis de comparer les performances.
+Les méthodes spectrales discontinues consistent à représenter la solution par cellule de calcul sur une base de polynôme et à prendre en compte la discontinuité entre cellules par résolution d’un problème de Riemann. Assez récentes en CFD, leur application pour la LES (SGE en Français) est un sujet de recherche actuel. Aujourd’hui, les études se focalisent essentiellement sur la précision des schémas spatiaux pour la convection et la diffusion. Ici, on souhaite focaliser notre attention sur les schémas numériques d’intégration temporelle des équations dans un code 1D prototype. Après une analyse bibliographique (Runge‐Kutta, Méthode de Gear, exponentiels, schémas Rock...), nous proposons l'implémentation de plusieurs familles de schémas dans une maquette 1D puis de comparer les performances.
 
-\vfill
-
+%\vfill
 \chapter{Description du projet}
 
 \section{Objectifs du projet, périmètre et résultats attendus}
@@ -246,8 +249,8 @@ Les méthodes spectrales discontinues consistent à représenter la solution par
 \begin{itemize}[label=\textbullet,]
 		\item Une analyse bibliographique des différentes classes de méthodes, 
 		\item Une analyse théorique des schémas numériques (précision, cout algorithmique, CFL max...) avec prise en compte de leurs paramètres utilisateur 
-		\item Une maquette (python) dans laquelle les schemas sont implantés (a gérer sous 
-        GitHub) et plusieurs cas‐tests. 
+		\item Une maquette (python) dans laquelle les schemas sont implémenter (a gérer sous 
+        GitHub) et plusieurs cas tests. 
 		\item Un rapport sur la comparaison croisée des schémas numériques
 		\item Une liste de recommandations du groupe sur le(s) meilleur (s) schéma(s)
 	\end{itemize}
