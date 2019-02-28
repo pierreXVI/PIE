@@ -306,10 +306,10 @@ Nous devons donc établir une stratégie de travail afin de se répartir la char
 \section{Organisation de l’équipe (rôles)}
     Notre équipe est organisée de la manière suivante :
    \begin{itemize}[label=\textbullet]
-   	\item Théo Maes sera notre chef de projet. 
-   	\item {Nous avons divisé l’équipe en deux groupes opérationnels :
-   	
-   	    L’équipe développement, coordonnée par Sara Barrasa-Ramos, sera responsable de l'implémentation des méthodes numériques aux EDE. Elle sera composée de :
+   	\item Théo Maes est le chef de projet. 
+   \end{itemize}
+Nous avons divisé l’équipe en deux groupes opérationnels :
+L’équipe développement, coordonnée par Sara Barrasa-Ramos, sera responsable de l'implémentation des méthodes numériques aux EDE. Elle sera composée de :
    	    \begin{itemize}[label=\textbullet]
    	    \item Louis Reboul
    	    \item Sara Barrasa-Ramos
@@ -321,14 +321,20 @@ Nous devons donc établir une stratégie de travail afin de se répartir la char
    	    \item Pierre Seize
    	    \item Jean-Baptiste Fourtout
         \end{itemize}
-        }
-    \end{itemize}
+Nous nous sommes efforcés de conserver le plus possible cette répartition des tâches. Néanmoins nous verrons par la suite que certains changements temporaires de ressources humaines. En effet, une équipe avait beaucoup d'avance quand l'autre prenait du retard.
+    
+\begin{figure}[h]
+\centering
+    \includegraphics[scale=0.7]{images/OBS.png}
+  	\caption{Organisation de l'équipe} 
+   \label{fig:BTBM}
+\end{figure}
+\newpage
+
 \section{Organisation du travail (méthodes et outils)}
     C’est le diagramme OBS qui permet de donner sous forme de diagramme la hiérarchisation de notre projet.
     
     \begin{center}
-		
-    \includegraphics[width=1\textwidth]{images/OBS.png}\\[1cm]
     
     \includegraphics[width=1\textwidth]{images/OB2.png}\\[1cm]
 
@@ -349,13 +355,33 @@ Nous devons donc établir une stratégie de travail afin de se répartir la char
    	\item  Fin Mars : Livraison des livrables à Rapport de projet, Code source
     \end{itemize}
 
-\section{Planning de projet (diagramme de Gantt)}
+\section{Planning de projet}
 
-    \begin{center}
+  \begin{figure}[h]
+\centering
+    \includegraphics[width=\textwidth, height=6cm]{images/Gant.png}
+  	\caption{Diagramme de Gantt intial} 
+   \label{fig:Gantt_initial}
+\end{figure}
 
-    \includegraphics[width=1\textwidth]{images/Gant.png}\\[1cm]
+Après plusieurs entretiens avec le client nous avons convenu de plusieurs changements qui ont provoqués des différences majeures dans l’emploi du temps du projet. 
 
-    \end{center} 
+Nous nous occupons de la partie intégration temporelle, néanmoins cette partie doit être couplée avec les méthodes d’intégration spatiales. Ces méthodes ont été réalisées au préalable par d’autres groupes d’étudiants de Supaero. Pour l’équipe couplage il s’est avéré difficile de reprendre le code informatique tel qu’il nous était fourni pour le coupler avec notre travail sur l’intégration temporelle. Après discussion avec nos clients nous avons donc réussi à les convaincre de changer la structure du code afin que cela soit plus fonctionnelle qu’avant. Cela a donc rajouté une tâche supplémentaire à l’équipe couplage mais ce temps perdu a été rattraper par un temps moins long que prévu initialement pour le couplage des méthodes. 
+
+  \begin{figure}[h]
+\centering
+    \includegraphics[width=\textwidth, height=5.5cm]{images/Gantt_revue_2.png}
+  	\caption{Diagramme de Gantt intial} 
+   \label{fig:Gantt_initial}
+\end{figure}
+
+Nous avons eu des difficultés sur l’implémentation des schémas numériques, comme l’équipe couplage avait de l’avance et qu’il était possible de déplacer une ressource humaine dans l’équipe implémentation. Nous avons donc fait le choix de changer la répartition des ressources afin d’avancer plus vite sur la partie implémentation des schémas. 
+
+De plus le client exige des soutenances de projet « blanches » courant le mois de février. Ceci nous impose donc de préparer le compte rendu de projet 1 semaine plus tôt que la date à laquelle nous avions prévu de le débuter. Ceci impose aussi de préparer en parallèle une présentation orale avec Power Point.
+
+A ce jour nous avons déjà tous les éléments nécessaires pour répondre aux besoins du client. Mais comme il s’agit d’un sujet recherche il est toujours possible d’aller plus loin dans le travail effectué. C’est pourquoi après plusieurs réunions avec le client nous sommes tombés d’accord sur les pistes qu’il souhaitait creuser davantage. C’est pourquoi dans le diagramme de Gantt de prévision à mi-janvier n’a rien à voir avec le diagramme de Gantt initial de début de projet. 
+
+
 
 \chapter{Definition détaillée du projet (Diagrammes PBS et WBS}
 
@@ -410,10 +436,48 @@ Nous devons donc établir une stratégie de travail afin de se répartir la char
 \part{Méthodes numériques}
 \chapter{Méthodes spectrales}
 \section{Intérêt}
-\section{Formalisme}
-\section{Méthode de reconstitution du Flux}
+
+Les méthodes spectrales se distinguent des autres méthodes car elles permettent de conserver des propriétés physiques des phénomènes étudiés. Notamment en mécanique des fluides une des propriétés importante c'est la conservation du flux.
+Cela permet aussi un gain de temps de calcul considérable par rapport au différence finies. Et les performances d'un solveur étant en partie lié à la rapidité de résolution on comprend l'intérêt porté à ces méthodes. 
+
+En terme de précision nous pouvons obtenir des ordres très élevés avec ces méthodes. Car on cherche la solution sous forme d'une combinaison linéaire sur des fonctions de base et que ces fonctions sont définies par cellules. 
+
+\section{Formalisme et Définition}
+
+Comme nous l'avons vu les méthodes spectrales permettent d'assurer la continuité du flux aux interfaces. Elles sont donc particulièrement intéressantes dans les cas des EDP rencontrés dans les problèmes de nos clients. Par exemple on peut considérer l'équation aux dérivées partielles suivante en 1D : 
+\begin{equation}
+\frac{\partial W}{\partial t}+\frac{\partial F(W)}{\partial x}=0 \nonumber
+\end{equation}
+
+W est la grandeur considérée et F le flux qui dépend de W. Les méthodes spectrales supposent quand dans chaque cellule du domaine de calcul il y ait s degrés de liberté pour définir la solution ainsi que p degrès de liberté pour définir le flux. Les grandeurs F et W sont approximées par des fonctions polynomiales. En général, ce sont les polynômes de Lagrange qui sont utilisés pour approximer ces grandeurs. Mais des recherches ont montrées qu'ils pouvaient être plus judicieux d'utiliser des polynômes de Legendre. 
+
+La résolution de chaque cellule ne se fait pas dans l'espace réel mais dans l'espace isoparamétrique qui est normalisé. En 1D, la cellule isoparamétrique est le segment [-1;1] et le passage d'un espace à l'autre s'effectue par une homothétie et une translation. 
+
+Des propriétés importantes de ce formalisme sont établies : 
+
+\begin{itemize}[label=\textbullet]
+   	    \item Consistence du schéma : L'approximation polynomiale fournit une condition sur les degrès des polynômes solution et flux : $ p=s+1 $
+   	    \item Conservation du flux : Il faut que le flux se conserve aux interfaces il vient donc : $F_{\Omega i}(-1)=F_{\Omega i-1}(1)$ et $ F_{\Omega i}(1)=F_{\Omega i+1}(-1) $
+        \end{itemize}
+        
+Une brève description de la méthode permettra de comprendre le fonctionnement. \\
+\textbf{Etape 1 :} Interpolation de la solution dans la cellule avec un polynôme de degré p aux p+1 points solution\\
+\textbf{Etape 2 :} Interpolation de la solution aux p points flux intercalés entre les p+1 points solution et extrapolation aux points flux des interfaces par le polynôme de degré p basé sur la solution\\
+\textbf{Etape 3 :} Calcul du flux aux points flux grâce aux valeurs de la solution interpolée\\
+\textbf{Etape 4 :} Résolution du problème de Riemann pour calculer les flux communs aux interfaces\\
+\textbf{Etape 5 :} Interpolation du nouveau flux corrigé aux interfaces aux points flux par un polynôme de degré p+1\\
+\textbf{Etape 6 :} Dérivation du flux corrigé aux points solution et intégration en temps pour avancer la solution
+
+\begin{figure}[h]
+\centering
+   \includegraphics[scale=0.5]{images/Meth_spectrale.png}
+  	\caption{Schématisation de la méthode} 
+   \label{fig:meth_spectrale}
+\end{figure}
+
 
 \chapter{Méthodes temporelles}
+\section{Méthodes classiques}
 \section{Exponentiel}
 \section{Rosenbroch}
 
