@@ -47,7 +47,7 @@ def lagrange_extrapolation_matrix(x, x_new):
 
     :param array_like x:
     :param array_like x_new:
-    :return: array_like
+    :return: numpy.ndarray
     """
     a, b = len(x), len(x_new)
     foo = np.zeros((b, a))
