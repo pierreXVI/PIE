@@ -9,4 +9,5 @@ Tests
    
    initial_condition.rst
    test_ode.rst
+   test_spatial.rst
 

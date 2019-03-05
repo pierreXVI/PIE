@@ -5,6 +5,17 @@ import pie
 
 
 def test_rhs(n, x_max, p, conv, diff, plot=False):
+    """
+    Test the rhs methods of the spatial methods on a sine and print the error.
+
+    :param int n: The number of cells
+    :param float x_max: The window size
+    :param int p: The number of points inside a cell
+    :param float conv: The convection parameter
+    :param float diff: The diffusion parameter
+    :param plot: If True, plot the computed RHS
+    :type plot: bool, optional
+    """
     mesh = np.linspace(0, x_max, n + 1)
     method_fd = pie.spatial.FiniteDifferenceMethod(mesh, p, conv=conv, diff=diff)
     x = method_fd.x
@@ -16,10 +27,12 @@ def test_rhs(n, x_max, p, conv, diff, plot=False):
     fig = plt.figure()
     ax1 = fig.add_subplot(121)
     ax2 = fig.add_subplot(122)
+    ax1.set_title('Convection - Diffusion')
+    ax2.set_title('Viscous Burgers')
     ax1.grid(True)
     ax2.grid(True)
-    ax1.plot(x, rhs_expected, 'k--', lw=3, label='Expected')
-    ax2.plot(x, rhs_expected_burgers, 'k--', lw=3, label='Expected')
+    ax1.plot(x, rhs_expected, 'k--', lw=3, label='Expected RHS')
+    ax2.plot(x, rhs_expected_burgers, 'k--', lw=3, label='Expected RHS')
 
     for spatial_method in (pie.spatial.FiniteDifferenceMethod,
                            pie.spatial.SpectralDifferenceMethod):
@@ -48,6 +61,21 @@ def test_rhs(n, x_max, p, conv, diff, plot=False):
 
 
 def test_jac(n, x_max, p, conv, diff, eps=1E-5):
+    r"""
+    Test the jac methods of the spatial methods on a sine and print the error.
+    Uses an order 2 approximation of the jacobian as a reference value :
+    :math:`\frac{\partial f}{\partial x}\left(x_0\right)
+    \approx\frac{f\left(x_0+\varepsilon\right)-f\left(x_0-\varepsilon\right)}{2\varepsilon}`
+
+    :param int n: The number of cells
+    :param float x_max: The window size
+    :param int p: The number of points inside a cell
+    :param float conv: The convection parameter
+    :param float diff: The diffusion parameter
+    :param eps: Parameter used to approximate the jacobian
+    :type eps: float, optional
+    :return:
+    """
     mesh = np.linspace(0, x_max, n + 1)
 
     for spatial_method in (pie.spatial.FiniteDifferenceMethod,
@@ -76,5 +104,5 @@ def test_jac(n, x_max, p, conv, diff, eps=1E-5):
 
 
 if __name__ == '__main__':
-    test_rhs(n=100, x_max=1, p=5, conv=0.5, diff=0.1, plot=False)
-    test_jac(n=100, x_max=1, p=5, conv=1.2, diff=0.0)
+    test_rhs(n=100, x_max=1, p=5, conv=0.5, diff=0.1, plot=True)
+    test_jac(n=100, x_max=1, p=5, conv=1.2, diff=0.1)
