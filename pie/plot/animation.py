@@ -88,7 +88,7 @@ class Animation:
         except IndexError:
             dt = 0
 
-        self.fig.suptitle('Speed x {0:0.2f}'.format(self.speed))
+        self.fig.suptitle('Speed x {0:0.2f}'.format(self.speed), x=0.1)
         self.ax.set_title(self.title.format(self.i, self.t[self.i], dt))
         for i in range(len(self.list_y)):
             self.list_line[i].set_ydata(self.list_y[i][self.i])
