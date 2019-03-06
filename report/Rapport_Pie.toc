@@ -14,13 +14,13 @@
 \contentsline {subsection}{\numberline {2}D\IeC {\'e}finition des jalons}{10}{subsection.0.3.2}
 \contentsline {subsection}{\numberline {3}Planning de projet}{10}{subsection.0.3.3}
 \contentsline {section}{\numberline {IV}Outils de gestion de projet}{12}{section.0.4}
-\contentsline {section}{\numberline {V}Les livrables du projet}{13}{section.0.5}
-\contentsline {subsection}{\numberline {1}Liste des produits livrables au client}{13}{subsection.0.5.1}
+\contentsline {section}{\numberline {V}Les livrables du projet}{12}{section.0.5}
+\contentsline {subsection}{\numberline {1}Liste des produits livrables au client}{12}{subsection.0.5.1}
 \contentsline {subsection}{\numberline {2}Liste des livrables demand\IeC {\'e}s par l\IeC {\textquoteright }\IeC {\'e}cole }{13}{subsection.0.5.2}
 \contentsline {section}{\numberline {VI}Risques et opportunit\IeC {\'e}s}{13}{section.0.6}
 \contentsline {section}{\numberline {VII}Suivi et Contr\IeC {\^o}le}{14}{section.0.7}
 \contentsline {subsection}{\numberline {1}Tableau de bord de suivi}{14}{subsection.0.7.1}
-\contentsline {subsection}{\numberline {2}Communication }{15}{subsection.0.7.2}
+\contentsline {subsection}{\numberline {2}Communication }{14}{subsection.0.7.2}
 \contentsline {part}{II\hspace {1em}M\IeC {\'e}thodes num\IeC {\'e}riques}{16}{part.2}
 \contentsline {section}{\numberline {VIII}M\IeC {\'e}thodes spectrales}{17}{section.0.8}
 \contentsline {subsection}{\numberline {1}Int\IeC {\'e}r\IeC {\^e}t}{17}{subsection.0.8.1}
