@@ -20,9 +20,7 @@ def solve(n, x_max, p, conv, diff, dt, t_max, init_cond, spatial_method, tempora
     # Solving
     y = temporal_method(y0, t, method.rhs, jac=method.jac, jac2=method.hess, krylov_subspace_dim=krylov_subspace_dim,
                         verbose='{0} + {1} at CFL = {2:0.3f}'
-                        .format(temporal_method.__name__, spatial_method.__name__, cfl)
-                        # verbose=False
-                        )
+                        .format(temporal_method.__name__, spatial_method.__name__, cfl))
 
     return method, t, y
 
@@ -49,40 +47,81 @@ def solve_burgers(n, x_max, p, diff, dt, t_max, init_cond, spatial_method_burger
     return method, t, y
 
 
-def compare(n, x_max, p, conv, diff, dt, t_max, temporal_method, krylov_subspace_dim=None, repeat=True, speed=1):
+def compare(n, x_max, p, conv, diff, dt, t_max, krylov_subspace_dim=None, repeat=True, speed=1):
     y0 = pie.test.initial_condition.sine(x_max)
-    method, t, y_fd = solve(n=n, x_max=x_max, p=p, conv=conv, diff=diff, dt=dt, t_max=t_max, init_cond=y0,
-                            spatial_method=pie.spatial.FiniteDifferenceMethod, temporal_method=temporal_method,
-                            krylov_subspace_dim=krylov_subspace_dim)
-    method, t, y_sd = solve(n=n, x_max=x_max, p=p, conv=conv, diff=diff, dt=dt, t_max=t_max, init_cond=y0,
-                            spatial_method=pie.spatial.SpectralDifferenceMethod, temporal_method=temporal_method,
-                            krylov_subspace_dim=krylov_subspace_dim)
+    list_y = []
+    list_label = []
+    list_fmt = []
+    list_lw = []
 
-    sol = [y0((method.x - conv * s) % x_max) * np.exp(-diff * s * ((2 * np.pi / x_max) ** 2)) for s in t]
-    pie.plot.animation.Animation(t, method.x,
-                                 [sol, y_fd, y_sd],
-                                 list_label=['Exact solution', 'FiniteDifferenceMethod', 'SpectralDifferenceMethod'],
-                                 list_fmt=['k', '+-', '+-'],
-                                 list_lw=[3, 1, 1],
+    t, method = None, None
+    for temporal_method in TEMPORAL_METHODS:
+        for spatial_method in SPATIAL_METHODS:
+            method, t, y = solve(n=n, x_max=x_max, p=p, conv=conv, diff=diff, dt=dt, t_max=t_max, init_cond=y0,
+                                 spatial_method=spatial_method, temporal_method=temporal_method,
+                                 krylov_subspace_dim=krylov_subspace_dim)
+            list_y.append(y)
+            if spatial_method == pie.spatial.FiniteDifferenceMethod:
+                list_label.append('{0} + FD'.format(temporal_method.__name__))
+            else:
+                list_label.append('{0} + SD'.format(temporal_method.__name__))
+            list_fmt.append('+-')
+            list_lw.append(1)
+
+    list_y = [[y0((method.x - conv * s) % x_max) * np.exp(-diff * s * ((2 * np.pi / x_max) ** 2)) for s in t]] + list_y
+    list_label = ['Exact solution'] + list_label
+    list_fmt = ['k'] + list_fmt
+    list_lw = [3] + list_lw
+
+    pie.plot.animation.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
                                  x_ticks=np.linspace(0, x_max, n + 1), repeat=repeat, speed=speed)
 
 
-def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, temporal_method, repeat=True, speed=1):
-    method, t, y_fd = solve_burgers(n=n, x_max=x_max, p=p, diff=diff, dt=dt, t_max=t_max,
-                                    init_cond=init_cond, temporal_method=temporal_method,
-                                    spatial_method_burgers=pie.spatial.burgers.FiniteDifferenceMethodBurgers)
-    method, t, y_sd = solve_burgers(n=n, x_max=x_max, p=p, diff=diff, dt=dt, t_max=t_max,
-                                    init_cond=init_cond, temporal_method=temporal_method,
-                                    spatial_method_burgers=pie.spatial.burgers.SpectralDifferenceMethodBurgers)
+def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, repeat=True, speed=1):
+    list_y = []
+    list_label = []
+    list_fmt = []
+    list_lw = []
 
-    pie.plot.animation.Animation(t, method.x,
-                                 [y_fd, y_sd],
-                                 list_label=['FiniteDifferenceMethod', 'SpectralDifferenceMethod'],
+    t, method = None, None
+    for temporal_method in TEMPORAL_METHODS:
+        for spatial_method in SPATIAL_METHODS_BURGERS:
+            method, t, y = solve_burgers(n=n, x_max=x_max, p=p, diff=diff, dt=dt, t_max=t_max, init_cond=init_cond,
+                                         temporal_method=temporal_method, spatial_method_burgers=spatial_method)
+            list_y.append(y)
+            if spatial_method == pie.spatial.burgers.FiniteDifferenceMethodBurgers:
+                list_label.append('{0} + FD Burgers'.format(temporal_method.__name__))
+            else:
+                list_label.append('{0} + SD Burgers'.format(temporal_method.__name__))
+            list_fmt.append('+-')
+            list_lw.append(1)
+
+    pie.plot.animation.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
                                  x_ticks=np.linspace(0, x_max, n + 1), repeat=repeat, speed=speed)
 
+
+TEMPORAL_METHODS = (
+    pie.temporal.rk_1,
+    pie.temporal.rk_2,
+    # pie.temporal.bdf_1,
+    # pie.temporal.taylor_exp_1,
+)
+"""The temporal methods that are going to be tested"""
+
+SPATIAL_METHODS = (
+    pie.spatial.FiniteDifferenceMethod,
+    pie.spatial.SpectralDifferenceMethod,
+)
+"""The spatial methods that are going to be tested"""
+
+SPATIAL_METHODS_BURGERS = (
+    pie.spatial.burgers.FiniteDifferenceMethodBurgers,
+    pie.spatial.burgers.SpectralDifferenceMethodBurgers,
+)
+"""The Burgers spatial methods that are going to be tested"""
 
 if __name__ == '__main__':
-    compare(n=50, x_max=10, p=4, conv=1, diff=0.005, dt=1E-0, t_max=10, temporal_method=pie.temporal.taylor_exp_1,
-            speed=1, repeat=False, krylov_subspace_dim=20)
-    # compare_burgers(n=50, x_max=1, p=4, diff=0.00, dt=1E-3, t_max=1, init_cond=pie.test.initial_condition.rect(1),
-    #                 temporal_method=pie.temporal.rk_4, speed=10, repeat=True)
+    # compare(n=30, x_max=1, p=3, conv=1, diff=0.005, dt=1E-3, t_max=10,
+    #         speed=1, repeat=False, krylov_subspace_dim=20)
+    compare_burgers(n=50, x_max=1, p=4, diff=0.00, dt=1E-3, t_max=1, init_cond=pie.test.initial_condition.rect(1),
+                    speed=10, repeat=True)
