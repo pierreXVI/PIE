@@ -92,6 +92,11 @@ class Animation:
         self.ax.set_title(self.title.format(self.i, self.t[self.i], dt))
         for i in range(len(self.list_y)):
             self.list_line[i].set_ydata(self.list_y[i][self.i])
+
+            # TODO: Deal with this
+            if (self.list_y[i][self.i] > 1E3).any():
+                self.list_line[i].set_ydata(None)
+
         self.fig.canvas.draw()
 
         if self.run:
