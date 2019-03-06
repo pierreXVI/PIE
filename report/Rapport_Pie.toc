@@ -13,7 +13,7 @@
 \contentsline {section}{\numberline {a}Logique de d\IeC {\'e}veloppement}{11}{section.3.1}
 \contentsline {section}{\numberline {b}D\IeC {\'e}finition des jalons}{11}{section.3.2}
 \contentsline {section}{\numberline {c}Planning de projet}{12}{section.3.3}
-\contentsline {chapter}{\numberline {4}Definition d\IeC {\'e}taill\IeC {\'e}e du projet (Diagrammes PBS et WBS}{14}{chapter.4}
+\contentsline {chapter}{\numberline {4}Definition d\IeC {\'e}taill\IeC {\'e}e du projet (Diagrammes PBS et WBS)}{14}{chapter.4}
 \contentsline {chapter}{\numberline {5}Les livrables du projet}{16}{chapter.5}
 \contentsline {section}{\numberline {a}Liste des produits livrables au client}{16}{section.5.1}
 \contentsline {section}{\numberline {b}Liste des livrables demand\IeC {\'e}s par l\IeC {\textquoteright }\IeC {\'e}cole }{16}{section.5.2}
