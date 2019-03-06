@@ -60,5 +60,15 @@ class FiniteDifferenceMethodBurgers(_SpatialMethod):
         j = self.j1 * (y > 0)[:, None] + self.j2 * (y < 0)[:, None]
         return self._jac_diff - (y[:, None] * j + np.diagflat(np.dot(j, y)))
 
+    def hess(self, y, t):
+        # TODO: check this
+        j = self.j1 * (y > 0)[:, None] + self.j2 * (y < 0)[:, None]
+        hess = np.zeros((self.n_pts, self.n_pts, self.n_pts))
+        for k in range(self.n_pts):
+            for l in range(self.n_pts):
+                for m in range(self.n_pts):
+                    hess[k, l, m] = -j[k, l]
+        return hess
+
     def __repr__(self):
         return "Finite difference for Burgers' equation " + super(FiniteDifferenceMethodBurgers, self).__repr__()

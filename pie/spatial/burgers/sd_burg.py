@@ -130,6 +130,12 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         jac_conv = -np.dot(self._d_in_flux_to_sol_full, foo * (np.dot(foo, y)[:, None]))
         return self._jac_diff + jac_conv
 
+    def hess(self, y, t):
+        # TODO: check this
+        foo = np.dot(self._riemann_solver(y), self._sol_to_flux_full)
+        hess_conv = -np.dot(self._d_in_flux_to_sol_full, foo * foo[:, None])
+        return hess_conv
+
     def _riemann_solver(self, y):
         """
 
