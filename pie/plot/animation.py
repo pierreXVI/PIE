@@ -7,7 +7,9 @@ class Animation:
 
     Press ``+`` or ``-`` to increase or decrease the animation speed.
     Press ``*`` or ``/`` to multiply or divide it by 2.
-    Press ``space`` to pause/play , and ``home`` to set the animation at start.
+    Press ``space`` to toggle pause.
+    Press ``home`` or ``end`` to set the animation at start or at end.
+    Press ``left`` or ``right`` to move one step at a time.
 
     :param array_like t:
     :param array_like x:
@@ -72,6 +74,8 @@ class Animation:
         plt.show()
 
     def _update(self):
+        if self.i < 0:
+            self.i += len(self.t)
         if self.i >= len(self.t):
             if self.repeat:
                 self.i = 0
@@ -90,8 +94,8 @@ class Animation:
             self.list_line[i].set_ydata(self.list_y[i][self.i])
         self.fig.canvas.draw()
 
-        self.i = int(self.i + max(1, self.speed))
         if self.run:
+            self.i = int(self.i + max(1, self.speed))
             self.fig.canvas._tkcanvas.after(int(1 / self.speed), self._update)
 
     def _key_event(self, event):
@@ -106,6 +110,18 @@ class Animation:
 
         if event.key == 'home':
             self.i = 0
+            if not self.run:
+                self._update()
+        if event.key == 'end':
+            self.i = len(self.t) - 1
+            if not self.run:
+                self._update()
+        if event.key == 'left':
+            self.i -= 1
+            if not self.run:
+                self._update()
+        if event.key == 'right':
+            self.i += 1
             if not self.run:
                 self._update()
 
