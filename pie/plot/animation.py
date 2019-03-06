@@ -68,7 +68,7 @@ class Animation:
         for i in range(len(self.list_y)):
             self.list_line[i], = self.ax.plot(self.x, list_y[i][0], list_fmt[i], lw=list_lw[i], label=list_label[i])
 
-        self.ax.legend()
+        self.ax.legend(loc='upper left', ncol=2)
         self.fig.canvas.mpl_connect('key_press_event', self._key_event)
         self._update()
         plt.show()
