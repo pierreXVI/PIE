@@ -42,8 +42,8 @@ From the `Wikipedia article <https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_m
 
 .. math::
    \left\{\begin{aligned}
-    \dot{y} &= y\sin\left(t\right)^2 \\
-    y\left(0\right) &= 0
+    &\dot{y} = y\sin\left(t\right)^2 \\
+    &y\left(0\right) = 0
    \end{aligned}\right.
    \Rightarrow y\left(t\right)=\exp\left(\frac{t}{2} - \frac{\sin\left(2t\right)}{4}\right)
 """
@@ -61,8 +61,8 @@ pb_2 = Problem(
 r"""
 .. math::
    \left\{\begin{aligned}
-    \dot{y} &= \cos\left(t\right) e^{\cos\left(t\right)} - y^2e^{-\cos\left(t\right)} \\
-    y\left(0\right) &= 0
+    &\dot{y} = \cos\left(t\right) e^{\cos\left(t\right)} - y^2e^{-\cos\left(t\right)} \\
+    &y\left(0\right) = 0
    \end{aligned}\right.
    \Rightarrow y\left(t\right) = \sin\left(t\right) e^{\cos\left(t\right)}
 """
@@ -76,8 +76,8 @@ pb_3 = Problem(
 r"""
 .. math::
    \left\{\begin{aligned}
-    \dot{y} &= \sin\left(y\right) \\
-    y\left(0\right) &= 1
+    &\dot{y} = \sin\left(y\right) \\
+    &y\left(0\right) = 1
    \end{aligned}\right.
    \Rightarrow y\left(t\right) = 2\arctan\left(\tan\left(\frac{1}{2}\right)e^{-t}\right)
 """
@@ -93,8 +93,8 @@ The solutions of this equation do diverge in a finite time.
 
 .. math::
    \left\{\begin{aligned}
-    \dot{y} &= y^2 \\
-    y\left(0\right) &= 0.1
+    &\dot{y} = y^2 \\
+    &y\left(0\right) = 0.1
    \end{aligned}\right.
    \Rightarrow y\left(t\right) = \frac{0.1}{1 - 0.1t}
 """
@@ -111,8 +111,8 @@ Stiff equation, from `Hairer & Wanner, 'Solving Ordinary Differential Equations 
 
 .. math::
    \left\{\begin{aligned}
-    \dot{y} &= -50\left(y - \cos\left(t\right)\right) \\
-    y\left(0\right) &= 0
+    &\dot{y} = -50\left(y - \cos\left(t\right)\right) \\
+    &y\left(0\right) = 0
    \end{aligned}\right.
    \Rightarrow y\left(t\right) =  \frac{50}{2501}\sin\left(t\right)+ \frac{2500}{2501}\cos\left(t\right)
    -\frac{2500}{2501}e^{-50t}
@@ -125,8 +125,8 @@ pb2d_1 = Problem(
 )
 r"""
 Harmonic problem :
-:math:`\left\{\begin{aligned}\ddot{y} + y &= 0 \\
-\left(y, \dot{y}\right)_{t = 0} &= \left(1, 0\right)\end{aligned}\right.`
+:math:`\left\{\begin{aligned}&\ddot{y} + y = 0 \\
+&\left(y, \dot{y}\right)_{t = 0} = \left(1, 0\right)\end{aligned}\right.`
 with :math:`y = \cos\left(t\right)` as solution
 """
 
