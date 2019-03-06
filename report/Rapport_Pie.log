@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6880 64-bit) (preloaded format=pdflatex 2018.12.6)  6 MAR 2019 13:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6880 64-bit) (preloaded format=pdflatex 2018.12.6)  6 MAR 2019 13:53
 entering extended mode
 **./Rapport_Pie.tex
 (Rapport_Pie.tex
@@ -1016,22 +1016,22 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 247.
+(hyperref)                than one, level fixed on input line 248.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 250.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 251.
 
 (D:\Programmes\Prog_miktex\tex\latex\base\omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 250.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 251.
 
-Underfull \hbox (badness 10000) in paragraph at lines 267--268
+Underfull \hbox (badness 10000) in paragraph at lines 268--269
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 283--284
+Underfull \hbox (badness 10000) in paragraph at lines 284--285
 
  []
 
@@ -1039,30 +1039,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 283--284
 <images/OBS.png, id=224, 378.81525pt x 204.765pt>
 File: images/OBS.png Graphic file (type png)
 <use images/OBS.png>
-Package pdftex.def Info: images/OBS.png  used on input line 329.
+Package pdftex.def Info: images/OBS.png  used on input line 330.
 (pdftex.def)             Requested size: 265.16885pt x 143.3345pt.
  [8 <./images/OBS.png>]
 <images/OB2.png, id=232, 609.27625pt x 387.4475pt>
 File: images/OB2.png Graphic file (type png)
 <use images/OB2.png>
-Package pdftex.def Info: images/OB2.png  used on input line 340.
+Package pdftex.def Info: images/OB2.png  used on input line 341.
 (pdftex.def)             Requested size: 460.72124pt x 292.99107pt.
  [9 <./images/OB2.png>]
 <images/Gant.png, id=238, 768.8725pt x 336.25626pt>
 File: images/Gant.png Graphic file (type png)
 <use images/Gant.png>
-Package pdftex.def Info: images/Gant.png  used on input line 363.
+Package pdftex.def Info: images/Gant.png  used on input line 364.
 (pdftex.def)             Requested size: 460.72873pt x 227.62505pt.
  [10 <./images/Gant.png>]
 <images/Gantt_revue_2.png, id=245, 888.31876pt x 452.28975pt>
 File: images/Gantt_revue_2.png Graphic file (type png)
 <use images/Gantt_revue_2.png>
-Package pdftex.def Info: images/Gantt_revue_2.png  used on input line 374.
+Package pdftex.def Info: images/Gantt_revue_2.png  used on input line 375.
 (pdftex.def)             Requested size: 460.72205pt x 227.62122pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 387--388
-
- []
 
 [11 <./images/Gantt_revue_2.png>]
 <images/WBS_detaille.png, id=253, 376.40625pt x 341.47575pt>
@@ -1075,20 +1071,17 @@ File: images/WBS.png Graphic file (type png)
 <use images/WBS.png>
 Package pdftex.def Info: images/WBS.png  used on input line 401.
 (pdftex.def)             Requested size: 322.50345pt x 166.03189pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
  [12 <./images/WBS_detaille.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 422--423
 
  []
 
-[13 <./images/WBS.png>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 424--425
 
  []
 
-
+[13 <./images/WBS.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 426--427
 
  []
@@ -1106,11 +1099,7 @@ Package pdftex.def Info: images/matrice.png  used on input line 434.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [14]
-[15 <./images/matrice.png>] [16
+[14] [15 <./images/matrice.png>] [16
 
 ]
 
@@ -1182,7 +1171,7 @@ uper/sfcc1440.pfb><D:/Programmes/Prog_miktex/fonts/type1/public/cm-super/sfrm09
 Programmes/Prog_miktex/fonts/type1/public/cm-super/sfrm1440.pfb><D:/Programmes/
 Prog_miktex/fonts/type1/public/cm-super/sfti1200.pfb><D:/Programmes/Prog_miktex
 /fonts/type1/public/cm-super/sfti1440.pfb>
-Output written on Rapport_Pie.pdf (24 pages, 850120 bytes).
+Output written on Rapport_Pie.pdf (24 pages, 850056 bytes).
 PDF statistics:
  410 PDF objects out of 1000 (max. 8388607)
  76 named destinations out of 1000 (max. 500000)
