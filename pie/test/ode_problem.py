@@ -10,7 +10,7 @@ class Problem:
     :param jac: The Jacobian of f, must return an array
     :type jac: func or None, optional
     :param jac2: The second-order Jacobian of f, must return an array
-    :type jac2: func or None, optional
+    :type hess: func or None, optional
     :param df_dt: The f partial derivative with respect to time
     :type df_dt: func or None, optional
     :param d2f_dt2: The f second-order partial derivative with respect to time
@@ -19,11 +19,11 @@ class Problem:
     :type d2f_dtdu: func or None, optional
     """
 
-    def __init__(self, y, f, jac=None, jac2=None, df_dt=None, d2f_dtdu=None, d2f_dt2=None):
+    def __init__(self, y, f, jac=None, hess=None, df_dt=None, d2f_dtdu=None, d2f_dt2=None):
         self.y = y
         self.f = f
         self.jac = jac
-        self.jac2 = jac2
+        self.hess = hess
         self.df_dt = df_dt
         self.d2f_dtdu = d2f_dtdu
         self.d2f_dt2 = d2f_dt2
@@ -33,7 +33,6 @@ pb_1 = Problem(
     y=lambda t: np.exp(t / 2 - np.sin(2 * t) / 4),
     f=lambda y, t: y * (np.sin(t) ** 2),
     jac=lambda y, t: np.array([np.sin(t) ** 2]),
-    jac2=lambda y, t: np.array([0]),
     df_dt=lambda y, t: y * np.sin(2 * t),
     d2f_dtdu=lambda y, t: np.array([np.sin(2 * t)]),
     d2f_dt2=lambda y, t: y * 2 * np.cos(2 * t)
@@ -53,7 +52,7 @@ pb_2 = Problem(
     y=lambda t: np.sin(t) * np.exp(np.cos(t)),
     f=lambda y, t: np.cos(t) * np.exp(np.cos(t)) - y * y * np.exp(-np.cos(t)),
     jac=lambda y, t: np.array([- 2 * y * np.exp(-np.cos(t))]),
-    jac2=lambda y, t: np.array([- 2 * np.exp(-np.cos(t))]),
+    hess=lambda y, t: np.array([- 2 * np.exp(-np.cos(t))]),
     df_dt=lambda y, t: -np.sin(t) * (np.exp(np.cos(t)) * (1 + np.cos(t)) + y * y * np.exp(-np.cos(t))),
     d2f_dtdu=lambda y, t: np.array([- 2 * y * np.sin(t) * np.exp(-np.cos(t))]),
     d2f_dt2=lambda y, t: (np.sin(t) * np.sin(t) * (2 + np.cos(t)) - np.cos(t) * (1 + np.cos(t))) * np.exp(np.cos(t)) - (
@@ -72,7 +71,7 @@ pb_3 = Problem(
     y=lambda t: 2 * np.arctan(np.tan(0.5) * np.exp(t)),
     f=lambda y, t: np.sin(y),
     jac=lambda y, t: np.array([np.cos(y)]),
-    jac2=lambda y, t: np.array([-np.sin(y)])
+    hess=lambda y, t: np.array([-np.sin(y)]),
 )
 r"""
 .. math::
@@ -87,7 +86,7 @@ pb_4 = Problem(
     y=lambda t: 0.1 / (1 - 0.1 * t),
     f=lambda y, t: y * y,
     jac=lambda y, t: np.array([2 * y]),
-    jac2=lambda y, t: np.array([2])
+    hess=lambda y, t: np.array([2])
 )
 r"""
 The solutions of this equation do diverge in a finite time.
@@ -104,7 +103,8 @@ pb_5 = Problem(
     y=lambda t: (0 - 2500 / 2501) * np.exp(-50 * t) + 50 * np.sin(t) / 2501 + 2500 * np.cos(t) / 2501,
     f=lambda y, t: -50 * (y - np.cos(t)),
     jac=lambda y, t: np.array([-50]),
-    jac2=lambda y, t: np.array([0])
+    df_dt=lambda y, t: -50 * np.sin(t),
+    d2f_dt2=lambda y, t: -50 * np.cos(t),
 )
 r"""
 Stiff equation, from `Hairer & Wanner, 'Solving Ordinary Differential Equations II', chapter IV.1`
@@ -122,7 +122,6 @@ pb2d_1 = Problem(
     y=lambda t: np.array([np.cos(t), -np.sin(t)]),
     f=lambda y, t: np.array([y[1], -y[0]]),
     jac=lambda y, t: np.array([[0, 1], [-1, 0]]),
-    jac2=lambda y, t: np.zeros((2, 2, 2))
 )
 r"""
 Harmonic problem :
@@ -135,7 +134,11 @@ pb2d_2 = Problem(
     y=lambda t: np.array([np.sin(t) * np.exp(np.cos(t)), (np.cos(t) - np.sin(t) * np.sin(t)) * np.exp(np.cos(t))]),
     f=lambda y, t: np.array([y[1], -(1 + 2 * np.cos(t)) * y[0] - np.sin(t) * y[1]]),
     jac=lambda y, t: np.array([[0, 1], [-(1 + 2 * np.cos(t)), - np.sin(t)]]),
-    jac2=lambda y, t: np.zeros((2, 2, 2))
+    hess=lambda y, t: np.zeros((2, 2, 2)),
+    df_dt=lambda y, t: np.array([0, 2 * np.sin(t) * y[0] - np.cos(t) * y[1]]),
+    d2f_dtdu=lambda y, t: np.array([[0, 0], [2 * np.sin(t), - np.cos(t)]]),
+    d2f_dt2=lambda y, t: np.array([0, 2 * np.cos(t) * y[0] + np.sin(t) * y[1]]),
+
 )
 r"""
 Same problem as ``pb_2`` written in 2D

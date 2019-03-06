@@ -75,7 +75,7 @@ class FiniteDifferenceMethod(_SpatialMethod):
     def jac(self, y, t):
         return self._jac
 
-    def jac2(self, y, t):
+    def hess(self, y, t):
         return np.zeros((self.n_pts, self.n_pts, self.n_pts))
 
     def __repr__(self):
