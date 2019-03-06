@@ -106,6 +106,8 @@ class Animation:
 
         if event.key == 'home':
             self.i = 0
+            if not self.run:
+                self._update()
 
         if event.key == ' ':
             self.run = not self.run
