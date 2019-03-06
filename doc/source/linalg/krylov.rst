@@ -1,5 +1,5 @@
 Krylov exponential approximation
 ================================
 
-.. automodule:: pie.linalg.krylov
+.. automodule:: linalg.krylov
    :members:

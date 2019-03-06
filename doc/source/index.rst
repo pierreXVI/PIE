@@ -11,6 +11,7 @@ Welcome to PIE's documentation!
    spatial/spatial.rst
    linalg/linalg.rst
    test/test.rst
+   plot/plot.rst
 
 
 

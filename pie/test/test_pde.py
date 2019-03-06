@@ -55,7 +55,7 @@ def compare(n, x_max, p, conv, diff, dt, t_max, temporal_method, repeat=True, sp
     pie.plot.animation.Animation(t, method.x,
                                  [sol, y_fd, y_sd],
                                  list_label=['Exact solution', 'FiniteDifferenceMethod', 'SpectralDifferenceMethod'],
-                                 list_ls=['k', '+-', '+-'],
+                                 list_fmt=['k', '+-', '+-'],
                                  list_lw=[3, 1, 1],
                                  repeat=repeat, speed=speed)
 
