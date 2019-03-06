@@ -1,32 +1,35 @@
 \babel@toc {french}{}
 \contentsline {part}{I\hspace {1em}Gestion de projet}{4}{part.1}
-\contentsline {chapter}{\numberline {1}Description du projet}{6}{chapter.1}
-\contentsline {section}{\numberline {a}Objectifs du projet, p\IeC {\'e}rim\IeC {\`e}tre et r\IeC {\'e}sultats attendus}{6}{section.1.1}
-\contentsline {section}{\numberline {b}Les parties prennantes du projet}{6}{section.1.2}
-\contentsline {section}{\numberline {c}Les exigences de haut niveau}{7}{section.1.3}
-\contentsline {section}{\numberline {d}Les contraintes identifi\IeC {\'e}es}{7}{section.1.4}
-\contentsline {section}{\numberline {e}Hypoth\IeC {\`e}ses de travail}{7}{section.1.5}
-\contentsline {chapter}{\numberline {2}Organisation}{8}{chapter.2}
-\contentsline {section}{\numberline {a}Organisation de l\IeC {\textquoteright }\IeC {\'e}quipe (r\IeC {\^o}les)}{8}{section.2.1}
-\contentsline {section}{\numberline {b}Organisation du travail (m\IeC {\'e}thodes et outils)}{8}{section.2.2}
-\contentsline {chapter}{\numberline {3}Processus du d\IeC {\'e}veloppement}{10}{chapter.3}
-\contentsline {section}{\numberline {a}Logique de d\IeC {\'e}veloppement}{10}{section.3.1}
-\contentsline {section}{\numberline {b}D\IeC {\'e}finition des jalons}{10}{section.3.2}
-\contentsline {section}{\numberline {c}Planning de projet (diagramme de Gantt)}{11}{section.3.3}
-\contentsline {chapter}{\numberline {4}Definition d\IeC {\'e}taill\IeC {\'e}e du projet (Diagrammes PBS et WBS}{12}{chapter.4}
-\contentsline {chapter}{\numberline {5}Les livrables du projet}{14}{chapter.5}
-\contentsline {section}{\numberline {a}Liste des produits livrables au client}{14}{section.5.1}
-\contentsline {section}{\numberline {b}Liste des livrables demand\IeC {\'e}s par l\IeC {\textquoteright }\IeC {\'e}cole }{14}{section.5.2}
-\contentsline {chapter}{\numberline {6}Risques et opportunit\IeC {\'e}s}{15}{chapter.6}
-\contentsline {chapter}{\numberline {7}Suivi et Contr\IeC {\^o}le}{16}{chapter.7}
-\contentsline {section}{\numberline {a}Tableau de bord de suivi}{16}{section.7.1}
-\contentsline {section}{\numberline {b}Communication }{16}{section.7.2}
-\contentsline {part}{II\hspace {1em}M\IeC {\'e}thodes num\IeC {\'e}riques}{17}{part.2}
-\contentsline {chapter}{\numberline {8}M\IeC {\'e}thodes spectrales}{18}{chapter.8}
-\contentsline {section}{\numberline {a}Int\IeC {\'e}r\IeC {\^e}t}{18}{section.8.1}
-\contentsline {section}{\numberline {b}Formalisme}{18}{section.8.2}
-\contentsline {section}{\numberline {c}M\IeC {\'e}thode de reconstitution du Flux}{18}{section.8.3}
-\contentsline {chapter}{\numberline {9}M\IeC {\'e}thodes temporelles}{19}{chapter.9}
-\contentsline {section}{\numberline {a}Exponentiel}{19}{section.9.1}
-\contentsline {section}{\numberline {b}Rosenbroch}{19}{section.9.2}
-\contentsline {part}{III\hspace {1em}Couplage spatial - temporel}{20}{part.3}
+\contentsline {section}{\numberline {I}Description du projet}{5}{section.0.1}
+\contentsline {subsection}{\numberline {1}Objectifs du projet, p\IeC {\'e}rim\IeC {\`e}tre et r\IeC {\'e}sultats attendus}{5}{subsection.0.1.1}
+\contentsline {subsection}{\numberline {2}Les parties prenantes du projet}{5}{subsection.0.1.2}
+\contentsline {subsection}{\numberline {3}Les exigences de haut niveau}{6}{subsection.0.1.3}
+\contentsline {subsection}{\numberline {4}Les contraintes identifi\IeC {\'e}es}{7}{subsection.0.1.4}
+\contentsline {subsection}{\numberline {5}Hypoth\IeC {\`e}ses de travail}{7}{subsection.0.1.5}
+\contentsline {section}{\numberline {II}Organisation}{7}{section.0.2}
+\contentsline {subsection}{\numberline {1}Organisation de l\IeC {\textquoteright }\IeC {\'e}quipe}{7}{subsection.0.2.1}
+\contentsline {subsection}{\numberline {2}Organisation du travail (m\IeC {\'e}thodes et outils)}{9}{subsection.0.2.2}
+\contentsline {section}{\numberline {III}Processus du d\IeC {\'e}veloppement}{9}{section.0.3}
+\contentsline {subsection}{\numberline {1}Logique de d\IeC {\'e}veloppement}{9}{subsection.0.3.1}
+\contentsline {subsection}{\numberline {2}D\IeC {\'e}finition des jalons}{10}{subsection.0.3.2}
+\contentsline {subsection}{\numberline {3}Planning de projet}{10}{subsection.0.3.3}
+\contentsline {section}{\numberline {IV}Outils de gestion de projet}{12}{section.0.4}
+\contentsline {section}{\numberline {V}Les livrables du projet}{13}{section.0.5}
+\contentsline {subsection}{\numberline {1}Liste des produits livrables au client}{13}{subsection.0.5.1}
+\contentsline {subsection}{\numberline {2}Liste des livrables demand\IeC {\'e}s par l\IeC {\textquoteright }\IeC {\'e}cole }{13}{subsection.0.5.2}
+\contentsline {section}{\numberline {VI}Risques et opportunit\IeC {\'e}s}{13}{section.0.6}
+\contentsline {section}{\numberline {VII}Suivi et Contr\IeC {\^o}le}{14}{section.0.7}
+\contentsline {subsection}{\numberline {1}Tableau de bord de suivi}{14}{subsection.0.7.1}
+\contentsline {subsection}{\numberline {2}Communication }{15}{subsection.0.7.2}
+\contentsline {part}{II\hspace {1em}M\IeC {\'e}thodes num\IeC {\'e}riques}{16}{part.2}
+\contentsline {section}{\numberline {VIII}M\IeC {\'e}thodes spectrales}{17}{section.0.8}
+\contentsline {subsection}{\numberline {1}Int\IeC {\'e}r\IeC {\^e}t}{17}{subsection.0.8.1}
+\contentsline {subsection}{\numberline {2}Formalisme et D\IeC {\'e}finition}{17}{subsection.0.8.2}
+\contentsline {section}{\numberline {IX}M\IeC {\'e}thodes temporelles}{18}{section.0.9}
+\contentsline {subsection}{\numberline {1}M\IeC {\'e}thodes classiques}{18}{subsection.0.9.1}
+\contentsline {subsection}{\numberline {2}Exponentiel}{19}{subsection.0.9.2}
+\contentsline {subsection}{\numberline {3}Rosenbroch}{19}{subsection.0.9.3}
+\contentsline {part}{III\hspace {1em}R\IeC {\'e}sultats et perspectives}{20}{part.3}
+\contentsline {section}{\numberline {X}Equation diff\IeC {\'e}rentielles ordinaire}{21}{section.0.10}
+\contentsline {section}{\numberline {XI}Equation aux d\IeC {\'e}riv\IeC {\'e}es partielles}{21}{section.0.11}
+\contentsline {section}{\numberline {XII}Conclusion et persepectives}{21}{section.0.12}

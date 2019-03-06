@@ -58,12 +58,12 @@ class SpectralDifferenceMethod(_SpatialMethod):
     def rhs(self, y, t):
         """
         # Setting the needed matrices
-        sol_to_flux = lagrange_extrapolation_matrix(self.cell, self.flux_pts)
-        flux_to_sol = lagrange_extrapolation_matrix(self.flux_pts, self.cell)
+        sol_to_flux = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
+        flux_to_sol = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
         d_in_flux = np.zeros((self.p + 1, self.p + 1))
         for i in range(self.p + 1):
             for j in range(self.p + 1):
-                d_in_flux[i, j] = d_lagrange(self.flux_pts[i], self.flux_pts, j)
+                d_in_flux[i, j] = pie.linalg.lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
         d_in_flux_to_sol = np.dot(flux_to_sol, d_in_flux)
 
         flux_in_flux_point_conv = np.zeros((self.n_cell, self.p + 1))
@@ -109,7 +109,7 @@ class SpectralDifferenceMethod(_SpatialMethod):
     def jac(self, y, t):
         return self._jac
 
-    def jac2(self, y, t):
+    def hess(self, y, t):
         return np.zeros((self.n_pts, self.n_pts, self.n_pts))
 
     def __repr__(self):

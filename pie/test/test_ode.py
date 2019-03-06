@@ -33,7 +33,7 @@ def compare_methods(pb, h, t_max):
 
     score = dict()
     for method in METHODS:
-        y = method(pb.y(0), t, pb.f, jac=pb.jac, jac2=pb.jac2, df_dt=pb.df_dt, d2f_dtdu=pb.d2f_dtdu, d2f_dt2=pb.d2f_dt2)
+        y = method(pb.y(0), t, pb.f, jac=pb.jac, hess=pb.hess, df_dt=pb.df_dt, d2f_dtdu=pb.d2f_dtdu, d2f_dt2=pb.d2f_dt2)
         if y.ndim > 1:
             y = y[:, 0]
         color = ax1.plot(t, y, '+', label=method.__name__)[0].get_color()

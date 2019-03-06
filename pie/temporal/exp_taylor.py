@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.linalg import expm as expm_sp
 
-import pie.linalg
+import pie.linalg.krylov
 import pie.temporal.commons
 
 
@@ -46,7 +46,7 @@ def taylor_exp_1(y0, t, f, jac, verbose=True, krylov_subspace_dim=None, **_):
         if krylov_subspace_dim is None:
             y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
         else:
-            y[i + 1] = pie.linalg.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
+            y[i + 1] = pie.linalg.krylov.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
         count(i + 1)
     return y
 
@@ -98,7 +98,7 @@ def taylor_exp_2(y0, t, f, jac, df_dt=None, verbose=True, krylov_subspace_dim=No
         if krylov_subspace_dim is None:
             y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
         else:
-            y[i + 1] = pie.linalg.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
+            y[i + 1] = pie.linalg.krylov.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
         count(i + 1)
     return y
 
@@ -165,6 +165,6 @@ def taylor_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, v
         if krylov_subspace_dim is None:
             y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
         else:
-            y[i + 1] = pie.linalg.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
+            y[i + 1] = pie.linalg.krylov.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
         count(i + 1)
     return y

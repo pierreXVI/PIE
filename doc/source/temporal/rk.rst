@@ -8,7 +8,7 @@ Runge - Kutta methods
 .. py:function:: rk.rk_4(y0, t, f, verbose=true)
 
 
-.. autofunction:: pie.temporal.rk_butcher
+.. autofunction:: temporal.rk_butcher
 
 .. autodata:: temporal.rk.A_RK4
    :annotation:

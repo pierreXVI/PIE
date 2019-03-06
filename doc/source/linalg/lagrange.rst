@@ -1,6 +1,6 @@
 Lagrange polynomial algebra
 ===========================
 
-.. automodule:: pie.linalg.lagrange
+.. automodule:: linalg.lagrange
    :members:
 

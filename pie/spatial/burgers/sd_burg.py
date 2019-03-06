@@ -55,12 +55,12 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
     def rhs(self, y, t):
         """
         # Setting the needed matrices
-        sol_to_flux = sd.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
-        flux_to_sol = sd.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
+        sol_to_flux = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
+        flux_to_sol = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
         d_in_flux = np.zeros((self.p + 1, self.p + 1))
         for i in range(self.p + 1):
             for j in range(self.p + 1):
-                d_in_flux[i, j] = sd.d_lagrange(self.flux_pts[i], self.flux_pts, j)
+                d_in_flux[i, j] = pie.linalg.lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
         d_in_flux_to_sol = np.dot(flux_to_sol, d_in_flux)
 
         sol_in_flux_point = np.zeros((self.n_cell, self.p + 1))
@@ -119,7 +119,7 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
             rhs_in_sol_point[i] = np.dot(scale * d_in_flux_to_sol,
                                          flux_in_flux_point_conv[i] + flux_in_flux_point_diff[i])
 
-        # return rhs_in_sol_point.reshape(y.shape)
+        return rhs_in_sol_point.reshape(y.shape)
         """
         rhs = np.dot(self._riemann_solver(y), np.dot(self._sol_to_flux_full, y))
         rhs = np.dot(self._d_in_flux_to_sol_full, -rhs * rhs / 2) + np.dot(self._jac_diff, y)

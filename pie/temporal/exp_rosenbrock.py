@@ -1,10 +1,11 @@
 import numpy as np
 from scipy.linalg import expm as expm_sp
 
+import pie.linalg.krylov
 import pie.temporal.commons
 
 
-def rosen_exp_1(y0, t, f, jac, verbose=True, **_):
+def rosen_exp_1(y0, t, f, jac, verbose=True, krylov_subspace_dim=None, **_):
     """
     Order 1 Rosenbrock exponential method
 
@@ -14,6 +15,8 @@ def rosen_exp_1(y0, t, f, jac, verbose=True, **_):
     :param func jac: The Jacobian of f, must return an array
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
+    :param krylov_subspace_dim:
+    :type krylov_subspace_dim: None or int, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
     try:
@@ -40,12 +43,15 @@ def rosen_exp_1(y0, t, f, jac, verbose=True, **_):
         w[:, -1] = f(y[i], t[i]) - np.dot(j, y[i])
         expanded_vector[:d] = y[i]
         expanded_matrix[:d, -1:] = w
-        y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
+        if krylov_subspace_dim is None:
+            y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
+        else:
+            y[i + 1] = pie.linalg.krylov.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
         count(i + 1)
     return y
 
 
-def rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, **_):
+def rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, krylov_subspace_dim=None, **_):
     """
     Order 2 Rosenbrock exponential method
 
@@ -57,6 +63,8 @@ def rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, **_):
     :type df_dt: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
+    :param krylov_subspace_dim:
+    :type krylov_subspace_dim: None or int, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
     try:
@@ -87,12 +95,16 @@ def rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, **_):
         w[:, -2] = np.dot(jac(y[i], t[i]) - j, f(y[i], t[i])) + df_dt(y[i], t[i])
         expanded_vector[:d] = y[i]
         expanded_matrix[:d, -2:] = w
-        y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
+        if krylov_subspace_dim is None:
+            y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
+        else:
+            y[i + 1] = pie.linalg.krylov.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
         count(i + 1)
     return y
 
 
-def rosen_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, verbose=True, **_):
+def rosen_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, verbose=True, krylov_subspace_dim=None,
+                **_):
     """
     Order 3 Rosenbrock exponential method
 
@@ -109,6 +121,8 @@ def rosen_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, ve
     :type d2f_dtdu: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
+    :param krylov_subspace_dim:
+    :type krylov_subspace_dim: None or int, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
     try:
@@ -148,6 +162,9 @@ def rosen_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, ve
                    + d2f_dt2(y[i], t[i])
         expanded_vector[:d] = y[i]
         expanded_matrix[:d, -3:] = w
-        y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
+        if krylov_subspace_dim is None:
+            y[i + 1] = np.dot(expm_sp(h * expanded_matrix), expanded_vector)[:d]
+        else:
+            y[i + 1] = pie.linalg.krylov.expm_krylov(h * expanded_matrix, expanded_vector, krylov_subspace_dim)[:d]
         count(i + 1)
     return y

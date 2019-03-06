@@ -1,4 +1,4 @@
-% A LaTeX (non-official) template for ISAE projects reports
+ % A LaTeX (non-official) template for ISAE projects reports
 % Copyright (C) 2014 Damien Roque
 %$ This program is free software; you can redistribute it and/or
 % modify it under the terms of the GNU General Public License
@@ -85,7 +85,8 @@ urlcolor=black}
   \if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \makeatother
 \graphicspath{{C:/Users/Utilisateur/Pictures/}  } %logo
-\renewcommand{\thesection}{\alph{section}}
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\arabic{subsection}}
 \usepackage{enumitem}
 \usepackage{amsthm}
 \usepackage{amssymb,amsmath,bbm}
@@ -223,36 +224,38 @@ urlcolor=black}
 %\frontmatter
 
 \chapter*{Introduction}
-Ce document est rédigé dans le cadre du Projet Ingénieurie et Entrepreneuriat en dernière année de l'ISAE SUPAERO. Il s'agit ici d'analyser les performances de schémas numériques d’intégration
-temporelle pour les simulations aux grandes échelles avec les méthodes spectrales discontinues d'ordre très élevé. Ces méthodes permettrait de pouvoir augmenter le pas de temps d'un calcul CFD. Et par conséquent semble très intéressant pour réduire les coûts de calcul.
+Ce document est rédigé dans le cadre du Projet Ingénieurie et Entrepreneuriat en dernière année de l'ISAE SUPAERO, en partenariat avec l'ONERA. Il s'agit ici d'analyser les performances de schémas numériques d’intégration
+temporelle pour la résolution de problème du type advection, diffusion rencontrés en mécanique des fluides. La particularité des problèmes de mécanique des fluides c'est que les équations qui régissent la physique sont des équations différentielles partielles. Ce qui implique qu'il faut savoir résoudre des équations à la fois en temps et en espace. Aujourd'hui de nombreuses recherches sur les méthodes de résolution spatiales ont permis d'obtenir des résultats très prometteurs. Mais peu de progrès ont été fait sur la résolution temporelle. C'est donc l'objet de ce projet. \\
 
-Le travail effectué se base donc sur la publication de papiers scientifiques. Notre objectif est donc d'implémenter ces nouveaux types de schémas dit \og exponentiels \fg{} en langage python mais aussi d'en assurer le couplage avec la méthode spatiale de la différence spectrale. Cette méthode spatiale étant au préalable implémenter par des étudiants des années précédentes. 
+En effet l'objectif c'est d'implémenter des méthodes numériques d'intégration temporelles dites \og exponentielles \fg{} d'ordre plus élevés que celles utilisées usuellement.  Ces méthodes permettraient de pouvoir augmenter le pas de temps d'un calcul CFD. Ce qui réellement permet à un industriel de réaliser des simulations numériques bien plus rapide qu'avec une méthode usuelle. Par conséquent ces méthodes semblent très intéressantes pour réduire les coûts de calcul. 
+Néanmoins ces méthodes n'intéresseront pas notre client si elles ne fonctionne pas avec les méthodes spatiales. Le couplage des deux méthodes est donc le deuxième enjeu primordial de ce projet. 
+
+Le travail effectué se base donc sur la publication de papiers scientifiques. Afin de valider au fur et à mesure le travail effectué nous testerons nos méthodes sur des cas simples que nous complexifierons avec l'avancée du travail. Nous réaliserons la programmation avec le langage python qui est un langage open source et choisit par le client. 
 
 \part{Gestion de projet}
 
 \vfill
 
-Cette partie consiste à exposer la manière dont nous nous sommes organisés pour la réalisation de ce projet. Ce sujet de PIE s'insrit globalement dans une stratégie commune de recherche entre l'ISAE-SUPAERO et l'ONERA. L'objectif est l'amélioration du code de calcul JAGUAR basé sur les différences spectrales ayant pour objectifs d'effectuer des simulations LES.
+Cette partie consiste à exposer la manière dont nous nous sommes organisés pour la réalisation de ce projet. Ce sujet de PIE s'insrit globalement dans une stratégie commune de recherche entre l'ISAE-SUPAERO et l'ONERA. L'objectif est l'amélioration du code de calcul JAGUAR basé sur les différences spectrales ayant pour objectifs d'effectuer des simulations numériques LES pour des applications CFD.
 
 
-Les méthodes spectrales discontinues consistent à représenter la solution par cellule de calcul sur une base de polynôme et à prendre en compte la discontinuité entre cellules par résolution d’un problème de Riemann. Assez récentes en CFD, leur application pour la LES (SGE en Français) est un sujet de recherche actuel. Aujourd’hui, les études se focalisent essentiellement sur la précision des schémas spatiaux pour la convection et la diffusion. Ici, on souhaite focaliser notre attention sur les schémas numériques d’intégration temporelle des équations dans un code 1D prototype. Après une analyse bibliographique (Runge‐Kutta, Méthode de Gear, exponentiels, schémas Rock...), nous proposons d’implémenter plusieurs familles de schémas dans une maquette 1D puis de comparer les performances.
+Les méthodes spectrales discontinues consistent à représenter la solution par cellule de calcul sur une base de polynôme et à prendre en compte la discontinuité entre cellules par résolution d’un problème de Riemann. Assez récentes en CFD, leur application pour la LES (SGE en Français) est un sujet de recherche actuel. Aujourd’hui, les études se focalisent essentiellement sur la précision des schémas spatiaux pour la convection et la diffusion. Ici, on souhaite focaliser notre attention sur les schémas numériques d’intégration temporelle des équations dans un code 1D prototype. Après une analyse bibliographique (Runge‐Kutta, Méthode de Gear, exponentiels, schémas Rock...), nous proposons l'implémentation de plusieurs familles de schémas dans une maquette 1D puis de comparer les performances.
 
-\vfill
+%\vfill
+\section{Description du projet}
 
-\chapter{Description du projet}
-
-\section{Objectifs du projet, périmètre et résultats attendus}
+\subsection{Objectifs du projet, périmètre et résultats attendus}
     Plusieurs résultats sont attendus : 
 \begin{itemize}[label=\textbullet,]
 		\item Une analyse bibliographique des différentes classes de méthodes, 
 		\item Une analyse théorique des schémas numériques (précision, cout algorithmique, CFL max...) avec prise en compte de leurs paramètres utilisateur 
-		\item Une maquette (python) dans laquelle les schemas sont implantés (a gérer sous 
-        GitHub) et plusieurs cas‐tests. 
+		\item Une maquette (python) dans laquelle les schemas sont implémenter (a gérer sous 
+        GitHub) et plusieurs cas tests. 
 		\item Un rapport sur la comparaison croisée des schémas numériques
 		\item Une liste de recommandations du groupe sur le(s) meilleur (s) schéma(s)
 	\end{itemize}
 	
-\section{Les parties prennantes du projet}	
+\subsection{Les parties prenantes du projet}	
    Il est important de bien connaître toutes les parties prenantes du projet afin que la communication entre les différentes parties soient fluides et efficace. 
    \begin{itemize}[label=\textbullet]
    	\item Groupe Etudiants de L’ISAE composé de Louis Reboul, Pierre Seize, Sara Barrasa-Ramos, Jean-Baptiste Fourtout, Maes Théo qui représente l’équipe de développeurs
@@ -260,39 +263,53 @@ Les méthodes spectrales discontinues consistent à représenter la solution par
    	\item Xavier Vasseur : Client, encadrant technique et référent école
    	\item Rémi Lebouteiller : Tuteur en gestion de projet
     \end{itemize}
+\vspace{2mm}     
+Afin d'avoir une bonne communication entre les différentes parties prenantes du projet nous avons mis en place plusieurs moyen de communication. Notre principal client, Guillaume Puigt représentant l'organisme de l'ONERA est très investit c'est pourquoi nous avons une conversation Whatsapp avec lui. Cela nous permet d'échanger très rapidement pour fixer des rendez-vous. Néanmoins notre référent école, Xavier Vasseur qui est aussi l’un de nos clients n’utilise pas cette interface c’est pourquoi pour dialoguer nous utilisons principalement les mails. C’est aussi l’unique moyen de communication que nous avons d’ailleurs avec notre tuteur de gestion de projet. \\
 
-\section{Les exigences de haut niveau}
-    Les exigences client sont :
+D’autre part en moyenne il a été décidé dès le début du projet de faire des réunions bimensuelles ce qui nous a permit de rester à l'écoute de nos clients pour répondre à leurs exigences et de proposer des améliorations.
+
+Au sein de l'équipe de développement nous avons mis en place une conversation téléphonique de groupe pour se coordonner lors des réunions et pour la répartition du travail.
+
+
+\subsection{Les exigences de haut niveau}
+    Les exigences clients sont :
    \begin{itemize}[label=\textbullet]
    	\item Implémenter les méthodes numérique exponentielle Standard, Rosenbroch, Rock en 1D
    	\item Fournir et commenter le code
-   	\item Donner les avantages et les inconvénients de chacune des méthodes afin de déterminer laquelle est la meilleur pour une utilisation souhaitée.
+   	\item Donner les avantages et les inconvénients de chacune des méthodes afin de déterminer laquelle est la meilleure pour une utilisation souhaitée.
     \end{itemize}
+\vspace{2mm}
 
-\section{Les contraintes identifiées}
-    Les contraintes connues à l’heure actuelle portent sur l’environnement de développement du logiciel, elles sont imposées par les clients :
+Comme évoqué précédemment afin de répondre au cahier des charges clients nous devons implémenter les méthodes numériques en langage python. Sur conseil de notre client nous avons ouvert un compte sur la plateforme GITHUB qui nous permet de travailler en parallèle à plusieurs sur un même fichier. Cette plateforme est très adaptée pour travailler sur des fichiers de code informatiques notamment. Ceci nous permet aussi d'avoir plusieurs sauvegarde de notre travail et cela préviens donc d'une éventuelle perte du code informatique. \\ 
+
+Nous avons utiliser le logiciel Sphinx pour créer la documentation du code. En écrivant d'une manière bien précise notre code informatique, cela créer automatiquement la documentation expliquant comment fonctionne le code informatique. C'est très simple d'utilisation car cela créer une page internet sous le format html et à l'aide de lien hypertexte on peut naviguer sur chacune des fonctions pour savoir comment elle fonctionne, quels sont les arguments à utiliser etc...
+
+
+\subsection{Les contraintes identifiées}
+    Les contraintes connues portent sur l’environnement de développement du code informatique, elles sont imposées par les clients :
    \begin{itemize}[label=\textbullet]
    	\item Utilisation du langage de programmation Python version 2.7.xx
    	\item Utilisation de la plateforme Github pour le partage des données
     \end{itemize}
 
-\section{Hypothèses de travail}
+\subsection{Hypothèses de travail}
     Les hypothèses du projet portent sur les ressources disponibles et la capacité de travail des membres de l’équipe de développement.
    \begin{itemize}[label=\textbullet]
    	\item L’équipe de développement peut fournir 4 à 8h/semaine/personne
-   	\item Une partie de la bibliographie est fourni par G. Puigt et une autre par Xavier Vasseur
+   	\item La bibliographie est fourni par G. Puigt et par Xavier Vasseur
    	\item  Les algorithmes d’intégration spatiales sont fournis par G. Puigt
     \end{itemize}
+\vspace{3mm}
+Nous devons donc établir une stratégie de travail afin de se répartir la charge de travail de façon équivalente. 
 
-
-\chapter{Organisation}
-\section{Organisation de l’équipe (rôles)}
+\section{Organisation}
+\subsection{Organisation de l’équipe}
     Notre équipe est organisée de la manière suivante :
    \begin{itemize}[label=\textbullet]
-   	\item Théo Maes sera notre chef de projet. 
-   	\item {Nous avons divisé l’équipe en deux groupes opérationnels :
-   	
-   	    L’équipe développement, coordonnée par Sara Barrasa-Ramos, sera responsable de l'implémentation des méthodes numériques aux EDE. Elle sera composée de :
+   	\item Théo Maes est le chef de projet. 
+   \end{itemize}
+Nous avons divisé l’équipe en deux groupes opérationnels :
+L’équipe développement, coordonnée par Sara Barrasa-Ramos, sera responsable de l'implémentation des méthodes numériques aux EDE. Elle sera composée de :
    	    \begin{itemize}[label=\textbullet]
    	    \item Louis Reboul
    	    \item Sara Barrasa-Ramos
@@ -304,25 +321,32 @@ Les méthodes spectrales discontinues consistent à représenter la solution par
    	    \item Pierre Seize
    	    \item Jean-Baptiste Fourtout
         \end{itemize}
-        }
-    \end{itemize}
-\section{Organisation du travail (méthodes et outils)}
+        
+La répartition du travail c'est faite assez naturellement en deux équipes grâce aux diagramme PBS et WBS que nous avons mis en place et que nous verrons par la suite. Nous connaissions très bien les limites de notre projet et les étapes à effectuer pour parvenir à l'objectif du client.       \\ Nous nous sommes efforcés de conserver le plus possible cette répartition des tâches. Néanmoins nous avons été contraints d'effectuer certains changements temporaires de ressources humaines. En effet, une équipe avait beaucoup d'avance quand l'autre prenait du retard.
+    
+\begin{figure}[h]
+\centering
+    \includegraphics[scale=0.7]{images/OBS.png}
+  	\caption{Organisation de l'équipe} 
+   \label{fig:BTBM}
+\end{figure}
+\newpage
+
+\subsection{Organisation du travail (méthodes et outils)}
     C’est le diagramme OBS qui permet de donner sous forme de diagramme la hiérarchisation de notre projet.
     
     \begin{center}
-		
-    \includegraphics[width=1\textwidth]{images/OBS.png}\\[1cm]
     
     \includegraphics[width=1\textwidth]{images/OB2.png}\\[1cm]
 
     \end{center} 
     
-\chapter{Processus du développement}
-\section{Logique de développement}
+\section{Processus du développement}
+\subsection{Logique de développement}
 
     Nous avons commencé par prendre connaissance de la bibliographie qui est directement liée à notre travail. Puis il a fallu prendre en main la programmation Python car tous les développeurs n’avaient pas la même connaissance de ce langage informatique. L’Onera développe un logiciel de calcul CFD très performant, qui est limité par la capacité de résolution des méthodes temporelles. C’est pourquoi l’objectif de ce projet est d’améliorer les méthodes temporelles utilisées dans le code informatique. Il faut donc implémenter des méthodes dites « Exponentielles » qui sont récentes et seraient plus efficaces que les méthodes connues classique du type Range-Kutta. Afin de prendre en main la programmation nous avons coder les méthodes classiques afin de connaître leurs performances. Puis nous codons alors les méthodes exponentielles afin de pouvoir comparer les performances avec les méthodes classiques. Une fois ceci réalisé nous devons faire un choix sur la méthode que nous allons coupler avec la méthode de résolution spatiale pour la finalisation du logiciel de calcul de l’Onera. 
 
-\section{Définition des jalons}
+\subsection{Définition des jalons}
 
     Définition des jalons et la nature des jalons :
    \begin{itemize}[label=\textbullet]
@@ -332,20 +356,43 @@ Les méthodes spectrales discontinues consistent à représenter la solution par
    	\item  Fin Mars : Livraison des livrables à Rapport de projet, Code source
     \end{itemize}
 
-\section{Planning de projet (diagramme de Gantt)}
+\subsection{Planning de projet}
 
-    \begin{center}
+  \begin{figure}[h]
+\centering
+    \includegraphics[width=\textwidth, height=8cm]{images/Gant.png}
+  	\caption{Diagramme de Gantt intial} 
+   \label{fig:Gantt_initial}
+\end{figure}
 
-    \includegraphics[width=1\textwidth]{images/Gant.png}\\[1cm]
+Après plusieurs entretiens avec le client nous avons convenu de plusieurs changements qui ont provoqués des différences majeures dans l’emploi du temps du projet. 
 
-    \end{center} 
+Nous nous occupons de la partie intégration temporelle, néanmoins cette partie doit être couplée avec les méthodes d’intégration spatiales. Ces méthodes ont été réalisées au préalable par d’autres groupes d’étudiants de Supaero. Pour l’équipe couplage il s’est avéré difficile de reprendre le code informatique tel qu’il nous était fourni pour le coupler avec notre travail sur l’intégration temporelle. Après discussion avec nos clients nous avons donc réussi à les convaincre de changer la structure du code afin que cela soit plus fonctionnelle qu’avant. Cela a donc rajouté une tâche supplémentaire à l’équipe couplage mais ce temps perdu a été rattraper par un temps moins long que prévu initialement pour le couplage des méthodes. 
 
-\chapter{Definition détaillée du projet (Diagrammes PBS et WBS}
+  \begin{figure}[h]
+\centering
+    \includegraphics[width=\textwidth, height=8cm]{images/Gantt_revue_2.png}
+  	\caption{Diagramme de Gantt modifié} 
+   \label{fig:Gantt modifié}
+\end{figure}
 
-\begin{figure}
+Nous avons eu des difficultés sur l’implémentation des schémas numériques, comme l’équipe couplage avait de l’avance et qu’il était possible de déplacer une ressource humaine dans l’équipe implémentation. Nous avons donc fait le choix de changer la répartition des ressources afin d’avancer plus vite sur la partie implémentation des schémas. 
+
+De plus le client exige des soutenances de projet « blanches » courant le mois de février. Ceci nous impose donc de préparer le compte rendu de projet 1 semaine plus tôt que la date à laquelle nous avions prévu de le débuter. Ceci impose aussi de préparer en parallèle une présentation orale. Ces demandes supplémentaires du client nous ont imposés de nouveaux jalons, qui sont répertorié sur la figure \ref{fig:Gantt modifié}.
+
+A ce jour nous avons déjà tous les éléments nécessaires pour répondre aux besoins du client. Mais comme il s’agit d’un sujet recherche il est toujours possible d’aller plus loin dans le travail effectué. C’est pourquoi après plusieurs réunions avec le client nous sommes tombés d’accord sur les pistes qu’il souhaitait creuser davantage. C’est pourquoi dans le diagramme de Gantt de prévision à mi-janvier n’a rien à voir avec le diagramme de Gantt initial de début de projet. 
+
+\section{Outils de gestion de projet}
+
+	Les outils qui nous ont été très utiles pour mettre des limites à notre projet et de répartir les différentes tâches aux seins de l'équipe sont principalement les diagrammes PBS et WBS.\\
+	
+	Le diagrammee PBS (Product Breakdown Structure) nous permet de savoir dans quelle ordre nous allons faire les différentes opérations pour aboutir à l'objectif du projet. Tandis que le WBS (Working Breakdown Structure) nous indique plutôt comment nous allons faire ces opérations. Cela permet de définir différentes tâches, et nous répartir le travail de manière équitable pour lisser la charge de travail sur chacun des membres de l'équipe de développement. 
+	 
+
+\begin{figure}[h]
      \centering
-      \includegraphics[width=0.7\textwidth]{images/PBS.png}
-       \caption{Diagramme PBS}
+      \includegraphics[width=0.7\textwidth]{images/WBS_detaille.png}
+       \caption{Diagramme WBS}
     \label{chaine optim}
 \end{figure}
     
@@ -356,8 +403,8 @@ Les méthodes spectrales discontinues consistent à représenter la solution par
      \label{chaine optim}
   \end{figure}
     
-\chapter{Les livrables du projet}
-\section{Liste des produits livrables au client}
+\section{Les livrables du projet}
+\subsection{Liste des produits livrables au client}
    Les livrables du projet :
    \begin{itemize}[label=\textbullet]
    	\item Revue bibliographique avec pour objectif de répondre aux questions qu’est ce qu’on conseil d’utiliser et pourquoi ? Pour quelles applications ?
@@ -366,23 +413,34 @@ Les méthodes spectrales discontinues consistent à représenter la solution par
    	\item  Code informatique avec pour critère d’acceptation d’être fait en langage Python et transmis par la plateforme Github.
     \end{itemize}
 
-\section{Liste des livrables demandés par l’école }
+\subsection{Liste des livrables demandés par l’école }
 
     Dans le cadre de la gestion de projet nous devons rendre un plan de développement de notre projet. D’autre part nous sommes évalués sur un rapport de projet et une soutenance qui aura lieu mi-Mars ce sont donc des livrables requis. 
 
-\chapter{Risques et opportunités}
+\section{Risques et opportunités}
+ 
+  Les risques liés au projet sont répertoriés dans le tableau figure XXXX. On peut voir que ce tableau est réalisé en définissant pour chaque risque potentiel une Occurence et une Gravité par un coefficient. Et le produit de ces deux coefficient nous indiquera tout naturellement si l'impact du risque considérer sur le projet est fort ou non. L'utilisation d'un code couleur permet en effet de visuellement repérer les risques majeurs d'un coup d'oeil avec la couleur rouge. \\
+  
+  Une fois ces risques identifiés il est à notre charge de faire en sorte qu'ils ne se produisent pas. C'est donc ce que nous nous sommes efforcés de faire tout au long du projet. Bien sûr ayant une faible expérience des projets il est difficile d'identifier en amont tous les risques qu'un projet peu contenir. \\
+  
+  Il y a d'ailleur un risque que nous n’avions pas considéré c’est incompatibilité ou la difficulté de couplage de notre travail avec la méthode spatiale. En effet, la méthode spatiale étant fournit par le client nous récupérions un code informatique fonctionnant. Néanmoins il était codé de manière peu flexible ce qui ne permettait pas de coupler les deux travaux de façon simple et agile.\\
+  
+ C'est alors qu'un choix s'offrait à nous, soit on prenait le temps de réécrire la partie du code fournit par le client soit nous allions avoir des difficultés pour tester les résultats de notre travail et cela allait nous prendre beaucoup de temps. Mais nous aurions la garantit d'avoir un résultat. Ce n'est cependant pas le choix que nous avons fait. Nous avons préférer avec l'accord du client reprendre la structure du code fournit afin de pouvoir faire un couplage de notre travail de manière simple et agile. \\ 
+ 
+ Ce qui s'apparentait à un risque s'est tranformé en opportunité car finalement par rapport au diagramme de Gantt initial nous avions gagné du temps. Ce qui nous as permit de faire pas mal de choses supplémentaires par la suite.
 
-    \begin{center}
-
-    \includegraphics[width=1\textwidth]{images/matrice.png}\\[1cm]
-
-    \end{center} 
+\begin{figure}[h] 
+     \centering
+       \includegraphics[width=\textwidth]{images/matrice.png}
+       \caption{Tableau des risques}
+       \label{Tab risque}
+  \end{figure}
     
-\chapter{Suivi et Contrôle}
-\section{Tableau de bord de suivi}
+\section{Suivi et Contrôle}
+\subsection{Tableau de bord de suivi}
     Nous avons l’opportunité d’utiliser MS-Project pour faire un suivi du projet. Nous avons réalisé un diagramme de Gantt de référence que nous mettrons à jours au fur et à mesure que le projet va avancer. Nous savons déjà qu’en fin de projet des personnes sont en surcharge de travail, nous sommes déjà en train de voir comment nous allons pouvoir répartir la charge de travail. 
 
-\section{Communication }
+\subsection{Communication }
 
     Nous avons la chance d’avoir un de nos clients qui est très proche de nous, c’est pourquoi nous avons une conversation Whatsapp avec celui-ci. Mais notre référent école qui est aussi l’un de nos clients n’utilise pas cette interface c’est pourquoi pour dialoguer nous utilisons principalement les mails. C’est l’unique moyen de communication que nous avons d’ailleurs avec notre tuteur de gestion de projet. 
     
@@ -391,16 +449,66 @@ Les méthodes spectrales discontinues consistent à représenter la solution par
     Concernant la communication au sein de l’équipe nous avons un groupe sur le web de façon à partager et modifier facilement des documents sur lesquels nous travaillons. Une conversation téléphonique de groupe a été créée afin de se coordonner lors de réunions et de créneaux projet. 
 
 \part{Méthodes numériques}
-\chapter{Méthodes spectrales}
-\section{Intérêt}
-\section{Formalisme}
-\section{Méthode de reconstitution du Flux}
+\section{Méthodes spectrales}
+\subsection{Intérêt}
 
-\chapter{Méthodes temporelles}
-\section{Exponentiel}
-\section{Rosenbroch}
+Les méthodes spectrales se distinguent des autres méthodes car elles permettent de conserver des propriétés physiques des phénomènes étudiés. Notamment en mécanique des fluides une des propriétés importante c'est la conservation du flux.
+Cela permet aussi un gain de temps de calcul considérable par rapport au différence finies. Et les performances d'un solveur étant en partie lié à la rapidité de résolution on comprend l'intérêt porté à ces méthodes. 
 
-\part{Couplage spatial - temporel}
+En terme de précision nous pouvons obtenir des ordres très élevés avec ces méthodes. Car on cherche la solution sous forme d'une combinaison linéaire sur des fonctions de base et que ces fonctions sont définies par cellules. 
+
+\subsection{Formalisme et Définition}
+
+Comme nous l'avons vu les méthodes spectrales permettent d'assurer la continuité du flux aux interfaces. Elles sont donc particulièrement intéressantes dans les cas des EDP rencontrés dans les problèmes de nos clients. Par exemple on peut considérer l'équation aux dérivées partielles suivante en 1D : 
+\begin{equation}
+\frac{\partial W}{\partial t}+\frac{\partial F(W)}{\partial x}=0 \nonumber
+\end{equation}
+
+W est la grandeur considérée et F le flux qui dépend de W. Les méthodes spectrales supposent quand dans chaque cellule du domaine de calcul il y ait s degrés de liberté pour définir la solution ainsi que p degrès de liberté pour définir le flux. Les grandeurs F et W sont approximées par des fonctions polynomiales. En général, ce sont les polynômes de Lagrange qui sont utilisés pour approximer ces grandeurs. Mais des recherches ont montrées qu'ils pouvaient être plus judicieux d'utiliser des polynômes de Legendre. 
+
+La résolution de chaque cellule ne se fait pas dans l'espace réel mais dans l'espace isoparamétrique qui est normalisé. En 1D, la cellule isoparamétrique est le segment [-1;1] et le passage d'un espace à l'autre s'effectue par une homothétie et une translation. 
+
+Des propriétés importantes de ce formalisme sont établies : 
+
+\begin{itemize}[label=\textbullet]
+   	    \item Consistence du schéma : L'approximation polynomiale fournit une condition sur les degrès des polynômes solution et flux : $ p=s+1 $
+   	    \item Conservation du flux : Il faut que le flux se conserve aux interfaces il vient donc : $F_{\Omega i}(-1)=F_{\Omega i-1}(1)$ et $ F_{\Omega i}(1)=F_{\Omega i+1}(-1) $
+        \end{itemize}
+        
+Une brève description de la méthode permettra de comprendre le fonctionnement. \\
+\textbf{Etape 1 :} Interpolation de la solution dans la cellule avec un polynôme de degré p aux p+1 points solution\\
+\textbf{Etape 2 :} Interpolation de la solution aux p points flux intercalés entre les p+1 points solution et extrapolation aux points flux des interfaces par le polynôme de degré p basé sur la solution\\
+\textbf{Etape 3 :} Calcul du flux aux points flux grâce aux valeurs de la solution interpolée\\
+\textbf{Etape 4 :} Résolution du problème de Riemann pour calculer les flux communs aux interfaces\\
+\textbf{Etape 5 :} Interpolation du nouveau flux corrigé aux interfaces aux points flux par un polynôme de degré p+1\\
+\textbf{Etape 6 :} Dérivation du flux corrigé aux points solution et intégration en temps pour avancer la solution
+
+\begin{figure}[h]
+\centering
+   \includegraphics[scale=0.5]{images/Meth_spectrale.png}
+  	\caption{Schématisation de la méthode} 
+   \label{fig:meth_spectrale}
+\end{figure}
+
+
+\section{Méthodes temporelles}
+\subsection{Méthodes classiques}
+
+Dans cette section nous allons présenter les méthodes numériques de résolution temporelles qui sont les plus utilisées à l'heure actuelle. Nous savons que la principale difficulté de ces méthodes c'est de pourvoir avoir un ordre élevé ce qui permettrai d'augmenter la rapidité des calculs de logiciel de CFD. \\ 
+Nous nous attarderons particulièrement sur les méthodes de Runge-Kutta et les méthodes de Gear. 
+Les méthodes donc Gear sont plus utilisées pour la résolution de problèmes physiques ayant des temps physique différents du type réaction chimique. Tandis que les méthodes de Runge-Kutta sont plus utilisées pour des problèmes d'advection diffusion. 
+
+\subsection{Exponentiel}
+
+Tout l'objet de ce projet repose sur ces nouvelles méthodes. La théorie est développée à travers des articles scientifiques très récents. Ce qui montre que c'est un sujet actuelle de recherche, et qu'il y a des possibilités d'amélioration avec ces méthodes. Nous allons vous décrire brièvement le fonctionnement de ces méthodes, puis nous vous montrerons les résultats que nous avons obtenus.  
+\subsection{Rosenbroch}
+
+\part{Résultats et perspectives}
+
+\section{Equation différentielles ordinaire}
+	
+\section{Equation aux dérivées partielles}
+\section{Conclusion et persepectives}
 \clearpage
 \listoffigures
 

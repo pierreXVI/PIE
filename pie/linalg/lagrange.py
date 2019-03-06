@@ -5,7 +5,7 @@ r"""
 import numpy as np
 
 
-def lagrange(x, interpolation_points, i):
+def eval_lagrange(x, interpolation_points, i):
     r"""
     Evaluate in ``x`` the ``i`` Lagrange basis polynomial on the points ``interpolation_points``
 
@@ -47,11 +47,11 @@ def lagrange_extrapolation_matrix(x, x_new):
 
     :param array_like x:
     :param array_like x_new:
-    :return: array_like
+    :return: numpy.ndarray
     """
     a, b = len(x), len(x_new)
     foo = np.zeros((b, a))
     for i in range(a):
         for j in range(b):
-            foo[j, i] = lagrange(x_new[j], x, i)
+            foo[j, i] = eval_lagrange(x_new[j], x, i)
     return foo
