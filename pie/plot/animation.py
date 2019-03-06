@@ -110,22 +110,17 @@ class Animation:
 
         if event.key == 'home':
             self.i = 0
-            if not self.run:
-                self._update()
         if event.key == 'end':
             self.i = len(self.t) - 1
-            if not self.run:
-                self._update()
         if event.key == 'left':
             self.i -= 1
-            if not self.run:
-                self._update()
         if event.key == 'right':
             self.i += 1
-            if not self.run:
-                self._update()
 
         if event.key == ' ':
             self.run = not self.run
             if self.run:
                 self._update()
+
+        if not self.run:
+            self._update()
