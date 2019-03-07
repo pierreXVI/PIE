@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 
+if plt.get_backend() != 'TkAgg':
+    plt.switch_backend('TkAgg')
+
 
 class Animation:
     r"""
