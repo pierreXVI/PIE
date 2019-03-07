@@ -103,7 +103,7 @@ def taylor_exp_2(y0, t, f, jac, df_dt=None, verbose=True, krylov_subspace_dim=No
     return y
 
 
-def taylor_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, verbose=True, krylov_subspace_dim=None,
+def taylor_exp_3(y0, t, f, jac, hess, df_dt=None, d2f_dt2=None, d2f_dtdu=None, verbose=True, krylov_subspace_dim=None,
                  **_):
     """
     Order 3 Taylor exponential method
@@ -112,7 +112,7 @@ def taylor_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, v
     :param 1D_array t: Array of time steps, of size n
     :param func f: Function with well shaped input and output
     :param func jac: The Jacobian of f, must return an array
-    :param func jac2: The second-order Jacobian of f, must return an array
+    :param func hess: The Hessian of f, must return an array
     :param df_dt: The f partial derivative with respect to time
     :type df_dt: func or None, optional
     :param d2f_dt2: The f second-order partial derivative with respect to time
@@ -155,7 +155,7 @@ def taylor_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, v
         h = t[i + 1] - t[i]
         w[:, -1] = f(y[i], t[i]) - np.dot(j, y[i])
         w[:, -2] = np.dot(jac(y[i], t[i]) - j, f(y[i], t[i])) + df_dt(y[i], t[i])
-        w[:, -3] = np.dot(np.dot(jac2(y[i], t[i]), f(y[i], t[i])), f(y[i], t[i])) \
+        w[:, -3] = np.dot(np.dot(hess(y[i], t[i]), f(y[i], t[i])), f(y[i], t[i])) \
                    + np.dot(jac(y[i], t[i]) - j, np.dot(jac(y[i], t[i]), y[i])) \
                    + np.dot(jac(y[i], t[i]) - j, df_dt(y[i], t[i])) \
                    + 2 * np.dot(d2f_dtdu(y[i], t[i]), f(y[i], t[i])) \
