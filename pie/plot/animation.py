@@ -61,6 +61,8 @@ class Animation:
 
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111)
+        self.ax.set_xlabel('x', fontsize=16)
+        self.ax.set_ylabel('y', fontsize=16)
         self.ax.grid(True)
         if x_ticks is not None:
             self.ax.set_xticks(x_ticks)
@@ -71,7 +73,7 @@ class Animation:
         for i in range(len(self.list_y)):
             self.list_line[i], = self.ax.plot(self.x, list_y[i][0], list_fmt[i], lw=list_lw[i], label=list_label[i])
 
-        self.ax.legend(loc='upper left', ncol=2)
+        self.ax.legend(loc='upper left', ncol=2, fontsize=10)
         self.fig.canvas.mpl_connect('key_press_event', self._key_event)
         self._update()
         plt.show()
@@ -92,7 +94,7 @@ class Animation:
             dt = 0
 
         self.fig.suptitle('Speed x {0:0.2f}'.format(self.speed), x=0.1)
-        self.ax.set_title(self.title.format(self.i, self.t[self.i], dt))
+        self.ax.set_title(self.title.format(self.i, self.t[self.i], dt), fontsize=16)
         for i in range(len(self.list_y)):
             self.list_line[i].set_ydata(self.list_y[i][self.i])
 
