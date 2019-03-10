@@ -19,8 +19,8 @@ class Animation:
     :param array_like list_y:
     :param list_label:
     :type list_label: array_like, optional
-    :param list_ls:
-    :type list_ls: array_like, optional
+    :param list_fmt:
+    :type list_fmt: array_like, optional
     :param list_lw:
     :type list_lw: array_like, optional
     :param x_ticks:
@@ -73,7 +73,7 @@ class Animation:
         for i in range(len(self.list_y)):
             self.list_line[i], = self.ax.plot(self.x, list_y[i][0], list_fmt[i], lw=list_lw[i], label=list_label[i])
 
-        self.ax.legend(loc='upper left', ncol=2, fontsize=10)
+        self.ax.legend(loc='upper right', ncol=2, fontsize=10)
         self.fig.canvas.mpl_connect('key_press_event', self._key_event)
         self._update()
         plt.show()
@@ -91,7 +91,7 @@ class Animation:
         try:
             dt = self.t[self.i + 1] - self.t[self.i]
         except IndexError:
-            dt = 0
+            dt = self.t[1] - self.t[0]
 
         self.fig.suptitle('Speed x {0:0.2f}'.format(self.speed), x=0.1)
         self.ax.set_title(self.title.format(self.i, self.t[self.i], dt), fontsize=16)
