@@ -94,7 +94,7 @@ def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, title='', krylov_su
             if spatial_method == pie.spatial.burgers.FiniteDifferenceMethodBurgers:
                 list_label.append('{0} + FD_1 Burgers'.format(temporal_method.__name__))
             else:
-                list_label.append('{0} + SD_{1} Burgers'.format(temporal_method.__name__, spatial_method.p - 1))
+                list_label.append('{0} + SD_{1} Burgers'.format(temporal_method.__name__, p - 1))
             list_fmt.append('+-')
             list_lw.append(1)
 
@@ -103,10 +103,10 @@ def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, title='', krylov_su
 
 
 TEMPORAL_METHODS = (
-    pie.temporal.rk_1,
+    # pie.temporal.rk_1,
     # pie.temporal.rk_2,
-    # pie.temporal.rk_4,
-    pie.temporal.bdf_1,
+    pie.temporal.rk_4,
+    # pie.temporal.bdf_1,
     # pie.temporal.bdf_2,
     # pie.temporal.bdf_4,
     # pie.temporal.taylor_exp_1,
@@ -119,7 +119,7 @@ TEMPORAL_METHODS = (
 """The temporal methods that are going to be tested"""
 
 SPATIAL_METHODS = (
-    # pie.spatial.FiniteDifferenceMethod,
+    pie.spatial.FiniteDifferenceMethod,
     pie.spatial.SpectralDifferenceMethod,
 )
 """The spatial methods that are going to be tested"""
@@ -132,7 +132,7 @@ SPATIAL_METHODS_BURGERS = (
 
 if __name__ == '__main__':
     # Difference FD - SD
-    compare(n=50, x_max=1, p=2, conv=2, diff=0, dt=1E-3, t_max=1,
+    compare(n=50, x_max=1, p=3, conv=2, diff=0, dt=1E-3, t_max=10,
             speed=20, repeat=False, krylov_subspace_dim=None, title='FD vs SD')
 
     # Breaking bad

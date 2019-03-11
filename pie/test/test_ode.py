@@ -3,7 +3,7 @@ from __future__ import print_function
 import matplotlib.pyplot as plt
 import numpy as np
 
-import pie.test.ode_problem
+import pie
 
 
 def compare_methods(pb, h, t_max, t=None, fmt='+-', title=''):
@@ -86,7 +86,7 @@ METHODS = (
 """The methods that are going to be tested"""
 
 if __name__ == '__main__':
-    compare_methods(pie.test.ode_problem.pb_0, t_max=5*2.2, h=2.2, title='Implicit vs Explicit')
+    compare_methods(pie.test.ode_problem.pb_0, t_max=5 * 2.2, h=2.2, title='Implicit vs Explicit')
     # compare_methods(pie.test.ode_problem.pb_1, t_max=10, h=0.1)
     # compare_methods(pie.test.ode_problem.pb_2, t_max=20, h=0.1)
     # compare_methods(pie.test.ode_problem.pb_3, t_max=30, h=0.1)
