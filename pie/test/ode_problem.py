@@ -29,6 +29,22 @@ class Problem:
         self.d2f_dt2 = d2f_dt2
 
 
+pb_0 = Problem(
+    y=lambda t: np.exp(-t),
+    f=lambda y, t: -y,
+    jac=lambda y, t: np.array([1]),
+)
+r"""
+Linear problem
+
+.. math::
+   \left\{\begin{aligned}
+    &\dot{y} = -y \\
+    &y\left(0\right) = 1
+   \end{aligned}\right.
+   \Rightarrow y\left(t\right)=\exp^{-t}
+"""
+
 pb_1 = Problem(
     y=lambda t: np.exp(t / 2 - np.sin(2 * t) / 4),
     f=lambda y, t: y * (np.sin(t) ** 2),
