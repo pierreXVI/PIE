@@ -47,7 +47,7 @@ def solve_burgers(n, x_max, p, diff, dt, t_max, init_cond, spatial_method_burger
     return method, t, y
 
 
-def compare(n, x_max, p, conv, diff, dt, t_max, krylov_subspace_dim=None, repeat=True, speed=1):
+def compare(n, x_max, p, conv, diff, dt, t_max, title='', krylov_subspace_dim=None, repeat=True, speed=1):
     y0 = pie.test.initial_condition.sine(x_max)
     list_y = []
     list_label = []
@@ -62,9 +62,9 @@ def compare(n, x_max, p, conv, diff, dt, t_max, krylov_subspace_dim=None, repeat
                                  krylov_subspace_dim=krylov_subspace_dim)
             list_y.append(y)
             if spatial_method == pie.spatial.FiniteDifferenceMethod:
-                list_label.append('{0} + FD'.format(temporal_method.__name__))
+                list_label.append('{0} + FD_1'.format(temporal_method.__name__))
             else:
-                list_label.append('{0} + SD'.format(temporal_method.__name__))
+                list_label.append('{0} + SD_{1}'.format(temporal_method.__name__, p - 1))
             list_fmt.append('+-')
             list_lw.append(3)
 
@@ -74,10 +74,10 @@ def compare(n, x_max, p, conv, diff, dt, t_max, krylov_subspace_dim=None, repeat
     list_lw = [5] + list_lw
 
     pie.plot.animation.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
-                                 x_ticks=np.linspace(0, x_max, n + 1), repeat=repeat, speed=speed)
+                                 x_ticks=np.linspace(0, x_max, n + 1), title=title, repeat=repeat, speed=speed)
 
 
-def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, krylov_subspace_dim=None, repeat=True, speed=1):
+def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, title='', krylov_subspace_dim=None, repeat=True, speed=1):
     list_y = []
     list_label = []
     list_fmt = []
@@ -92,28 +92,28 @@ def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, krylov_subspace_dim
 
             list_y.append(y)
             if spatial_method == pie.spatial.burgers.FiniteDifferenceMethodBurgers:
-                list_label.append('{0} + FD Burgers'.format(temporal_method.__name__))
+                list_label.append('{0} + FD_1 Burgers'.format(temporal_method.__name__))
             else:
-                list_label.append('{0} + SD Burgers'.format(temporal_method.__name__))
+                list_label.append('{0} + SD_{1} Burgers'.format(temporal_method.__name__, spatial_method.p - 1))
             list_fmt.append('+-')
             list_lw.append(1)
 
     pie.plot.animation.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
-                                 x_ticks=np.linspace(0, x_max, n + 1), repeat=repeat, speed=speed)
+                                 x_ticks=np.linspace(0, x_max, n + 1), title=title, repeat=repeat, speed=speed)
 
 
 TEMPORAL_METHODS = (
     pie.temporal.rk_1,
-    pie.temporal.rk_2,
+    # pie.temporal.rk_2,
     # pie.temporal.rk_4,
     pie.temporal.bdf_1,
-    pie.temporal.bdf_2,
+    # pie.temporal.bdf_2,
     # pie.temporal.bdf_4,
-    pie.temporal.taylor_exp_1,
-    pie.temporal.taylor_exp_2,
+    # pie.temporal.taylor_exp_1,
+    # pie.temporal.taylor_exp_2,
     # pie.temporal.taylor_exp_3,
-    pie.temporal.rosen_exp_1,
-    pie.temporal.rosen_exp_2,
+    # pie.temporal.rosen_exp_1,
+    # pie.temporal.rosen_exp_2,
     # pie.temporal.rosen_exp_3,
 )
 """The temporal methods that are going to be tested"""
@@ -131,8 +131,14 @@ SPATIAL_METHODS_BURGERS = (
 """The Burgers spatial methods that are going to be tested"""
 
 if __name__ == '__main__':
-    compare(n=30, x_max=1, p=3, conv=1, diff=0.0001, dt=1E-1, t_max=10,
-            speed=1, repeat=False, krylov_subspace_dim=None)
+    # Difference FD - SD
+    compare(n=50, x_max=1, p=2, conv=2, diff=0, dt=1E-3, t_max=1,
+            speed=20, repeat=False, krylov_subspace_dim=None, title='FD vs SD')
+
+    # Breaking bad
+    # compare(n=30, x_max=1, p=3, conv=1, diff=0, dt=1E-2, t_max=0.5,
+    #         speed=1, repeat=False, krylov_subspace_dim=None)
+
     # compare(n=30, x_max=1, p=2, conv=1, diff=0.0001, dt=1E-2, t_max=10,
     #         speed=1, repeat=False, krylov_subspace_dim=None)
     # compare(n=20, x_max=1, p=3, conv=0.5, diff=0.00, dt=1E-1, t_max=50,
