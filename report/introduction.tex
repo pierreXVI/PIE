@@ -1,0 +1,12 @@
+\part*{Introduction}
+
+\paragraph{}
+Ce document est rédigé dans le cadre du Projet Ingénierie et Entrepreneuriat en dernière année de l'ISAE SUPAERO, en partenariat avec l'ONERA. Il s'agit ici d'analyser les performances de schémas numériques d’intégration
+temporelle pour la résolution de problème du type advection, diffusion rencontrés en mécanique des fluides. La particularité des problèmes de mécanique des fluides c'est que les équations qui régissent la physique sont des équations différentielles partielles. Ce qui implique qu'il faut savoir résoudre des équations à la fois en temps et en espace. Aujourd'hui de nombreuses recherches sur les méthodes de résolution spatiales ont permis d'obtenir des résultats très prometteurs. Mais peu de progrès ont été fait sur la résolution temporelle. C'est donc l'objet de ce projet.
+
+\paragraph{}
+En effet l'objectif c'est d'implémenter des méthodes numériques d'intégration temporelles dites \og exponentielles \fg{} d'ordre plus élevés que celles utilisées usuellement.  Ces méthodes permettraient de pouvoir augmenter le pas de temps d'un calcul CFD. Ce qui réellement permet à un industriel de réaliser des simulations numériques bien plus rapide qu'avec une méthode usuelle. Par conséquent ces méthodes semblent très intéressantes pour réduire les coûts de calcul. 
+Néanmoins ces méthodes n'intéresseront pas notre client si elles ne fonctionne pas avec les méthodes spatiales. Le couplage des deux méthodes est donc le deuxième enjeu primordial de ce projet.
+
+\paragraph{}
+Le travail effectué se base donc sur la publication de papiers scientifiques. Afin de valider au fur et à mesure le travail effectué nous testerons nos méthodes sur des cas simples que nous complexifierons avec l'avancée du travail. Nous réaliserons la programmation avec le langage python qui est un langage open source et choisit par le client

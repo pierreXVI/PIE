@@ -1,0 +1,56 @@
+\documentclass{article}
+\input{header.tex}
+
+\begin{document}
+
+\input{title.tex}
+
+\input{resume.tex}
+\input{introduction.tex}
+
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\input{gestion_de_projet.tex}
+\input{methodes_numeriques.tex}
+\input{methodes_exponentielles.tex}
+
+
+\input{results.tex}
+
+%% à commenter à la fin
+%\clearpage
+%\input{eqs.tex}
+
+\clearpage
+
+
+\part*{Liste des sigles et acronymes}
+\begin{acronym}[CP-OFDMX] % Give the longest acronym here
+\acro{SD}{\emph{Spectral Différences (différences spectrales)}}
+\acro{EDP}{\emph{Équation aux Dérivées Partielles}}
+\acro{EDO}{\emph{Équation Différentielle Ordinaire}}
+\acro{RK}{\emph{Runge - Kutta}}
+\acro{BDF}{\emph{Backward Differentiation Formula}}
+\end{acronym}
+
+\bibliography{biblio.bib}
+\bibliographystyle{plain}
+
+\thispagestyle{empty}
+
+\begin{center}
+  ISAE\\
+  10, avenue Édouard Belin\\
+  BP 54032\\
+  31055 Toulouse CEDEX 4
+\end{center}
+\vspace*{\fill}
+
+\end{document}
+
+
+
+ 
