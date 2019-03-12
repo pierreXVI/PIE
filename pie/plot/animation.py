@@ -105,7 +105,7 @@ class Animation:
             dt = self.t[1] - self.t[0]
 
         self._speed_text.set_text('Speed x {0:0.2f}'.format(self.speed))
-        self.ax.set_title(self._iter_text.format(self.i, self.t[self.i], dt), fontsize=16)
+        self.ax.set_title(self._iter_text.format(self.i, self.t[self.i], dt), fontsize='xx-large')
         for i in range(len(self.list_y)):
             self.list_line[i].set_ydata(self.list_y[i][self.i])
 

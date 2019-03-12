@@ -12,6 +12,8 @@ List of problems :
 .. automodule:: pie.test.ode_problem
    :members: Problem
 
+.. autodata:: pie.test.ode_problem.pb_0
+   :annotation:
 .. autodata:: pie.test.ode_problem.pb_1
    :annotation:
 .. autodata:: pie.test.ode_problem.pb_2
