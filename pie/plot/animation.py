@@ -62,13 +62,13 @@ class Animation:
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111)
 
-        self._iter_text = 'n_iter = {{0:0>{width1}}}, t = {{1:0>{width2}.2f}}, dt = {{2:0.2E}}' \
+        self._iter_text = r'$N_{{{{iter}}}}$ = {{0:0>{width1}}}, $t$ = {{1:0>{width2}.2f}}, $\Delta t$ = {{2:0.2E}}' \
             .format(width1=len(str(len(self.t))), width2=len('{0:0.2f}'.format(self.t[-1])))
         self._speed_text = self.fig.text(*ANIMATION_SPEED_LOC, s='Speed x {0:0.2f}'.format(self.speed),
                                          horizontalalignment='left')
 
-        self.ax.set_xlabel('x', fontsize='xx-large')
-        self.ax.set_ylabel('y', fontsize='xx-large')
+        self.ax.set_xlabel(r'$x$', fontsize='xx-large')
+        self.ax.set_ylabel(r'$y$', fontsize='xx-large')
         self.ax.grid(True)
         if x_ticks is not None:
             self.ax.set_xticks(x_ticks)
