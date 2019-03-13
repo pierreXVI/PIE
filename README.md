@@ -20,8 +20,16 @@ To build this project's documentation, *sphinx* need to be installed.
 If the *read-the-doc* theme is installed, it will be used as the html theme.
 
 To then build the doc:
+
+##### With `make`:
 ~~~
 cd /path/to/local/repository/doc/
 make # to see a list of possible output format
 make html # to build the doc html format, in ./build/html
+~~~
+
+##### Without `make`:
+~~~
+cd /path/to/local/repository/doc/
+sphinx-build -M html source build # to build the doc html format, in ./build/html
 ~~~
