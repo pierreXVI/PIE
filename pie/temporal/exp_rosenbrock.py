@@ -15,7 +15,7 @@ def rosen_exp_1(y0, t, f, jac, verbose=True, krylov_subspace_dim=None, **_):
     :param func jac: The Jacobian of f, must return an array
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
-    :param krylov_subspace_dim:
+    :param krylov_subspace_dim: If given, uses the Krylov subspace approximation method of this dimension
     :type krylov_subspace_dim: None or int, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
@@ -63,7 +63,7 @@ def rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, krylov_subspace_dim=Non
     :type df_dt: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
-    :param krylov_subspace_dim:
+    :param krylov_subspace_dim: If given, uses the Krylov subspace approximation method of this dimension
     :type krylov_subspace_dim: None or int, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
@@ -121,7 +121,7 @@ def rosen_exp_3(y0, t, f, jac, hess, df_dt=None, d2f_dt2=None, d2f_dtdu=None, ve
     :type d2f_dtdu: func or None, optional
     :param verbose: If True or a string, displays a progress bar
     :type verbose: bool or str, optional
-    :param krylov_subspace_dim:
+    :param krylov_subspace_dim: If given, uses the Krylov subspace approximation method of this dimension
     :type krylov_subspace_dim: None or int, optional
     :return: numpy.ndarray - The solution, of shape (n, d)
     """
