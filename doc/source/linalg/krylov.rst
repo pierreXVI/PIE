@@ -1,5 +1,5 @@
-Krylov exponential approximation
-================================
+Krylov subspace approximation method
+====================================
 
 .. automodule:: linalg.krylov
    :members:

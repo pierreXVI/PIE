@@ -1,6 +1,7 @@
 r"""
-This package implement the Krylov subspace method
-from `Antti Koskela, Alexander Ostermann - Exponential Taylor methods: Analysis and implementation`
+The Krylov subspace approximation is detailed in
+`Analysis of some Krylov subspace approximations to the matrix exponential operator` from Y. Saad
+in `SIAM Journal on Numerical Analysis, Vol. 29, No. 1`.
 """
 
 import numpy as np
@@ -14,7 +15,7 @@ def expm_krylov(a, b, k, eps=1E-12):
     :param array_like a:
     :param array_like b:
     :param int k:
-    :param eps: If the new computed vector's norm is lower than ``eps``, it is assumed to be null
+    :param eps: If the norm of the new computed Krylov basis vector is lower than ``eps``, it is assumed to be null
     :type eps: float, optional
     :return: numpy.ndarray
     """
