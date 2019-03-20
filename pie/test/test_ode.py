@@ -69,7 +69,7 @@ METHODS = (
     pie.temporal.rk_1,
     # pie.temporal.rk_2,
     # pie.temporal.rk_4,
-    # pie.temporal.rk_butcher(pie.temporal.rk.A_RK4, pie.temporal.rk.B_RK4),
+    # pie.temporal.rk.rk_butcher(pie.temporal.rk.A_RK4, pie.temporal.rk.B_RK4),
     pie.temporal.bdf_1,
     # pie.temporal.bdf_2,
     # pie.temporal.bdf_3,

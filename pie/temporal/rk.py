@@ -107,13 +107,15 @@ def rk_4(y0, t, f, verbose=True, **_):
 
 def rk_butcher(a, b):
     """
-    Generic RK method, using a Butcher tableau (*a*, *b*, *c*)
+    Generic explicit s-stage RK method, using a Butcher tableau (*a*, *b*, *c*)
+
+    The returned method is explicit, therefore only the strictly lower triangulat part of *a* is used.
 
     The *c* array is deduced from the *a* and the *b* array so that the method is consistent:
     :math:`c_{i}=\sum _{k=0}^{i-1}a_{ik}`
 
-    :param 2D_array a: The *a* array of the Butcher tableau
-    :param 2D_array b: The *b* array of the Butcher tableau
+    :param 2D_array a: The *a* array of the Butcher tableau, of shape (s, s)
+    :param 2D_array b: The *b* array of the Butcher tableau, of shape (s,)
     :return: func - the wanted Runge Kutta method
     """
     q = a.shape[0]
