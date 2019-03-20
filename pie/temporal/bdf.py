@@ -1,5 +1,9 @@
 r"""
 `BDF methods <https://en.wikipedia.org/wiki/Backward_differentiation_formula>`_ on Wikipedia.
+
+Uses the `hybr` method of the
+`scipy root finding function <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.root.html>`_.
+
 """
 
 import warnings
@@ -29,7 +33,7 @@ def _bdf_i(i, y0, t, f, func_to_minimise, jac_func_to_minimise, verbose):
     y[:i] = pie.temporal.rk_4(y0, t[:i], f, verbose=False)
     for k in range(n - i):
         result = scipy.optimize.root(func_to_minimise, y[k + i - 1], jac=jac_func_to_minimise,
-                                     args=tuple([t[k + i - 1], t[k + i]] + [y[k + j] for j in range(i)]))
+                                     args=tuple([t[k + i - 1], t[k + i]] + [y[k + j] for j in range(i)]), method='hybr')
         if not result.success:
             warnings.warn('\rBDF{0} : '.format(i) + result.message, stacklevel=2)
         y[k + i] = result.x
