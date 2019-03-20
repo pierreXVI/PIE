@@ -1,6 +1,6 @@
 Finite Difference Method
 ========================
 
-.. autoclass:: spatial.fd.FiniteDifferenceMethod
+.. autoclass:: spatial.FiniteDifferenceMethod
 
 

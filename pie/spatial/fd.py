@@ -5,7 +5,7 @@ from .method import _SpatialMethod
 
 class FiniteDifferenceMethod(_SpatialMethod):
     r"""
-    Upwind (as regard of the convection speed) scheme for convection - diffusion flux,
+    1D scheme for  upwind convection (as regard of the convection speed) and diffusion flux,
     with a periodic boundary condition.
 
     .. math::

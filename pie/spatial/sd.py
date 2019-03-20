@@ -6,7 +6,7 @@ from .method import _SpatialMethod
 
 class SpectralDifferenceMethod(_SpatialMethod):
     """
-    Spatial scheme for convection - diffusion flux,
+    Spatial scheme for 1D convection - diffusion flux,
     with a periodic boundary condition, using the spectral difference method.
 
     This method uses p + 1 flux points in the [-1, 1] cell, computed as the Legendre polynomial roots.

@@ -29,7 +29,7 @@ class _SpatialMethod(object):
         self.c = conv
         self.d = diff
 
-        # Setting the solution points in a [-1, 1] cell as the Gauss points
+        # Setting the solution points in a [-1, 1] cell as the Chebyshev nodes
         self.cell = np.array([-np.cos(np.pi * (2 * i + 1) / (2 * self.p)) for i in range(self.p)])
 
         # Setting the coordinates of all solutions points

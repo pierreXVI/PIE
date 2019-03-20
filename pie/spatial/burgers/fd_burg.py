@@ -5,8 +5,7 @@ from ..method import _SpatialMethod
 
 class FiniteDifferenceMethodBurgers(_SpatialMethod):
     r"""
-    Upwind (as regard of the convection speed) scheme for viscous Burgers' equation,
-    with a periodic boundary condition.
+    1D scheme for viscous Burgers' equation with a periodic boundary condition.
 
     :ivar array_like _j1: The constant jacobian for left convection
     :ivar array_like _j2: The constant jacobian for right convection

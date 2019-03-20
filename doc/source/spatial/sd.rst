@@ -1,5 +1,5 @@
 Spectral Difference Method
 ==========================
 
-.. autoclass:: spatial.sd.SpectralDifferenceMethod
+.. autoclass:: spatial.SpectralDifferenceMethod
 
