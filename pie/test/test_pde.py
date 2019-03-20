@@ -96,7 +96,7 @@ def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, title='', krylov_su
             else:
                 list_label.append('{0} + SD_{1} Burgers'.format(temporal_method.__name__, p - 1))
             list_fmt.append('+-')
-            list_lw.append(1)
+            list_lw.append(3)
 
     pie.plot.animation.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
                                  x_ticks=np.linspace(0, x_max, n + 1), title=title, repeat=repeat, speed=speed)
@@ -132,17 +132,23 @@ SPATIAL_METHODS_BURGERS = (
 
 if __name__ == '__main__':
     # Difference FD - SD
-    compare(n=50, x_max=1, p=3, conv=2, diff=0, dt=1E-3, t_max=10,
-            speed=20, repeat=False, krylov_subspace_dim=None, title='FD vs SD')
+    # compare(n=50, x_max=1, p=2, conv=2, diff=0, dt=1E-3, t_max=1,
+    #         speed=25, repeat=False, krylov_subspace_dim=None, title='FD vs SD')
 
     # Breaking bad
     # compare(n=30, x_max=1, p=3, conv=1, diff=0, dt=1E-2, t_max=0.5,
+    #         speed=1, repeat=False, krylov_subspace_dim=None, title='Stabilité')
+
+    # Advection 1
+    # compare(n=20, x_max=1, p=3, conv=0.5, diff=0, dt=1E-2, t_max=100,
     #         speed=1, repeat=False, krylov_subspace_dim=None)
 
-    # compare(n=30, x_max=1, p=2, conv=1, diff=0.0001, dt=1E-2, t_max=10,
+    # Advection - diffusion large CFL
+    # compare(n=20, x_max=1, p=3, conv=0.5, diff=0.00005, dt=1E+1, t_max=100,
     #         speed=1, repeat=False, krylov_subspace_dim=None)
-    # compare(n=20, x_max=1, p=3, conv=0.5, diff=0.00, dt=1E-1, t_max=50,
-    #         speed=1, repeat=False, krylov_subspace_dim=None)
-    # compare_burgers(n=127, x_max=1, p=4, diff=0.000, dt=1E-3, t_max=1, init_cond=pie.test.initial_condition.sine(1),
-    #                 speed=1, repeat=False, krylov_subspace_dim=8)
+
+    # Burgers
+    # compare_burgers(n=20, x_max=1, p=3, diff=0.000, dt=1E-3, t_max=1, init_cond=pie.test.initial_condition.sine(1),
+    #                 speed=1, repeat=False, krylov_subspace_dim=None)
+
     pass
