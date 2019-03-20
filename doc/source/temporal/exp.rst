@@ -3,7 +3,8 @@ Exponential methods
 
 `Exponential integrators <https://en.wikipedia.org/wiki/Exponential_integrator>`_ on Wikipedia.
 
-This module implements classic Taylor's methods and Rosenbrock methods.
+This module implements classic Taylor methods and Rosenbrock methods
+from `Antti Koskela, Alexander Ostermann - Exponential Taylor methods: Analysis and implementation`
 
 
 Order 1 methods:
