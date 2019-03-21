@@ -1,13 +1,11 @@
-\documentclass{article}
+\documentclass[twoside]{article}
 \input{header.tex}
 
 \begin{document}
 
-\input{title.tex}
-
+\input{titre.tex}
 \input{resume.tex}
 \input{introduction.tex}
-
 \clearpage
 
 \tableofcontents
@@ -16,41 +14,35 @@
 \input{gestion_de_projet.tex}
 \input{methodes_numeriques.tex}
 \input{methodes_exponentielles.tex}
-
-
-\input{results.tex}
-
-%% à commenter à la fin
-%\clearpage
-%\input{eqs.tex}
-
+\input{resultats_et_perspectives.tex}
 \clearpage
 
-
+\thispagestyle{empty}
 \part*{Liste des sigles et acronymes}
-\begin{acronym}[CP-OFDMX] % Give the longest acronym here
-\acro{SD}{\emph{Spectral Différences (différences spectrales)}}
-\acro{EDP}{\emph{Équation aux Dérivées Partielles}}
-\acro{EDO}{\emph{Équation Différentielle Ordinaire}}
-\acro{RK}{\emph{Runge - Kutta}}
-\acro{BDF}{\emph{Backward Differentiation Formula}}
+\begin{acronym}
+    \acro{PBS}{\emph{diagramme Product Breakdown Structure}}
+    \acro{WBS}{\emph{diagramme Working Breakdown Structure}}
+    \acro{RACI}{\emph{Réalisation, Approbation, Consultation, Information}}
+    \acro{CFD}{\emph{Computational Fluid Dynamics (mécanique des fluides numérique)}}
+    \acro{LES}{\emph{Large Eddies Simulation (simulation des grandes échelles de la turbulence)}}
+    \acro{CFL}{\emph{condition de Courant–Friedrichs–Lewy}}
+    \acro{SD}{\emph{Spectral Differences (différences spectrales)}}
+    \acro{EDP}{\emph{Équation aux Dérivées Partielles}}
+    \acro{EDO}{\emph{Équation Différentielle Ordinaire}}
+    \acro{RK}{\emph{Runge - Kutta}}
+    \acro{BDF}{\emph{Backward Differentiation Formula}}
 \end{acronym}
 
 \bibliography{biblio.bib}
 \bibliographystyle{plain}
 
-\thispagestyle{empty}
-
 \begin{center}
-  ISAE\\
-  10, avenue Édouard Belin\\
-  BP 54032\\
-  31055 Toulouse CEDEX 4
+    ISAE\\
+    10, avenue Édouard Belin\\
+    BP 54032\\
+    31055 Toulouse CEDEX 4
 \end{center}
 \vspace*{\fill}
 
 \end{document}
 
-
-
- 
