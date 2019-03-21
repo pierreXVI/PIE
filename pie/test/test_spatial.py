@@ -1,3 +1,8 @@
+r"""
+This module is used to test the methods implemented in the ``spatial`` module.
+"""
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -6,7 +11,7 @@ import pie
 
 def test_rhs(n, x_max, p, conv, diff, plot=False):
     """
-    Test the rhs methods of the spatial methods on a sine and print the error.
+    Test the rhs methods of the spatial methods on a sine input and print the error.
 
     :param int n: The number of cells
     :param float x_max: The window size
@@ -62,7 +67,7 @@ def test_rhs(n, x_max, p, conv, diff, plot=False):
 
 def test_jac(n, x_max, p, conv, diff, eps=1E-5):
     r"""
-    Test the jac methods of the spatial methods on a sine and print the error.
+    Test the jac methods of the spatial methods on a sine input and print the error.
     Uses an order 2 approximation of the jacobian as a reference value :
     :math:`\frac{\partial f}{\partial x}\left(x_0\right)
     \approx\frac{f\left(x_0+\varepsilon\right)-f\left(x_0-\varepsilon\right)}{2\varepsilon}`
@@ -74,7 +79,6 @@ def test_jac(n, x_max, p, conv, diff, eps=1E-5):
     :param float diff: The diffusion parameter
     :param eps: Parameter used to approximate the jacobian
     :type eps: float, optional
-    :return:
     """
     mesh = np.linspace(0, x_max, n + 1)
 
@@ -104,7 +108,7 @@ def test_jac(n, x_max, p, conv, diff, eps=1E-5):
 
 def test_hess(n, x_max, p, conv, diff, eps=1E-5):
     r"""
-    Test the hess methods of the spatial methods on a sine and print the error.
+    Test the hess methods of the spatial methods on a sine input and print the error.
     Uses an order 1 approximation of the hessian as a reference value :
     :math:`\frac{\partial^2 f}{\partial x^2}\left(x_0\right)
     \approx\frac{f\left(x_0+\varepsilon\right) - 2f\left(x_0\right) + f\left(x_0-\varepsilon\right)}{\varepsilon^2}`
@@ -116,7 +120,6 @@ def test_hess(n, x_max, p, conv, diff, eps=1E-5):
     :param float diff: The diffusion parameter
     :param eps: Parameter used to approximate the hessian
     :type eps: float, optional
-    :return:
     """
     mesh = np.linspace(0, x_max, n + 1)
 

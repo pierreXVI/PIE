@@ -83,7 +83,7 @@ METHODS = (
     # pie.temporal.rosen_exp_2,
     # pie.temporal.rosen_exp_3,
 )
-"""The methods that are going to be tested"""
+"""The methods that are going to be tested in ``compare_methods``"""
 
 if __name__ == '__main__':
     compare_methods(pie.test.ode_problem.pb_0, t_max=5 * 2.2, h=2.2, title='Implicit vs Explicit')

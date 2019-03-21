@@ -1,3 +1,8 @@
+r"""
+This module implements some 1D initial conditions functions.
+This module's functions returns numerical functions, defined on the interval [0, ``x_max``].
+"""
+
 import numpy as np
 
 

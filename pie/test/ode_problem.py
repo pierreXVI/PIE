@@ -1,3 +1,7 @@
+r"""
+Here are defined some Ordinary Differential Equations problems.
+"""
+
 import numpy as np
 
 
