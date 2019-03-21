@@ -7,7 +7,8 @@ This module implements classic Taylor methods and Rosenbrock methods
 from `Antti Koskela, Alexander Ostermann - Exponential Taylor methods: Analysis and implementation`
 
 
-Order 1 methods:
+Order 1 methods
+---------------
 
 .. py:function:: temporal.taylor_exp_1(y0, t, f, jac, verbose=True, krylov_subspace_dim=None, **_)
 .. py:function:: temporal.rosen_exp_1(y0, t, f, jac, verbose=True, krylov_subspace_dim=None, **_)
@@ -17,7 +18,9 @@ Order 1 methods:
    :type krylov_subspace_dim: None or int, optional
 
 
-Order 2 methods:
+Order 2 methods
+---------------
+
 
 .. py:function:: temporal.taylor_exp_2(y0, t, f, jac, df_dt=None, verbose=True, krylov_subspace_dim=None, **_)
 .. py:function:: temporal.rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, krylov_subspace_dim=None, **_)
@@ -29,7 +32,8 @@ Order 2 methods:
    :type krylov_subspace_dim: None or int, optional
 
 
-Order 3 methods:
+Order 3 methods
+---------------
 
 .. py:function:: temporal.taylor_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, verbose=True, krylov_subspace_dim=None,**_)
 .. py:function:: temporal.rosen_exp_3(y0, t, f, jac, jac2, df_dt=None, d2f_dt2=None, d2f_dtdu=None, verbose=True, krylov_subspace_dim=None,**_)

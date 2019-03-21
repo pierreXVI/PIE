@@ -11,5 +11,8 @@ Temporal Methods
    bdf.rst
    exp.rst
 
+Progression display
+-------------------
+
 .. automodule:: temporal.counter
    :members:
