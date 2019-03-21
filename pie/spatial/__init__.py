@@ -10,5 +10,6 @@ Inside a cell of the mesh, the points are placed at the
 `Chebyshev nodes <https://en.wikipedia.org/wiki/Chebyshev_nodes>`_.
 """
 
+from . import burgers
 from .fd import FiniteDifferenceMethod
 from .sd import SpectralDifferenceMethod

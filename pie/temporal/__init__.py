@@ -8,7 +8,7 @@ The temporal method is a function used to solve the equation for a given right h
    \end{aligned}\right.
 
 
-.. py:function:: temporal.temporal_method(y0, t, f, verbose=true, **kwargs)
+.. py:function:: temporal._temporal_method(y0, t, f, verbose=true, **kwargs)
 
    :param array_like y0: Initial value, may be multi-dimensional of size d
    :param 1D_array t: Array of time steps, of size n

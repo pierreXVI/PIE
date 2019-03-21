@@ -20,11 +20,11 @@ sys.path.insert(0, os.path.abspath('../../pie'))
 # -- Project information -----------------------------------------------------
 
 project = 'PIE'
-copyright = '2018, Maes Leveque, Fourtout, Barrasa Ramos, Reboul & Seize'
-author = 'Maes Leveque, Fourtout, Barrasa Ramos, Reboul & Seize'
+copyright = '2018, Maes Leveque, Barrasa Ramos, Reboul & Seize'
+author = 'Maes Leveque, Barrasa Ramos, Reboul & Seize'
 
 # The short X.Y version
-version = ''
+version = '1.0'
 # The full version, including alpha/beta/rc tags
 release = ''
 
@@ -132,7 +132,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'PIE.tex', 'PIE Documentation',
-     'Maes Leveque, Fourtout, Barrasa Ramos, Reboul \\& Seize', 'manual'),
+     'Maes Leveque, Barrasa Ramos, Reboul \\& Seize', 'manual'),
 ]
 
 # -- Options for manual page output ------------------------------------------
@@ -173,3 +173,5 @@ epub_title = project
 epub_exclude_files = ['search.html']
 
 # -- Extension configuration -------------------------------------------------
+
+autodoc_member_order = 'bysource'
