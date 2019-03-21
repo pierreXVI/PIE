@@ -2,7 +2,6 @@ r"""
 This module is used to test the methods implemented in the ``spatial`` module.
 """
 
-
 import matplotlib.pyplot as plt
 import numpy as np
 

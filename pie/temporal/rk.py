@@ -109,7 +109,7 @@ def rk_butcher(a, b):
     """
     Generic explicit s-stage RK method, using a Butcher tableau (*a*, *b*, *c*)
 
-    The returned method is explicit, therefore only the strictly lower triangulat part of *a* is used.
+    The returned method is explicit, therefore only the strictly lower triangular part of *a* is used.
 
     The *c* array is deduced from the *a* and the *b* array so that the method is consistent:
     :math:`c_{i}=\sum _{k=0}^{i-1}a_{ik}`

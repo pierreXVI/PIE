@@ -13,7 +13,7 @@ class Problem:
     :param func f: Function with well shaped input and output
     :param jac: The Jacobian of f, must return an array
     :type jac: func or None, optional
-    :param jac2: The second-order Jacobian of f, must return an array
+    :param hess: The second-order Jacobian of f, must return an array
     :type hess: func or None, optional
     :param df_dt: The f partial derivative with respect to time
     :type df_dt: func or None, optional

@@ -12,7 +12,7 @@ The Problem class
 1D problems
 ~~~~~~~~~~~
 
-Thoses problems are of type :math:`\dot{y} = f\left(y, t\right)`
+These problems are of type :math:`\dot{y} = f\left(y, t\right)`
 
 
 .. autodata:: pie.test.ode_problem.pb_0
@@ -31,7 +31,7 @@ Thoses problems are of type :math:`\dot{y} = f\left(y, t\right)`
 2D problems
 ~~~~~~~~~~~
 
-Thoses problems are of type :math:`\ddot{y} = f\left(y, \dot{y}, t\right)`
+These problems are of type :math:`\ddot{y} = f\left(y, \dot{y}, t\right)`
 
 .. autodata:: pie.test.ode_problem.pb2d_1
    :annotation:
