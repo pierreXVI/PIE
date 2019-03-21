@@ -10,3 +10,6 @@ Temporal Methods
    rk.rst
    bdf.rst
    exp.rst
+
+.. automodule:: temporal.counter
+   :members:

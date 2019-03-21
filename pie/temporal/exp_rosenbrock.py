@@ -2,7 +2,7 @@ import numpy as np
 from scipy.linalg import expm as expm_sp
 
 import pie.linalg.krylov
-import pie.temporal.commons
+import pie.temporal.counter
 
 
 def rosen_exp_1(y0, t, f, jac, verbose=True, krylov_subspace_dim=None, **_):
@@ -26,11 +26,11 @@ def rosen_exp_1(y0, t, f, jac, verbose=True, krylov_subspace_dim=None, **_):
         n, d = len(t), 1
         y = np.zeros((n,))
     if verbose is False:
-        count = pie.temporal.commons.Counter('', 0)
+        count = pie.temporal.counter.Counter('', 0)
     elif verbose is True:
-        count = pie.temporal.commons.Counter('Rosenbrock Exp 1', n)
+        count = pie.temporal.counter.Counter('Rosenbrock Exp 1', n)
     else:
-        count = pie.temporal.commons.Counter(verbose, n)
+        count = pie.temporal.counter.Counter(verbose, n)
     y[0] = y0
     w = np.zeros((d, 1))
     expanded_vector = np.zeros((d + 1,))
@@ -74,11 +74,11 @@ def rosen_exp_2(y0, t, f, jac, df_dt=None, verbose=True, krylov_subspace_dim=Non
         n, d = len(t), 1
         y = np.zeros((n,))
     if verbose is False:
-        count = pie.temporal.commons.Counter('', 0)
+        count = pie.temporal.counter.Counter('', 0)
     elif verbose is True:
-        count = pie.temporal.commons.Counter('Rosenbrock Exp 2', n)
+        count = pie.temporal.counter.Counter('Rosenbrock Exp 2', n)
     else:
-        count = pie.temporal.commons.Counter(verbose, n)
+        count = pie.temporal.counter.Counter(verbose, n)
     if df_dt is None:
         def df_dt(*_): return np.zeros((d,))
     y[0] = y0
@@ -132,11 +132,11 @@ def rosen_exp_3(y0, t, f, jac, hess, df_dt=None, d2f_dt2=None, d2f_dtdu=None, ve
         n, d = len(t), 1
         y = np.zeros((n,))
     if verbose is False:
-        count = pie.temporal.commons.Counter('', 0)
+        count = pie.temporal.counter.Counter('', 0)
     elif verbose is True:
-        count = pie.temporal.commons.Counter('Rosenbrock Exp 3', n)
+        count = pie.temporal.counter.Counter('Rosenbrock Exp 3', n)
     else:
-        count = pie.temporal.commons.Counter(verbose, n)
+        count = pie.temporal.counter.Counter(verbose, n)
     if df_dt is None:
         def df_dt(*_): return np.zeros((d,))
     if d2f_dt2 is None:
