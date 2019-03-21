@@ -1,7 +1,7 @@
 Plotting tools
 ==============
 
-.. automodule:: plot
+.. automodule:: pie.plot
 
-.. autoclass:: plot.animation.Animation
-
+.. automodule:: pie.plot.animation
+    :members:

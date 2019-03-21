@@ -4,6 +4,7 @@ if plt.get_backend() != 'TkAgg':
     plt.switch_backend('TkAgg')
 
 ANIMATION_SPEED_LOC = (0.01, 0.95)
+"""The location where to plot the animation speed, in figure coordinates, floats in [0, 1]"""
 
 
 class Animation:
