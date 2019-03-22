@@ -12,6 +12,7 @@ Welcome to PIE's documentation!
    linalg/linalg.rst
    test/test.rst
    plot/plot.rst
+   example.rst
 
 
 
