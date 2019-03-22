@@ -156,16 +156,16 @@ def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, title='', krylov_su
 
 
 TEMPORAL_METHODS = (
-    # pie.temporal.rk_1,
+    pie.temporal.rk_1,
     # pie.temporal.rk_2,
-    pie.temporal.rk_4,
-    # pie.temporal.bdf_1,
+    # pie.temporal.rk_4,
+    pie.temporal.bdf_1,
     # pie.temporal.bdf_2,
     # pie.temporal.bdf_4,
-    # pie.temporal.taylor_exp_1,
+    pie.temporal.taylor_exp_1,
     # pie.temporal.taylor_exp_2,
     # pie.temporal.taylor_exp_3,
-    # pie.temporal.rosen_exp_1,
+    pie.temporal.rosen_exp_1,
     # pie.temporal.rosen_exp_2,
     # pie.temporal.rosen_exp_3,
 )
@@ -175,22 +175,22 @@ SPATIAL_METHODS = (
     pie.spatial.FiniteDifferenceMethod,
     pie.spatial.SpectralDifferenceMethod,
 )
-"""The spatial methods that are going to be tested"""
+"""The spatial methods that are going to be tested in ``compare``"""
 
 SPATIAL_METHODS_BURGERS = (
     pie.spatial.burgers.FiniteDifferenceMethodBurgers,
     pie.spatial.burgers.SpectralDifferenceMethodBurgers,
 )
-"""The Burgers spatial methods that are going to be tested"""
+"""The Burgers spatial methods that are going to be tested in ``compare_burgers``"""
 
 if __name__ == '__main__':
     # Difference FD - SD
-    # compare(n=50, x_max=1, p=2, conv=2, diff=0, dt=1E-3, t_max=1,
-    #         speed=25, repeat=False, krylov_subspace_dim=None, title='FD vs SD')
+    compare(n=50, x_max=1, p=2, conv=2, diff=0, dt=1E-3, t_max=1,
+            speed=25, repeat=False, krylov_subspace_dim=None, title='FD vs SD')
 
     # Breaking bad
     # compare(n=30, x_max=1, p=3, conv=1, diff=0, dt=1E-2, t_max=0.5,
-    #         speed=1, repeat=False, krylov_subspace_dim=None, title='Stabilité')
+    #         speed=1, repeat=False, krylov_subspace_dim=None, title='Stabilite')
 
     # Advection 1
     # compare(n=20, x_max=1, p=3, conv=0.5, diff=0, dt=1E-2, t_max=100,
@@ -201,7 +201,5 @@ if __name__ == '__main__':
     #         speed=1, repeat=False, krylov_subspace_dim=None)
 
     # Burgers
-    # compare_burgers(n=20, x_max=1, p=3, diff=0.000, dt=1E-3, t_max=1, init_cond=pie.test.initial_condition.sine,
-    #                 speed=1, repeat=False, krylov_subspace_dim=None, n_period=3)
-
-    pass
+    compare_burgers(n=20, x_max=1, p=3, diff=0.000, dt=1E-3, t_max=1, init_cond=pie.test.initial_condition.sine,
+                    speed=1, repeat=False, krylov_subspace_dim=None, n_period=3)

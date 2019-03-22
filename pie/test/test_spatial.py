@@ -2,6 +2,8 @@ r"""
 This module is used to test the methods implemented in the ``spatial`` module.
 """
 
+from __future__ import print_function
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -43,7 +45,7 @@ def test_rhs(n, x_max, p, conv, diff, plot=False):
         method = spatial_method(mesh, p, conv=conv, diff=diff)
         rhs = method.rhs(y0, 0)
         err = abs(rhs_expected - rhs)
-        print('Error on {0}.rhs :\t\t\t {1:0.1E} (mean), {2:0.1E} (max)'
+        print('Error on {0}.rhs :\t {1:0.1E} (mean), {2:0.1E} (max)'
               .format(method.__class__.__name__, np.mean(err), np.max(err)))
         ax1.plot(x, rhs, '--', label=method.__class__.__name__)
 
@@ -87,10 +89,8 @@ def test_jac(n, x_max, p, conv, diff, eps=1E-5):
                            pie.spatial.burgers.SpectralDifferenceMethodBurgers):
         try:
             method = spatial_method(mesh, p, conv=conv, diff=diff)
-            msg = 'Difference between {0}.jac and order 2 approximation :\t\t\t {1:0.1E} (mean), {2:0.1E} (max)'
         except TypeError:
             method = spatial_method(mesh, p, diff=diff)
-            msg = 'Difference between {0}.jac and order 2 approximation :\t {1:0.1E} (mean), {2:0.1E} (max)'
 
         y0 = np.sin(method.x * 2 * np.pi / x_max)
 
@@ -101,7 +101,8 @@ def test_jac(n, x_max, p, conv, diff, eps=1E-5):
             e_j[j] = eps
             jac_expected[:, j] = (method.rhs(y0 + e_j, 0) - method.rhs(y0 - e_j, 0)) / (2 * eps)
         err = abs(jac_expected - jac)
-        print(msg.format(spatial_method.__name__, np.mean(err), np.max(err)))
+        print('Difference between {0}.jac and order 2 approximation :\t {1:0.1E} (mean), {2:0.1E} (max)'
+              .format(spatial_method.__name__, np.mean(err), np.max(err)))
     print()
 
 
@@ -128,10 +129,8 @@ def test_hess(n, x_max, p, conv, diff, eps=1E-5):
                            pie.spatial.burgers.SpectralDifferenceMethodBurgers):
         try:
             method = spatial_method(mesh, p, conv=conv, diff=diff)
-            msg = 'Difference between {0}.hess and order 1 approximation :  \t\t {1:0.1E} (mean), {2:0.1E} (max)'
         except TypeError:
             method = spatial_method(mesh, p, diff=diff)
-            msg = 'Difference between {0}.hess and order 1 approximation :\t {1:0.1E} (mean), {2:0.1E} (max)'
 
         y0 = np.sin(method.x * 2 * np.pi / x_max)
 
@@ -147,11 +146,12 @@ def test_hess(n, x_max, p, conv, diff, eps=1E-5):
                                           - method.rhs(y0 - e_i + e_j, 0) + method.rhs(y0 - e_i - e_j, 0)) \
                                          / (4 * eps * eps)
         err = abs(hess_expected - hess)
-        print(msg.format(spatial_method.__name__, np.mean(err), np.max(err)))
+        print('Difference between {0}.hess and order 1 approximation :\t {1:0.1E} (mean), {2:0.1E} (max)'
+              .format(spatial_method.__name__, np.mean(err), np.max(err)))
     print()
 
 
 if __name__ == '__main__':
-    # test_rhs(n=100, x_max=1, p=5, conv=0.5, diff=0.1, plot=False)
-    # test_jac(n=100, x_max=1, p=5, conv=1.2, diff=0.1)
+    test_rhs(n=100, x_max=1, p=5, conv=0.5, diff=0.1, plot=True)
+    test_jac(n=100, x_max=1, p=5, conv=1.2, diff=0.1)
     test_hess(n=20, x_max=1, p=3, conv=1.2, diff=0.1)

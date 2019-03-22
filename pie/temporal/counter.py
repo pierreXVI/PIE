@@ -5,7 +5,7 @@ This bar is managed in the module ``temporal.counter``.
 
 from __future__ import print_function, division
 
-import os
+import shutil
 
 
 class Counter:
@@ -40,10 +40,9 @@ class Counter:
             return
         self.i = i
         try:
-            terminal_width = os.get_terminal_size()[0]
-        except (OSError, AttributeError):
-            terminal_width = 80
-        bar_length = terminal_width + 23 - len(self.string)
+            bar_length = shutil.get_terminal_size().columns + 23 - len(self.string)
+        except AttributeError:
+            bar_length = 10
         print(self.string.format(int(bar_length * i / self.n) * '-', i / self.n, bar_length=bar_length), end='')
         if i == self.n:
             print()
