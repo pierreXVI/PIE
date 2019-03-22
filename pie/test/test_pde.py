@@ -102,8 +102,8 @@ def compare(n, x_max, p, conv, diff, dt, t_max, title='', krylov_subspace_dim=No
     list_fmt = ['k'] + list_fmt
     list_lw = [5] + list_lw
 
-    pie.plot.animation.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
-                                 x_ticks=np.linspace(0, x_max, n + 1), title=title, repeat=repeat, speed=speed)
+    pie.plot.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
+                       x_ticks=np.linspace(0, x_max, n + 1), title=title, repeat=repeat, speed=speed)
 
 
 def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, title='', krylov_subspace_dim=None, repeat=True, speed=1,
@@ -151,8 +151,8 @@ def compare_burgers(n, x_max, p, diff, dt, t_max, init_cond, title='', krylov_su
             list_fmt.append('+-')
             list_lw.append(3)
 
-    pie.plot.animation.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
-                                 x_ticks=np.linspace(0, x_max, n + 1), title=title, repeat=repeat, speed=speed)
+    pie.plot.Animation(t, method.x, list_y, list_label=list_label, list_fmt=list_fmt, list_lw=list_lw,
+                       x_ticks=np.linspace(0, x_max, n + 1), title=title, repeat=repeat, speed=speed)
 
 
 TEMPORAL_METHODS = (
