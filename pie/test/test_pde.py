@@ -1,6 +1,3 @@
-import numpy as np
-
-import pie
 import pie.plot.animation
 
 
@@ -46,7 +43,7 @@ def solve(n, x_max, p, conv, diff, dt, t_max, init_cond_function, spatial_method
     t = np.append(np.arange(0, t_max, dt), t_max)
 
     # Solving
-    y = temporal_method(y0, t, method.rhs, jac=method.jac, jac2=method.hess, krylov_subspace_dim=krylov_subspace_dim,
+    y = temporal_method(y0, t, method.rhs, jac=method.jac, hess=method.hess, krylov_subspace_dim=krylov_subspace_dim,
                         verbose='{0} + {1} at CFL = {2:0.3f}'
                         .format(temporal_method.__name__, spatial_method.__name__, cfl))
 
