@@ -1,6 +1,6 @@
 import numpy as np
 
-import pie.plot.animation
+import pie
 
 
 def solve(n, x_max, p, conv, diff, dt, t_max, init_cond_function, spatial_method, temporal_method,
@@ -75,7 +75,7 @@ def compare(n, x_max, p, conv, diff, dt, t_max, title='', krylov_subspace_dim=No
     :param speed: The animation speed at the beginning (can be changed)
     :type speed: float, optional
     """
-    init_cond = pie.test.initial_condition.sine(x_max)
+    init_cond = pie.misc.initial_condition.sine(x_max)
     list_y = []
     list_label = []
     list_fmt = []
@@ -201,5 +201,5 @@ if __name__ == '__main__':
     #         speed=1, repeat=False, krylov_subspace_dim=None)
 
     # Burgers
-    compare_burgers(n=20, x_max=1, p=3, diff=0.000, dt=1E-3, t_max=1, init_cond=pie.test.initial_condition.sine,
+    compare_burgers(n=20, x_max=1, p=3, diff=0.000, dt=1E-3, t_max=1, init_cond=pie.misc.initial_condition.sine,
                     speed=1, repeat=False, krylov_subspace_dim=None, n_period=3)

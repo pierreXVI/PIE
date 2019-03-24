@@ -1,6 +1,6 @@
 import numpy as np
 
-import pie.linalg.lagrange
+from ...linalg import lagrange
 from ..method import _SpatialMethod
 
 
@@ -27,12 +27,12 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
         self.flux_pts = np.append(-1, np.append(np.polynomial.legendre.legroots((self.p - 1) * [0] + [1]), 1))
 
         # Setting the needed matrices
-        sol_to_flux = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
-        flux_to_sol = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
+        sol_to_flux = lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
+        flux_to_sol = lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
         d_in_flux = np.zeros((self.p + 1, self.p + 1))
         for i in range(self.p + 1):
             for j in range(self.p + 1):
-                d_in_flux[i, j] = pie.linalg.lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
+                d_in_flux[i, j] = lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
 
         # Working with full size matrices
         isoparametric_scale = 2 / (np.roll(self.mesh, -1) - self.mesh)[:-1]
@@ -55,12 +55,12 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
     def rhs(self, y, t):
         """
         # Setting the needed matrices
-        sol_to_flux = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
-        flux_to_sol = pie.linalg.lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
+        sol_to_flux = lagrange.lagrange_extrapolation_matrix(self.cell, self.flux_pts)
+        flux_to_sol = lagrange.lagrange_extrapolation_matrix(self.flux_pts, self.cell)
         d_in_flux = np.zeros((self.p + 1, self.p + 1))
         for i in range(self.p + 1):
             for j in range(self.p + 1):
-                d_in_flux[i, j] = pie.linalg.lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
+                d_in_flux[i, j] = lagrange.d_lagrange(self.flux_pts[i], self.flux_pts, j)
         d_in_flux_to_sol = np.dot(flux_to_sol, d_in_flux)
 
         sol_in_flux_point = np.zeros((self.n_cell, self.p + 1))

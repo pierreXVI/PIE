@@ -4,7 +4,7 @@ r"""
 
 import numpy as np
 
-import pie.temporal.counter
+from ..misc.counter import Counter
 
 
 def rk_1(y0, t, f, verbose=True, **_):
@@ -25,11 +25,11 @@ def rk_1(y0, t, f, verbose=True, **_):
         n = len(t)
         y = np.zeros((n,))
     if verbose is False:
-        count = pie.temporal.counter.Counter('', 0)
+        count = Counter('', 0)
     elif verbose is True:
-        count = pie.temporal.counter.Counter('RK1', n)
+        count = Counter('RK1', n)
     else:
-        count = pie.temporal.counter.Counter(verbose, n)
+        count = Counter(verbose, n)
     y[0] = y0
     for i in range(n - 1):
         y[i + 1] = y[i] + (t[i + 1] - t[i]) * f(y[i], t[i])
@@ -55,11 +55,11 @@ def rk_2(y0, t, f, verbose=True, **_):
         n = len(t)
         y = np.zeros((n,))
     if verbose is False:
-        count = pie.temporal.counter.Counter('', 0)
+        count = Counter('', 0)
     elif verbose is True:
-        count = pie.temporal.counter.Counter('RK2', n)
+        count = Counter('RK2', n)
     else:
-        count = pie.temporal.counter.Counter(verbose, n)
+        count = Counter(verbose, n)
     y[0] = y0
     for i in range(n - 1):
         h = t[i + 1] - t[i]
@@ -88,11 +88,11 @@ def rk_4(y0, t, f, verbose=True, **_):
         n = len(t)
         y = np.zeros((n,))
     if verbose is False:
-        count = pie.temporal.counter.Counter('', 0)
+        count = Counter('', 0)
     elif verbose is True:
-        count = pie.temporal.counter.Counter('RK4', n)
+        count = Counter('RK4', n)
     else:
-        count = pie.temporal.counter.Counter(verbose, n)
+        count = Counter(verbose, n)
     y[0] = y0
     for i in range(n - 1):
         h = t[i + 1] - t[i]
@@ -141,11 +141,11 @@ def rk_butcher(a, b):
             y = np.zeros((n,))
             p = np.zeros((q,))
         if verbose is False:
-            count = pie.temporal.counter.Counter('', 0)
+            count = Counter('', 0)
         elif verbose is True:
-            count = pie.temporal.counter.Counter('RK_butcher', n)
+            count = Counter('RK_butcher', n)
         else:
-            count = pie.temporal.counter.Counter(verbose, n)
+            count = Counter(verbose, n)
         y[0] = y0
         for i in range(n - 1):
             h = t[i + 1] - t[i]

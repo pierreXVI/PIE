@@ -11,6 +11,7 @@ The subpackage ``temporal`` is used to solve :math:`\dot{y}\left(t\right) = f\le
 for a given right hand side, and the subpackage ``spatial`` is used to compute a right hand side with x-derivatives.
 """
 
+from . import linalg
+from . import misc
 from . import spatial
 from . import temporal
-from . import test

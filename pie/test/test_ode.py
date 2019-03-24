@@ -87,14 +87,14 @@ METHODS = (
 """The methods that are going to be tested in ``compare_methods``"""
 
 if __name__ == '__main__':
-    compare_methods(pie.test.ode_problem.pb_0, t_max=5 * 2.2, dt=2.2, title='Implicit vs Explicit')
+    compare_methods(pie.misc.ode_problem.pb_0, t_max=5 * 2.2, dt=2.2, title='Implicit vs Explicit')
     # compare_methods(pie.test.ode_problem.pb_1, t_max=10, dt=0.1)
     # compare_methods(pie.test.ode_problem.pb_2, t_max=20, dt=0.1)
     # compare_methods(pie.test.ode_problem.pb_3, t_max=30, dt=0.1)
-    compare_methods(pie.test.ode_problem.pb_4, t_max=0, dt=0, t=np.flip(10 - np.geomspace(1, 10, 20)))
+    compare_methods(pie.misc.ode_problem.pb_4, t_max=0, dt=0, t=np.flip(10 - np.geomspace(1, 10, 20)))
     # compare_methods(pie.test.ode_problem.pb_5, t_max=20 * 0.04, dt=0.04)
     # compare_methods(pie.test.ode_problem.pb2d_1, t_max=5 * np.pi, dt=0.1)
-    compare_methods(pie.test.ode_problem.pb2d_1, t_max=10 * np.pi, dt=2, fmt='+')
+    compare_methods(pie.misc.ode_problem.pb2d_1, t_max=10 * np.pi, dt=2, fmt='+')
     # compare_methods(pie.test.ode_problem.pb2d_2, t_max=10, dt=0.01)
 
     pass

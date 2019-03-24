@@ -1,8 +1,3 @@
-r"""
-The temporal methods can display a progress bar through the use of the ``verbose`` parameter.
-This bar is managed in the module ``temporal.counter``.
-"""
-
 from __future__ import print_function, division
 
 import shutil
