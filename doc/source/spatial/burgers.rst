@@ -1,15 +1,15 @@
 Spatial scheme for Burger's equation
 ====================================
 
-.. automodule:: spatial.burgers
+.. automodule:: pie.spatial.burgers
 
 Finite difference method
 ------------------------
 
-.. autoclass:: spatial.burgers.FiniteDifferenceMethodBurgers
+.. autoclass:: pie.spatial.burgers.FiniteDifferenceMethodBurgers
 
 
 Spectral difference method
 --------------------------
 
-.. autoclass:: spatial.burgers.SpectralDifferenceMethodBurgers
+.. autoclass:: pie.spatial.burgers.SpectralDifferenceMethodBurgers

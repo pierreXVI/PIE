@@ -2,9 +2,9 @@ Spatial Methods
 ===============
 
 
-.. automodule:: spatial
+.. automodule:: pie.spatial
 
-.. autoclass:: spatial.method._SpatialMethod
+.. autoclass:: pie.spatial.method._SpatialMethod
    :members:
 
 .. toctree::

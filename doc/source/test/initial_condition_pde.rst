@@ -1,5 +1,5 @@
 Initial conditions for PDE
 ==========================
 
-.. automodule:: test.initial_condition
+.. automodule:: pie.misc.initial_condition
    :members:

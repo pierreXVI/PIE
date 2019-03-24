@@ -1,5 +1,5 @@
 Krylov subspace approximation method
 ====================================
 
-.. automodule:: linalg.krylov
+.. automodule:: pie.linalg.krylov
    :members:

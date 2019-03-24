@@ -1,6 +1,7 @@
 import numpy as np
 
 import pie
+import pie.plot
 
 
 def solve(n, x_max, p, conv, diff, dt, t_max, init_cond_function, spatial_method, temporal_method,

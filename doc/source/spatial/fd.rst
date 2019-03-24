@@ -1,6 +1,6 @@
 Finite Difference Method
 ========================
 
-.. autoclass:: spatial.FiniteDifferenceMethod
+.. autoclass:: pie.spatial.FiniteDifferenceMethod
 
 

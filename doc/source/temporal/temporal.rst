@@ -1,7 +1,7 @@
 Temporal Methods
 ================
 
-.. automodule:: temporal
+.. automodule:: pie.temporal
 
 .. toctree::
    :maxdepth: 2
@@ -14,5 +14,8 @@ Temporal Methods
 Progression display
 -------------------
 
-.. automodule:: temporal.counter
+The temporal methods can display a progress bar through the use of the ``verbose`` parameter.
+This bar is managed in the module ``misc.counter``.
+
+.. automodule:: pie.misc.counter
    :members:

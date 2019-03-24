@@ -1,5 +1,5 @@
 Spectral Difference Method
 ==========================
 
-.. autoclass:: spatial.SpectralDifferenceMethod
+.. autoclass:: pie.spatial.SpectralDifferenceMethod
 

@@ -24,7 +24,7 @@ Global features:
    mesh = np.linspace(0, x_max, n + 1)  # to create the mesh
 
    # Initial condition
-   init_cond_function = pie.test.initial_condition.sine(x_max)  # or any numerical function on [0, x_max]
+   init_cond_function = pie.misc.initial_condition.sine(x_max)  # or any numerical function on [0, x_max]
 
    # Temporal
    t = np.append(np.arange(0, t_max, dt), t_max)  # or any time steps array
@@ -38,7 +38,6 @@ Setting the spatial method:
          method = pie.spatial.SpectralDifferenceMethod(mesh, p, conv, diff)
    - Burgers' problem:
       .. code-block:: python
-
 
         method = pie.spatial.burgers.SpectralDifferenceMethodBurgers(mesh, p, diff)
 

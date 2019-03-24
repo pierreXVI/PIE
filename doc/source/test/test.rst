@@ -1,7 +1,7 @@
 Tests
 =====
 
-.. automodule:: test
+.. automodule:: pie.test
 
 .. toctree::
    :maxdepth: 2

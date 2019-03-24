@@ -1,12 +1,12 @@
 ODE problems
 ============
 
-.. automodule:: pie.test.ode_problem
+.. automodule:: misc.ode_problem
 
 The Problem class
 ~~~~~~~~~~~~~~~~~
 
-.. autoclass:: pie.test.ode_problem.Problem
+.. autoclass:: misc.ode_problem.Problem
 
 
 1D problems
@@ -15,17 +15,17 @@ The Problem class
 These problems are of type :math:`\dot{y} = f\left(y, t\right)`
 
 
-.. autodata:: pie.test.ode_problem.pb_0
+.. autodata:: pie.misc.ode_problem.pb_0
    :annotation:
-.. autodata:: pie.test.ode_problem.pb_1
+.. autodata:: pie.misc.ode_problem.pb_1
    :annotation:
-.. autodata:: pie.test.ode_problem.pb_2
+.. autodata:: pie.misc.ode_problem.pb_2
    :annotation:
-.. autodata:: pie.test.ode_problem.pb_3
+.. autodata:: pie.misc.ode_problem.pb_3
    :annotation:
-.. autodata:: pie.test.ode_problem.pb_4
+.. autodata:: pie.misc.ode_problem.pb_4
    :annotation:
-.. autodata:: pie.test.ode_problem.pb_5
+.. autodata:: pie.misc.ode_problem.pb_5
    :annotation:
 
 2D problems
@@ -33,7 +33,7 @@ These problems are of type :math:`\dot{y} = f\left(y, t\right)`
 
 These problems are of type :math:`\ddot{y} = f\left(y, \dot{y}, t\right)`
 
-.. autodata:: pie.test.ode_problem.pb2d_1
+.. autodata:: pie.misc.ode_problem.pb2d_1
    :annotation:
-.. autodata:: pie.test.ode_problem.pb2d_2
+.. autodata:: pie.misc.ode_problem.pb2d_2
    :annotation:

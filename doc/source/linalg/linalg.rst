@@ -1,7 +1,7 @@
 Linear algebra
 ==============
 
-.. automodule:: linalg
+.. automodule:: pie.linalg
 
 .. toctree::
    :maxdepth: 2
