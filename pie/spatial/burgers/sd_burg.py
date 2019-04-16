@@ -79,10 +79,8 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
             if yl > yr:  # shock
                 if yl + yr > 0:
                     riemann_conv = yl
-                elif yl + yr < 0:
-                    riemann_conv = yr
                 else:
-                    riemann_conv = 0
+                    riemann_conv = yr
             elif yl < yr:  # rarefaction
                 if yl > 0:
                     riemann_conv = yl
@@ -150,12 +148,9 @@ class SpectralDifferenceMethodBurgers(_SpatialMethod):
                 if yl + yr > 0:
                     riemann_c[i * (self.p + 1), i * (self.p + 1)] = 0
                     riemann_c[i * (self.p + 1), i * (self.p + 1) - 1] = 1
-                elif yl + yr < 0:
+                else:
                     riemann_c[i * (self.p + 1) - 1, i * (self.p + 1) - 1] = 0
                     riemann_c[i * (self.p + 1) - 1, i * (self.p + 1)] = 1
-                else:
-                    riemann_c[i * (self.p + 1), i * (self.p + 1)] = 0
-                    riemann_c[i * (self.p + 1) - 1, i * (self.p + 1) - 1] = 0
             elif yl < yr:  # rarefaction
                 if yl > 0:
                     riemann_c[i * (self.p + 1), i * (self.p + 1)] = 0
